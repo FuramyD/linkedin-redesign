@@ -1,0 +1,81 @@
+<div class="post">
+    <div class="post__header">
+        <div class="other">
+            <svg icon="other"></svg>
+            <div class="other-list hidden"></div>
+        </div>
+    </div>
+    <div class="post__body">
+        <div class="creator">
+            <div>
+                <div class="avatar-box">
+                    <img
+                        class="avatar"
+                        [src]="'../../../assets/img/avatar.jpg'"
+                        alt="avatar"
+                    />
+                </div>
+                <div class="description">
+                    <span class="name">{{ 'Full Name' }}</span>
+                    <span class="profession">{{ 'Profession' }}</span>
+                </div>
+            </div>
+            <span class="date">{{ '20 march 2020' }}</span>
+        </div>
+        <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, animi
+            autem, eos est fuga maiores nobis quaerat quos recusandae saepe
+            soluta vitae! Assumenda, blanditiis, error!
+        </div>
+    </div>
+    <div class="post__footer">
+        <div class="left-side">
+            <span class="like">
+                <svg icon="like"></svg>
+                {{ '42' }}
+            </span>
+            <span class="comment" (click)="comments.classList.toggle('open')">
+                <svg class="comment" icon="comment"></svg>
+                {{ '34' }}
+            </span>
+        </div>
+        <span class="share">
+            <svg icon="share"></svg>
+            Share
+        </span>
+    </div>
+    <div class="comments hidden" #comments>
+        <div *ngFor="let comment of [1, 2, 3, 4]" class="comment">
+            <div class="avatar-box">
+                <img
+                    class="avatar"
+                    src="../../../assets/img/photos/Photo.png"
+                    alt="avatar"
+                />
+            </div>
+            <div class="content">
+                <span class="name">Full Name</span>
+                <span class="text"
+                    >Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Aliquam, qui?</span
+                >
+                <div class="another">
+                    <span class="date">15 minutes ago</span>
+                    <span class="like">
+                        <svg icon="like"></svg>
+                        {{ '32' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="new-comment">
+            <textarea
+                rows="1"
+                contenteditable="true"
+                (input)="textareaResize($event)"
+                onblur="this.value = this.value.trim()"
+                placeholder="Add a public comment..."
+            ></textarea>
+        </div>
+    </div>
+</div>

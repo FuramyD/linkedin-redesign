@@ -1,0 +1,116 @@
+@import 'src/assets/styles/variables';
+
+.profile__sidebar {
+    max-width: 290px;
+
+    margin: 40px 0;
+
+    & > div:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    & > div {
+        padding: 25px 30px;
+    }
+
+    .dashboard,
+    .visitors,
+    .courses {
+        width: 100%;
+
+        &__header {
+            width: 100%;
+            margin-bottom: 30px;
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            .more {
+                font-weight: 600;
+            }
+        }
+    }
+
+    .dashboard {
+        .stats {
+            .stat {
+                margin-bottom: 20px;
+
+                .count {
+                    height: 65px;
+
+                    font-family: @numbers-ff;
+                    font-size: 52px;
+                    font-weight: 400;
+
+                    color: @active;
+                }
+
+                .description {
+                    font-size: 14px;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    .visitors {
+        .visitor {
+            display: flex;
+            align-items: center;
+
+            margin-bottom: 15px;
+
+            .avatar {
+                width: 52px;
+                height: 52px;
+                border-radius: 50%;
+
+                margin-right: 15px;
+            }
+
+            .name {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .description {
+                font-size: 10px;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .courses {
+        .course {
+            display: flex;
+            align-items: center;
+
+            margin-bottom: 15px;
+
+            .picture {
+                margin-right: 15px;
+            }
+
+            .name {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .views {
+                font-size: 10px;
+                font-weight: 400;
+            }
+        }
+
+        .more {
+            margin-top: 25px;
+
+            font-size: 13px;
+            font-weight: 500;
+        }
+    }
+}

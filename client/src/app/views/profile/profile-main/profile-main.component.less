@@ -1,0 +1,332 @@
+@import 'src/assets/styles/variables';
+
+.profile__main {
+    max-width: 850px;
+
+    margin: 40px;
+
+    .profile__header {
+        width: 100%;
+
+        & > img {
+            width: 100%;
+        }
+
+        &--bg {
+            width: 100%;
+            height: 200px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &--info {
+            margin: 5px 30px;
+            display: flex;
+            //flex-wrap: wrap;
+
+            .avatar {
+                position: relative;
+                top: -20px;
+
+                min-width: 170px;
+                max-width: 170px;
+                height: 170px;
+
+                //margin: 25px;
+                border-radius: 50%;
+
+                overflow: hidden;
+
+                & > img {
+                    width: 100%;
+                }
+            }
+
+            .information {
+                margin: 25px;
+
+                &__header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    margin-bottom: 15px;
+
+                    h3 {
+                        font-size: 18px;
+                    }
+
+                    p {
+                        font-size: 12px;
+                    }
+                }
+
+                &__content {
+                    font-size: 14px;
+                    line-height: 1.5;
+                }
+            }
+        }
+    }
+
+    .profile__content {
+        .tabs {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+
+            .tab {
+                padding: 18px;
+                min-width: 240px;
+
+                text-align: center;
+                font-size: 14px;
+
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+
+                cursor: pointer;
+
+                &.active {
+                    color: #fff;
+                    background-color: @active;
+                    cursor: default;
+                }
+            }
+        }
+
+        & > *:not(.tabs) {
+            margin: 30px;
+            padding: 30px;
+
+            //border: 1px dashed #ccc;
+
+            h3 {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+
+            .more {
+                margin-top: 20px;
+                font-size: 14px;
+            }
+        }
+
+        .about {
+            p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+
+        .projects {
+            width: 100%;
+            .head {
+                display: flex;
+
+                p {
+                    color: #747474;
+                    font-size: 18px;
+                    font-weight: 300;
+                }
+
+                & > * {
+                    margin-right: 15px;
+                }
+            }
+
+            .cards {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+
+                .card {
+                    margin-right: 20px;
+                    margin-bottom: 15px;
+
+                    img {
+                        max-width: 230px;
+                    }
+
+                    .project-name {
+                        margin-top: 15px;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+
+                    .info {
+                        margin-top: 5px;
+                        font-size: 10px;
+                        font-weight: 300;
+                    }
+                }
+            }
+        }
+
+        .reputation {
+            width: 100%;
+            .containers {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+
+                .container {
+                    margin-right: 20px;
+                    padding: 15px 20px;
+
+                    height: 80px;
+                    min-width: 230px;
+                    max-width: 250px;
+
+                    &__header {
+                        display: flex;
+                        justify-content: space-between;
+
+                        h4 {
+                            font-size: 14px;
+                            font-weight: 600;
+                        }
+
+                        .count {
+                            color: @active;
+                            font-size: 14px;
+                            font-weight: 600;
+                        }
+                    }
+
+                    .photo-queue {
+                        display: flex;
+                        margin-left: 6px;
+                        margin-top: 5px;
+
+                        img:nth-child(1) {
+                            position: relative;
+                            left: calc(-6px * 1);
+                        }
+
+                        img:nth-child(2) {
+                            position: relative;
+                            left: calc(-6px * 2);
+                        }
+
+                        img:nth-child(3) {
+                            position: relative;
+                            left: calc(-6px * 3);
+                        }
+
+                        img:nth-child(4) {
+                            position: relative;
+                            left: calc(-6px * 4);
+                        }
+
+                        img:nth-child(5) {
+                            position: relative;
+                            left: calc(-6px * 5);
+                        }
+
+                        img:nth-child(6) {
+                            position: relative;
+                            left: calc(-6px * 6);
+                        }
+                    }
+                }
+            }
+        }
+
+        .experience {
+            .container {
+                display: flex;
+
+                margin-bottom: 20px;
+
+                &:not(:last-child) {
+                    padding-bottom: 25px;
+                }
+
+                &__icon {
+                    margin-right: 16px;
+                }
+
+                &__header {
+                    h4 {
+                        margin-bottom: 10px;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+
+                    p {
+                        margin-bottom: 5px;
+                        font-size: 12px;
+
+                        span {
+                            margin-left: 10px;
+                        }
+                    }
+
+                    .company {
+                        span {
+                            font-weight: 300;
+                        }
+                    }
+
+                    .date {
+                        font-weight: 300;
+                        .duration {
+                            color: @active;
+                            font-weight: 600;
+                        }
+                    }
+                }
+
+                &__content {
+                    p {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        .education {
+            .container {
+                display: flex;
+
+                &__icon {
+                    margin-right: 16px;
+
+                    img {
+                        width: 54px;
+                        height: 54px;
+                    }
+                }
+
+                &__header {
+                    h4 {
+                        font-size: 14px;
+                        font-weight: 500;
+
+                        margin-bottom: 10px;
+                    }
+
+                    p {
+                        font-size: 12px;
+                        margin-bottom: 5px;
+                    }
+
+                    .date {
+                        font-weight: 300;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                &__content {
+                    p {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

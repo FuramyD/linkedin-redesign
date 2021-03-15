@@ -1,0 +1,35 @@
+@import 'src/assets/styles/variables';
+
+.auth-layout__wrapper {
+    position: relative;
+
+    height: 100vh;
+    width: 100vw;
+
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        z-index: -1;
+    }
+
+    &:before {
+        background: radial-gradient(
+            circle farthest-corner at 100% 0,
+            @active,
+            rgba(@active, 0.8)
+        );
+    }
+
+    &:after {
+        background-image: url('src/assets/img/svg/bg.svg');
+        background-size: 1920px 1080px;
+        background-position: left top;
+    }
+}

@@ -1,0 +1,79 @@
+<div class="feed__main">
+    <div class="new-post">
+        <h3>NEW POST</h3>
+        <div class="create-post">
+            <textarea
+                rows="2"
+                contenteditable="true"
+                (input)="textareaResize($event)"
+                onblur="this.value = this.value.trim()"
+                placeholder="What's on your mind?"
+            ></textarea>
+            <div class="controls">
+                <input type="file" multiple style="display: none" #fileInput />
+                <svg
+                    (click)="fileUpload(fileInput, 'file')"
+                    icon="attach"
+                    class="attach-icon"
+                ></svg>
+                <svg
+                    (click)="fileUpload(fileInput, 'image')"
+                    icon="picture"
+                    class="attach-icon"
+                ></svg>
+                <svg
+                    (click)="fileUpload(fileInput, 'video')"
+                    icon="film"
+                    class="attach-icon"
+                ></svg>
+                <button class="btn-post">
+                    <svg icon="send" class="send"></svg>
+                </button>
+            </div>
+        </div>
+        <div class="attached">
+            <div class="files">
+                <a
+                    *ngFor="let attach of attached.files"
+                    [href]="attach.result"
+                    download="{{ attach.name }}"
+                >
+                    <span class="name">{{ attach.name }}</span>
+                    <span class="size">{{ attach.size }}</span>
+                </a>
+            </div>
+            <div class="images"></div>
+            <div class="videos"></div>
+        </div>
+    </div>
+
+    <div class="sort">
+        <h4>
+            SORT BY:
+            <div>
+                <span
+                    (click)="sortList.classList.toggle('active')"
+                    class="sort-type"
+                >
+                    {{ feedPostSortingType }}
+                    <svg class="icon" icon="chevronDown"></svg>
+                </span>
+                <div class="sort-list" #sortList>
+                    <ul
+                        (click)="changeSortingType($event, sortList)"
+                        class="list"
+                    >
+                        <li>trending</li>
+                        <li>newest first</li>
+                        <li>lastest first</li>
+                        <li>by title</li>
+                    </ul>
+                </div>
+            </div>
+        </h4>
+    </div>
+    <!-- Ted Bell, Annette Nguyen and Cody Hawkins liked this -->
+    <div class="posts">
+        <app-post></app-post>
+    </div>
+</div>

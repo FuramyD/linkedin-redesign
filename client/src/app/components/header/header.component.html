@@ -1,0 +1,60 @@
+<header class="header">
+    <div class="left-side">
+        <nav class="navigation">
+            <a id="logo" class="link" routerLink="/feed">
+                <img src="../../assets/img/logo.png" alt="logo" />
+            </a>
+            <a
+                *ngFor="let route of routes"
+                class="link"
+                [class.active]="location.pathname === route.path"
+                [routerLink]="route.path"
+            >
+                <svg class="icon" [icon]="route.icon"></svg>
+                {{ route.name }}
+            </a>
+        </nav>
+        <div class="search">
+            <img src="../../assets/img/search.png" alt="search" />
+            <input type="search" id="search" placeholder="Search" />
+        </div>
+    </div>
+    <div class="right-side">
+        <a class="profile-link" routerLink="/profile">
+            <div class="profile">
+                <div class="photo">
+                    <img [src]="profileInfo.avatar" alt="avatar" id="avatar" />
+                </div>
+                <div class="info">
+                    <p class="name">
+                        {{ profileInfo.name | namePipe }} <span>YOU</span>
+                    </p>
+                    <p class="views">
+                        {{ profileInfo.viewsInfo.viewsProfile }} views today
+                        <span
+                            id="progress"
+                            [class.success]="
+                                profileInfo.viewsInfo.viewsProgress() > 0
+                            "
+                            [class.danger]="
+                                profileInfo.viewsInfo.viewsProgress() < 0
+                            "
+                        >
+                            {{
+                                profileInfo.viewsInfo.viewsProgress()
+                                    | prefixPlus
+                            }}
+                            <svg
+                                [icon]="profileInfo.viewsInfo.trendingIcon()"
+                            ></svg>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="link">
+            <svg class="icon" icon="other"></svg>
+            <p>OTHER</p>
+        </a>
+    </div>
+</header>
