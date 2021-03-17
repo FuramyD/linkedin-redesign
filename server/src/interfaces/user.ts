@@ -8,11 +8,11 @@ export interface IUser {
     password: string
 
     info: {
-        isOnline: boolean,
+        isOnline: boolean
         views: {
-            current: number,
+            current: number
             prev: number
-        },
+        }
         posts: number[] // array of posts id
     }
 }

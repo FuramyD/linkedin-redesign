@@ -4,5 +4,5 @@ export interface RegistrationForm {
     phone: string
     email: string
     password: string
-    repeatPassword: string
+    repeatPassword: string | undefined
 }

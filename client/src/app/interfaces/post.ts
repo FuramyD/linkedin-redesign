@@ -1,6 +1,6 @@
 export interface IPost {
     creator: {
-        id: number,
+        id: number
         fullName: string
     }
     content: string

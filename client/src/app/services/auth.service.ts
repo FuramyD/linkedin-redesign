@@ -13,6 +13,7 @@ export class AuthService {
     constructor(private http: HttpClient) {}
 
     signUpRequest(formValue: RegistrationForm): Observable<RegistrationForm> {
+        formValue.repeatPassword = undefined
         return this.http.post<RegistrationForm>(
             `${environment.server_url}/users/create`,
             formValue,
@@ -26,7 +27,7 @@ export class AuthService {
 
     signInRequest(formValue: AuthForm): Observable<AuthForm> {
         return this.http.post<AuthForm>(
-            `${environment.server_url}/users/findOne`,
+            `${environment.server_url}/users/auth`,
             formValue,
             {
                 headers: {

@@ -44,7 +44,10 @@ export class RegistrationComponent implements OnInit {
         if (this.registrationForm.valid) {
             this.authService
                 .signUpRequest(this.registrationForm.value)
-                .subscribe(res => console.log(res))
+                .subscribe(
+                    res => console.log(res),
+                    err => console.log('err => ', err.error),
+                )
         }
     }
 
@@ -56,6 +59,8 @@ export class RegistrationComponent implements OnInit {
             console.log('Status: ', status),
         )
 
-        this.authService.getIsdCountryCode().subscribe(val => this.IsdCountryCodes = val)
+        this.authService
+            .getIsdCountryCode()
+            .subscribe(val => (this.IsdCountryCodes = val))
     }
 }
