@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { ReactiveFormsModule } from '@angular/forms'
-import { HttpClientModule } from '@angular/common/http'
 
 import { ChatModule } from './chat/chat.module'
 import { FeedModule } from './feed/feed.module'
@@ -14,12 +12,10 @@ import { PipesModule } from '../pipes/pipes.module'
 import { SvgIconModule } from '../svg-icon/svg-icon.module'
 
 import { ICONS_PATH } from '../svg-icon/icons-path'
-
-import { AuthComponent } from './auth/auth.component'
-import { RegistrationComponent } from './registration/registration.component'
+import { AuthModule } from './auth/auth.module'
 
 @NgModule({
-    declarations: [AuthComponent, RegistrationComponent],
+    declarations: [],
     imports: [
         CommonModule,
         ChatModule,
@@ -28,11 +24,10 @@ import { RegistrationComponent } from './registration/registration.component'
         NetworkModule,
         NoticesModule,
         ProfileModule,
+        AuthModule,
         PipesModule,
         SvgIconModule,
         RouterModule,
-        ReactiveFormsModule,
-        HttpClientModule,
     ],
     providers: [
         {

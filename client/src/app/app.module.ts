@@ -29,5 +29,6 @@ import { BaseLayoutComponent } from './layouts/base/base.component'
     ],
     providers: [],
     bootstrap: [AppComponent],
+    exports: [],
 })
 export class AppModule {}

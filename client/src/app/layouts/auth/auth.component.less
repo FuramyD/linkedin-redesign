@@ -10,7 +10,7 @@
     &:after {
         content: '';
         display: block;
-        position: absolute;
+        position: fixed;
         left: 0;
         right: 0;
         top: 0;
@@ -23,7 +23,7 @@
         background: radial-gradient(
             circle farthest-corner at 100% 0,
             @active,
-            rgba(@active, 0.8)
+            rgba(@active, 0.3)
         );
     }
 

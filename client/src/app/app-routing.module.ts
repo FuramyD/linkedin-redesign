@@ -8,9 +8,10 @@ import { JobsComponent } from './views/jobs/jobs.component'
 import { ChatComponent } from './views/chat/chat.component'
 import { NoticesComponent } from './views/notices/notices.component'
 import { ProfileComponent } from './views/profile/profile.component'
+
 import { AuthLayoutComponent } from './layouts/auth/auth.component'
-import { RegistrationComponent } from './views/registration/registration.component'
-import { AuthComponent } from './views/auth/auth.component'
+import { AuthorizationComponent } from './views/auth/authorization/authorization.component'
+import { RegistrationComponent } from './views/auth/registration/registration.component'
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/feed' },
@@ -31,7 +32,7 @@ const routes: Routes = [
         component: AuthLayoutComponent,
         children: [
             { path: 'signup', component: RegistrationComponent },
-            { path: 'signin', component: AuthComponent },
+            { path: 'signin', component: AuthorizationComponent },
         ],
     },
 ]

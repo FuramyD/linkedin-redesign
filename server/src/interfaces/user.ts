@@ -1,7 +1,5 @@
-import { IProfileInfo } from './profileInfo'
-
 export interface IUser {
-    id: number | string
+    id: number
 
     firstName: string
     lastName: string
@@ -9,5 +7,12 @@ export interface IUser {
     phone: string
     password: string
 
-    info: IProfileInfo
+    info: {
+        isOnline: boolean,
+        views: {
+            current: number,
+            prev: number
+        },
+        posts: number[] // array of posts id
+    }
 }

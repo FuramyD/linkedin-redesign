@@ -1,0 +1,24 @@
+{
+    "name": "linkedin",
+    "version": "1.0.0",
+    "description": "\"# linkedin-redesign\"",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prettier": "prettier"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FuramyD/linkedin-redesign.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/FuramyD/linkedin-redesign/issues"
+    },
+    "homepage": "https://github.com/FuramyD/linkedin-redesign#readme",
+    "devDependencies": {
+        "prettier": "^2.2.1"
+    }
+}

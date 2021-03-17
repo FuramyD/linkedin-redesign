@@ -1,10 +1,15 @@
 export interface IPost {
     creator: {
-        name
+        id: number,
+        fullName: string
     }
     content: string
     dateOfLastModify?: Date
     dateOfCreation: Date
+
+    likes: {
+        userId: number
+    }[]
 
     attached: {
         images?: string[]
@@ -13,6 +18,6 @@ export interface IPost {
     }
 
     comments?: {
-        content
-    }
+        content: string
+    }[]
 }
