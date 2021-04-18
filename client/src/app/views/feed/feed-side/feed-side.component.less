@@ -1,10 +1,107 @@
 @import 'src/assets/styles/variables';
 
 .feed__sidebar {
-    width: 25%;
-    height: 500px;
-    max-width: 290px;
+    &__header {
+        margin-bottom: 30px;
 
-    margin-left: 40px;
-    border: 1px dashed #ccc;
+        .header-bg {
+            width: 100%;
+            height: 120px;
+        }
+
+        .profile-info {
+            margin-top: -50px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .avatar-box {
+                width: 100px;
+                height: 100px;
+
+                border: 7px solid white;
+                border-radius: 50%;
+                overflow: hidden;
+
+                margin-bottom: 15px;
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .name {
+                text-align: center;
+                font-size: 16px;
+                font-weight: 600;
+
+                margin-bottom: 10px;
+            }
+
+            .description {
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .btn {
+                width: calc(100% - 60px);
+                margin: 20px 30px;
+                text-transform: uppercase;
+            }
+        }
+    }
+    .groups {
+        padding: 30px;
+
+        &__header {
+            height: 50px;
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 14px;
+
+            .title {
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+        }
+
+        &__body {
+            .group {
+                width: 100%;
+                height: 80px;
+                margin-bottom: 10px;
+
+                &__icon {
+                    display: inline-block;
+
+                    width: 52px;
+                    height: 52px;
+
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+
+                &__name {
+                    display: inline-block;
+                    width: 65%;
+
+                    margin-left: 15px;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        &__footer {
+            height: 50px;
+            line-height: 50px;
+        }
+    }
 }

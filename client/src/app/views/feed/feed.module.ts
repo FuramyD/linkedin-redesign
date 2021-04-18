@@ -7,6 +7,7 @@ import { FeedComponent } from './feed.component'
 import { FeedMainComponent } from './feed-main/feed-main.component'
 import { FeedSideComponent } from './feed-side/feed-side.component'
 import { PostComponent } from '../../components/post/post.component'
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
     declarations: [
@@ -15,6 +16,6 @@ import { PostComponent } from '../../components/post/post.component'
         FeedSideComponent,
         PostComponent,
     ],
-    imports: [CommonModule, SvgIconModule],
+    imports: [CommonModule, SvgIconModule, FormsModule],
 })
 export class FeedModule {}

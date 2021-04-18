@@ -5,6 +5,32 @@
 		</div>
 		<div class="container__body">
 			<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="form">
+				
+				<ul class="form__errors">
+					<li *ngIf="registrationForm.controls['firstName'].invalid
+					&& registrationForm.controls['firstName'].touched">
+						Invalid first name
+					</li>
+					<li *ngIf="registrationForm.controls['lastName'].invalid
+					&& registrationForm.controls['lastName'].touched">
+						Invalid last name
+					</li>
+					<li *ngIf="registrationForm.controls['email'].invalid
+					&& registrationForm.controls['email'].touched">
+						Invalid email
+					</li>
+					<li *ngIf="registrationForm.controls['phone'].invalid
+					&& registrationForm.controls['phone'].touched">
+						Invalid phone
+					</li>
+					<li *ngIf="registrationForm.controls['password'].invalid
+					&& registrationForm.controls['password'].touched">
+						invalid password
+					</li>
+					<li *ngIf="repeatPasswordError">Password mismatch</li>
+					<li *ngIf="backendError">{{ backendError }}</li>
+				</ul>
+		
 				<div>
 					<label class="form__label" for="firstName">First name</label>
 					<input class="form__control" type="text" id="firstName" formControlName="firstName" required>

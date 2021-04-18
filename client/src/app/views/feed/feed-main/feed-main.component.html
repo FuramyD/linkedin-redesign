@@ -8,6 +8,7 @@
                 (input)="textareaResize($event)"
                 onblur="this.value = this.value.trim()"
                 placeholder="What's on your mind?"
+                [(ngModel)]="textareaContent"
             ></textarea>
             <div class="controls">
                 <input type="file" multiple style="display: none" #fileInput />
@@ -26,7 +27,7 @@
                     icon="film"
                     class="attach-icon"
                 ></svg>
-                <button class="btn-post">
+                <button (click)="createPost()" class="btn-post">
                     <svg icon="send" class="send"></svg>
                 </button>
             </div>
@@ -73,7 +74,8 @@
         </h4>
     </div>
     <!-- Ted Bell, Annette Nguyen and Cody Hawkins liked this -->
-    <div class="posts">
-        <app-post></app-post>
+    <div *ngIf="(isPosts$ | async)" class="posts">
+        <app-post [postInfo]="post" *ngFor="let post of (posts$ | async)"></app-post>
     </div>
+    <h2 *ngIf="!(isPosts$ | async)" class="no-posts">There are no posts in your feed yet</h2>
 </div>

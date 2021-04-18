@@ -1,0 +1,11 @@
+<svg id="invitationsIcon" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0)">
+<path d="M8.64347 14.6667C12.3254 14.6667 15.3101 11.6819 15.3101 8C15.3101 4.3181 12.3254 1.33333 8.64347 1.33333C4.96158 1.33333 1.97681 4.3181 1.97681 8C1.97681 11.6819 4.96158 14.6667 8.64347 14.6667Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.64355 10C9.74812 10 10.6436 9.10457 10.6436 8C10.6436 6.89543 9.74812 6 8.64355 6C7.53899 6 6.64355 6.89543 6.64355 8C6.64355 9.10457 7.53899 10 8.64355 10Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0">
+<rect width="16" height="16" fill="white" transform="translate(0.643555)"/>
+</clipPath>
+</defs>
+</svg>

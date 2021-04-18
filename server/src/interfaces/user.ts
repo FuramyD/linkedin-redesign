@@ -9,10 +9,25 @@ export interface IUser {
 
     info: {
         isOnline: boolean
+        description: string
         views: {
             current: number
             prev: number
         }
-        posts: number[] // array of posts id
+
+        connections: { userId: number; date: number }[]
+        sentConnections: { userId: number; message: string }[]
+        receivedConnections: { userId: number; message: string }[]
+        posts: {
+            postId: number
+        }[]
+        avatar: string | ArrayBuffer | null
+        profileHeaderBg: string | ArrayBuffer | null
+        dateOfBirth: number
+        profession: string
+        locality: {
+            country: string
+            city: string
+        }
     }
 }

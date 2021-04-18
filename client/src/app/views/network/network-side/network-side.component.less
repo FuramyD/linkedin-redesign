@@ -1,0 +1,47 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/text-mixins';
+
+.network-menu {
+    .menu {
+        list-style: none;
+        border: 1px dashed #cccccc;
+
+        .user-select-none();
+        &__item {
+            width: 50px;
+            line-height: 50px;
+            padding: 0 30px;
+
+            display: flex;
+            justify-content: space-between;
+
+            cursor: pointer;
+
+            .title {
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+
+                display: flex;
+                align-items: center;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+
+                    stroke: @base;
+                    stroke-width: 3px;
+
+                    margin-right: 10px;
+                }
+            }
+
+            &.active {
+                border-left: 10px solid @active;
+                & > .title {
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
+}

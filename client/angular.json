@@ -30,8 +30,11 @@
                         "tsConfig": "tsconfig.app.json",
                         "aot": true,
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.less"],
-                        "scripts": []
+                        "styles": [
+                            "src/styles.less",
+                            "node_modules/hystmodal/dist/hystmodal.min.css"
+                        ],
+                        "scripts": ["src/app/plugins/hystModal_.js"]
                     },
                     "configurations": {
                         "production": {

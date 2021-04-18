@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { IsdCountryCode } from 'src/app/interfaces/isdCountryCode'
+import { IsdCountryCode } from '../../../../../server/src/interfaces/auth/isdCountryCode'
 
 @Component({
     selector: 'app-select',

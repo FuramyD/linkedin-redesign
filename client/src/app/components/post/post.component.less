@@ -63,10 +63,15 @@
 
         .date {
             font-size: 11px;
+            font-weight: 500;
             align-self: flex-start;
             justify-self: flex-end;
 
             color: @light;
+        }
+
+        .content {
+            font-size: 18px;
         }
     }
 
@@ -109,69 +114,74 @@
         }
     }
 
-    .comments {
-        margin-top: 15px;
-        padding: 0 15px;
+    .comments-wrapper {
+        display: none;
 
-        max-height: 0;
-        overflow: hidden;
+        .comments {
+            margin-top: 15px;
+            padding: 0 15px;
 
-        .comment {
-            width: 100%;
-            display: flex;
+            max-height: 0;
+            overflow: hidden;
 
-            padding: 0 15px 10px 30px;
-
-            .content {
+            .comment {
+                width: 100%;
                 display: flex;
-                flex-direction: column;
-                flex-grow: 1;
 
-                font-size: 14px;
+                padding: 0 15px 10px 30px;
 
-                .name {
-                    font-weight: 600;
-                }
-
-                .another {
-                    display: flex;
-                    justify-content: space-between;
-
-                    .date {
-                        color: @light;
-                    }
-
-                    .like {
-                        cursor: pointer;
-                    }
-
-                    svg {
-                        vertical-align: middle;
-
-                        width: 14px;
-                        height: 14px;
-                    }
-                }
-            }
-
-            &:nth-child(n + 2) {
-                .avatar-box {
-                    margin-top: 10px;
-                }
                 .content {
-                    padding-top: 10px;
-                    border-top: 1px solid #ccc;
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+
+                    font-size: 16px;
+
+                    .name {
+                        font-weight: 600;
+                    }
+
+                    .another {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .date {
+                            color: @light;
+                            font-size: 12px;
+                        }
+
+                        .like {
+                            cursor: pointer;
+                        }
+
+                        svg {
+                            vertical-align: middle;
+
+                            width: 14px;
+                            height: 14px;
+                        }
+                    }
+                }
+
+                &:nth-child(n + 2) {
+                    .avatar-box {
+                        margin-top: 10px;
+                    }
+                    .content {
+                        padding-top: 10px;
+                        border-top: 1px solid #ccc;
+                    }
                 }
             }
-        }
-
-        &.open {
-            max-height: none;
         }
 
         .new-comment {
-            margin-top: 30px;
+            margin: 20px;
             padding: 0 15px 10px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
             textarea {
                 width: 70%;
@@ -195,6 +205,35 @@
                     color: rgba(24, 24, 24, 0.22);
                     .user-select-none();
                 }
+            }
+
+            .btn-comment {
+                width: 28px;
+                height: 28px;
+
+                border-radius: 4px;
+                border: 0;
+                outline: 0;
+
+                background-color: @active;
+
+                cursor: pointer;
+
+                .send {
+                    width: 16px;
+                    height: 16px;
+
+                    vertical-align: middle;
+                    margin-left: 4px;
+                }
+            }
+        }
+
+        &.open {
+            display: block;
+
+            .comments {
+                max-height: none;
             }
         }
     }
@@ -227,4 +266,8 @@ svg {
     svg {
         fill: @active;
     }
+}
+
+.content {
+    overflow: hidden;
 }

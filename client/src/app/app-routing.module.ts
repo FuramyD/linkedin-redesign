@@ -12,6 +12,7 @@ import { ProfileComponent } from './views/profile/profile.component'
 import { AuthLayoutComponent } from './layouts/auth/auth.component'
 import { AuthorizationComponent } from './views/auth/authorization/authorization.component'
 import { RegistrationComponent } from './views/auth/registration/registration.component'
+import { AuthGuard } from './guards/auth.guard'
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/feed' },
@@ -19,12 +20,41 @@ const routes: Routes = [
         component: BaseLayoutComponent,
         path: '',
         children: [
-            { path: 'feed', component: FeedComponent },
-            { path: 'network', component: NetworkComponent },
-            { path: 'jobs', component: JobsComponent },
-            { path: 'chat', component: ChatComponent },
-            { path: 'notices', component: NoticesComponent },
-            { path: 'profile', component: ProfileComponent },
+            {
+                path: 'feed',
+                component: FeedComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'network',
+                component: NetworkComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'jobs',
+                component: JobsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'chats',
+                component: ChatComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'notices',
+                component: NoticesComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'profile',
+                component: ProfileComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'profile/:id',
+                component: ProfileComponent,
+                canActivate: [AuthGuard],
+            },
         ],
     },
     {
@@ -40,5 +70,6 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
+    providers: [AuthGuard],
 })
 export class AppRoutingModule {}

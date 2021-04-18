@@ -1,0 +1,21 @@
+<div class="connections">
+	<h2 class="number">You have {{ connections.length }} connections</h2>
+	
+	<div class="connections__list">
+		<div *ngFor="let connection of connections" class="connection">
+			<a [routerLink]="'/profile/' + connection.user.id" class="user">
+				<div class="avatar-box">
+					<img [src]="connection.user.info.avatar || 'assets/img/avatar-man.png'" alt="avatar">
+				</div>
+				<div class="info">
+					<div class="name">{{ connection.user.firstName }} {{ connection.user.lastName }}</div>
+					<div class="profession">{{ connection.user.info.profession }}</div>
+					<div class="user-connections">{{ connection.user.info.connections.length }} connections</div>
+<!--					<div class="date">{{ connection.date }}</div>-->
+				</div>
+			</a>
+			<button class="btn">Remove</button>
+		</div>
+	</div>
+</div>
+

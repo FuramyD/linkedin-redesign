@@ -8,5 +8,13 @@ import { Component, OnInit } from '@angular/core'
 export class NetworkComponent implements OnInit {
     constructor() {}
 
+    activeTab: string = 'invitations'
+
+    activateTab(tab: string): void {
+        console.log(tab)
+        this.activeTab = tab
+    }
+
     ngOnInit(): void {}
 }
+

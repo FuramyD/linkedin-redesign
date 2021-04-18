@@ -47,8 +47,10 @@
 
             .information {
                 margin: 25px;
+                width: 100%;
 
                 &__header {
+                    width: 100%;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
@@ -67,6 +69,18 @@
                 &__content {
                     font-size: 14px;
                     line-height: 1.5;
+
+                    position: relative;
+
+                    .btn,
+                    .btn-outline {
+                        i {
+                            font-size: 20px;
+                            vertical-align: middle;
+
+                            margin-right: 10px;
+                        }
+                    }
                 }
             }
         }
@@ -328,5 +342,58 @@
                 }
             }
         }
+    }
+}
+
+.hystmodal {
+    &__window {
+        border-radius: 8px;
+    }
+
+    &__header {
+        border-bottom: 1px solid #cccccc;
+        margin-bottom: 10px;
+    }
+
+    &__body {
+        width: 100%;
+        margin-bottom: 20px;
+
+        .message {
+            margin: 0 auto;
+            width: 80%;
+
+            &__title {
+                color: @base;
+                font-size: 18px;
+                font-weight: 500;
+
+                margin-bottom: 10px;
+            }
+
+            &__textarea {
+                width: 100%;
+                border: 1px solid lighten(@light, 23%);
+                border-radius: 4px;
+                padding: 10px;
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        border-top: 1px solid #cccccc;
+
+        .controls {
+            padding-right: 20px;
+            padding-bottom: 20px;
+        }
+    }
+
+    &__title {
+        font-size: 24px;
+        padding: 10px 20px;
+        width: 100%;
     }
 }

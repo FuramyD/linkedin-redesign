@@ -13,6 +13,7 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module'
 
 import { ICONS_PATH } from '../svg-icon/icons-path'
 import { AuthModule } from './auth/auth.module'
+import { PostsService } from '../services/posts.service'
 
 @NgModule({
     declarations: [],
@@ -34,6 +35,7 @@ import { AuthModule } from './auth/auth.module'
             provide: ICONS_PATH,
             useValue: 'assets/img/svg',
         },
+        PostsService,
     ],
 })
 export class ViewsModule {}

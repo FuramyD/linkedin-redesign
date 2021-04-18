@@ -1,39 +1,48 @@
 <div class="profile__main">
     <div class="profile__header">
         <div class="profile__header--bg">
-            <img src="../../../../assets/img/profile-header.png" alt="bg" />
+            <img [src]="headerBg$ | async" alt="bg" />
         </div>
         <div class="profile__header--info">
             <div class="avatar">
-                <img src="../../../../assets/img/avatar.jpg" alt="avatar" />
+                <img [src]="avatar$ | async" alt="avatar" />
             </div>
             <div class="information">
                 <div class="information__header">
                     <h3 class="name">
-                        Alexandr Kazantsev
-                        <span
-                            ><img
-                                src="../../../../assets/img/gold-logo.png"
-                                alt="gold-logo"
-                        /></span>
+                        {{ fullName$ | async }}
+                        <span>
+                            <img src="../../../../assets/img/gold-logo.png" alt="gold-logo" />
+                        </span>
                     </h3>
                     <p class="location">
-                        <span
-                            ><img
-                                src="../../../../assets/img/location.png"
-                                alt="location"
-                        /></span>
-                        Nizhniy Novgorod, Russian Federation
+                        <span>
+                            <img src="../../../../assets/img/location.png" alt="location" />
+                        </span>
+                        {{ locality$ | async }}
                     </p>
                 </div>
                 <div class="information__content">
                     <p>
-                        A beginner web developer, developing a frontend on VUE
-                        and Angular, a backend on Node js and express and nest
-                        js frameworks, open to offers
+                        {{ description$ | async }}
                     </p>
-                    <button class="btn">CONTACT INFO</button>
-                    <button class="btn-outline">1,043 CONNECTIONS</button>
+                    <button class="btn">Contact Info</button>
+                    <button *ngIf="isMyProfile" class="btn">
+                        <i class="fas fa-user-edit"></i>
+                        Edit profile
+                    </button>
+                    <button *ngIf="!isMyProfile && !sentConnection && !isConnection && !incomingConnection" data-hystmodal="#sendConnectionModal" class="btn">
+                        Send connection
+                    </button>
+                    <button *ngIf="!isMyProfile && sentConnection" class="btn-outline" (click)="declineConnection()">
+                        Connection was sent
+                    </button>
+                    <button *ngIf="!isMyProfile && incomingConnection" class="btn-outline" (click)="acceptConnection()">
+                        Accept connection
+                    </button>
+                    <button *ngIf="!isMyProfile && isConnection" class="btn-outline" (click)="removeConnection()">Remove connection</button>
+                    <button class="btn-outline">{{ connectionsLength$ | async }} Connections</button>
+                    
                 </div>
             </div>
         </div>
@@ -272,6 +281,37 @@
                             js
                         </p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="hystmodal" id="sendConnectionModal" aria-hidden="true">
+    <div class="hystmodal__wrap">
+        <div class="hystmodal__window" role="dialog" aria-modal="true">
+            <button data-hystclose class="hystmodal__close">Закрыть</button>
+            <div class="hystmodal__header">
+                <h2 class="hystmodal__title">Send connection</h2>
+            </div>
+            <div class="hystmodal__body">
+                <div class="message">
+                    <p class="message__title">Message</p>
+                    <textarea
+                            class="message__textarea"
+                            id="message"
+                            rows="6"
+                            placeholder="If you want to say something, write it here"
+                            #textarea
+                    ></textarea>
+                </div>
+                
+            </div>
+            <div class="hystmodal__footer">
+                <div class="controls">
+                    <button (click)="textarea.value = ''" data-hystclose class="btn-outline decline">Decline</button>
+                    <button (click)="sendConnection(textarea.value)" data-hystclose class="btn send">Send connection</button>
                 </div>
             </div>
         </div>

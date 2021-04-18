@@ -1,0 +1,75 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/text-mixins';
+@import 'src/assets/styles/mixins/scrollbar-mixins';
+
+.chat-side {
+    .title {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .chats {
+        margin-top: 20px;
+        max-height: 500px;
+
+        overflow: auto;
+
+        .user-select-none();
+        .light-thin-scrollbar();
+
+        .chat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            height: 80px;
+            padding-left: 20px;
+            padding-right: 30px;
+
+            cursor: pointer;
+
+            .user {
+                display: flex;
+                .avatar-box {
+                    width: 52px;
+                    height: 52px;
+                }
+
+                .info {
+                    .name {
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+                    .last-message {
+                        font-size: 11px;
+                    }
+                }
+            }
+
+            .unread {
+                width: 18px;
+                height: 18px;
+
+                text-align: center;
+                font-size: 12px;
+
+                background-color: @active;
+                color: white;
+
+                padding-left: 1px;
+
+                border-radius: 50%;
+            }
+
+            &.active {
+                border-left: 10px solid @active;
+                .user {
+                    opacity: 0.6;
+                }
+                .unread {
+                    display: none;
+                }
+            }
+        }
+    }
+}

@@ -14,13 +14,7 @@
     justify-content: center;
     align-items: center;
 
-    @media (max-height: 750px) {
-        align-items: flex-start;
-
-        .container {
-            margin-top: 30px;
-        }
-    }
+    overflow-x: hidden;
 
     .container {
         min-width: 300px;
@@ -57,7 +51,8 @@
 
         &__body {
             padding: 10px;
-
+            max-height: 700px;
+            overflow: auto;
             .form {
                 font-family: 'Poppins', sans-serif;
                 display: flex;
@@ -126,10 +121,39 @@
                         }
                     }
                 }
+
+                &__errors {
+                    width: 80%;
+                    margin: 20px auto;
+                    padding: 10px;
+
+                    border: 3px solid red;
+                    border-radius: 10px;
+                    background-color: lighten(red, 23%);
+
+                    color: darken(red, 30%);
+
+                    li {
+                        margin-left: 20px;
+                    }
+
+                    &:empty {
+                        display: none;
+                    }
+                }
             }
         }
     }
-}
 
-.agree {
+    @media (max-height: 750px) {
+        align-items: flex-start;
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .container__body {
+            max-height: none;
+        }
+    }
 }

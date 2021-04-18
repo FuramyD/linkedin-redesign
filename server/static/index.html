@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<div id="v-app">
+		<h1>{{ title }}</h1>
+		<input type="text" v-model="message">
+		<button class="send" @click.prevent="sendMessage">Send</button>
+		
+		<ul class="messages">
+			<li v-for="message of messages">{{ message }}</li>
+		</ul>
+	</div>
+</body>
+
+<script>
+	var app = new Vue({
+		el: '#v-app',
+		data() {
+		    return {
+		        title: 'My vue app',
+				message: '',
+				messages: ['hello', 'world'],
+		    	socket: null
+			}
+		},
+		methods: {
+		    sendMessage() {
+		    	this.socket.emit('sendMessage', this.message)
+			},
+			receiveMessage(msg) {
+		 		this.messages.push(msg)
+			}
+		},
+		created() {
+		    this.socket = io('http://localhost:3000')
+			this.socket.on('receiveMessage', msg => {
+                this.receiveMessage(msg)
+			})
+			this.socket.on('some event', data => {
+			    console.log(data)
+			})
+		}
+	})
+</script>
+</html>

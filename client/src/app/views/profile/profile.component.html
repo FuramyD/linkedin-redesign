@@ -1,6 +1,6 @@
 <div class="profile">
     <div class="profile__wrapper">
-        <app-profile-main></app-profile-main>
-        <app-profile-side></app-profile-side>
+        <app-profile-main [isMyProfile]="isMyProfile"></app-profile-main>
+        <app-profile-side *ngIf="isMyProfile"></app-profile-side>
     </div>
 </div>

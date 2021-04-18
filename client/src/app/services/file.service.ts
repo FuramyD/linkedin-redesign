@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 
-import { IAttach } from '../interfaces/attach'
-import { IAttached } from '../interfaces/attached'
+import { IAttach } from '../../../../server/src/interfaces/post/attach'
+import { IAttached } from '../../../../server/src/interfaces/post/attached'
 
 @Injectable({
     providedIn: 'root',
@@ -34,10 +34,13 @@ export class FileService {
                     }
 
                     if (file.type.match('image')) {
+                        if (!attached.images) attached.images = []
                         attached.images.push(attach)
                     } else if (file.type.match('video')) {
+                        if (!attached.videos) attached.videos = []
                         attached.videos.push(attach)
                     } else {
+                        if (!attached.files) attached.files = []
                         attached.files.push(attach)
                     }
                 }

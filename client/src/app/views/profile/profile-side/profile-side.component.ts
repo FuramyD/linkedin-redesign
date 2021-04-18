@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
+import { ProfileState } from '../../../store/profile/profile.reducer'
+import { initialProfileState } from '../profile.component'
 
 @Component({
     selector: 'app-profile-side',
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core'
 })
 export class ProfileSideComponent implements OnInit {
     constructor() {}
+
+    // @Input() isMyProfile: boolean = false
 
     ngOnInit(): void {}
 }

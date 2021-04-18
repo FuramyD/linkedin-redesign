@@ -1,0 +1,11 @@
+<div class="network-main">
+	<app-invitations
+			*ngIf="activeTab === 'invitations'"
+			[myProfileId]="myProfileId"
+			[myConnections$]="myConnections$"
+	></app-invitations>
+	<app-users-list
+			*ngIf="activeTab === 'connections'"
+			[connections]="[myConnections[0], myConnections[0], myConnections[0], myConnections[0], myConnections[0], myConnections[0]]"
+	></app-users-list>
+</div>

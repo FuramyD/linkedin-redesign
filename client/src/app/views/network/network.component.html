@@ -1,1 +1,4 @@
-<p>network works!</p>
+<div class="network-wrapper">
+	<app-network-side class="side" (activateItem)="activateTab($event)"></app-network-side>
+	<app-network-main class="main" [activeTab]="activeTab"></app-network-main>
+</div>
