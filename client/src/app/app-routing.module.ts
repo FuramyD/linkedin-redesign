@@ -13,6 +13,8 @@ import { AuthLayoutComponent } from './layouts/auth/auth.component'
 import { AuthorizationComponent } from './views/auth/authorization/authorization.component'
 import { RegistrationComponent } from './views/auth/registration/registration.component'
 import { AuthGuard } from './guards/auth.guard'
+import { EditProfileComponent } from './views/profile/edit-profile/edit-profile.component'
+import { AccountDeletedComponent } from './components/account-deleted/account-deleted.component'
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/feed' },
@@ -51,6 +53,11 @@ const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
+                path: 'profile/edit',
+                component: EditProfileComponent,
+                canActivate: [AuthGuard],
+            },
+            {
                 path: 'profile/:id',
                 component: ProfileComponent,
                 canActivate: [AuthGuard],
@@ -64,6 +71,10 @@ const routes: Routes = [
             { path: 'signup', component: RegistrationComponent },
             { path: 'signin', component: AuthorizationComponent },
         ],
+    },
+    {
+        path: 'account-deleted',
+        component: AccountDeletedComponent,
     },
 ]
 

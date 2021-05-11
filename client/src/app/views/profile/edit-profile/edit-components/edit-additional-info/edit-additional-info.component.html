@@ -1,0 +1,190 @@
+<div class="additional-info-edit">
+	<div class="role">
+		<h3 class="title">Role</h3>
+		<div class="role__select">
+			<app-select class="select"
+						[options]="['HR', 'jobseeker']"
+						[selectedByDefault]="role ? role : 'Choose your role'"
+						[error]="false"
+						(onChange)="role = $event"
+			></app-select>
+			<button class="btn" [disabled]="role === '' || role === 'Choose your role'" (click)="changeRole()">Choose</button>
+		</div>
+		
+	</div>
+	<div class="company" *ngIf="role === 'HR'"></div>
+	<div class="about">
+		<h3 class="title">About yourself</h3>
+		<textarea [(ngModel)]="about" class="about__textarea control-textarea" rows="6" placeholder="White about yourself"></textarea>
+		<button class="btn" [disabled]="about === ''" (click)="changeAbout()">Save</button>
+	</div>
+	<div class="profession">
+		<h3 class="title">Profession</h3>
+		<input class="control" [(ngModel)]="profession" type="text" id="profession" placeholder="White your profession">
+		<button class="btn" [disabled]="profession === ''" (click)="changeProfession()">Save</button>
+	</div>
+	<div class="locality">
+		<h3 class="title">Locality</h3>
+		<form [formGroup]="localityForm" id="locality" (ngSubmit)="changeLocality()">
+			<label class="control-wrapper">
+				Country
+				<input class="control" type="text" formControlName="country" name="country">
+			</label>
+			<label class="control-wrapper">
+				City
+				<input class="control" type="text" formControlName="city" name="city">
+			</label>
+			<button class="btn" type="submit" [disabled]="localityForm.invalid">Save</button>
+		</form>
+	</div>
+	<div class="contact-info">
+		<h3 class="title">Contact Information</h3>
+		<p class="help">Write here ways of contacting you. Please note that this data will be available to everyone!</p>
+		
+		<div class="error" *ngIf="projectsError">{{ projectsError }}</div>
+		
+		<label *ngFor="let contact of contactInfo" class="control-wrapper">
+			<input class="control" [(ngModel)]="contact.contactWay" type="text" placeholder="Way of contact">
+			<input class="control" [(ngModel)]="contact.data" type="text" placeholder="Contact data">
+			<svg icon="close" class="remove" (click)="removeContactWay(contact)"></svg>
+		</label>
+		
+		<div class="controls">
+			<button class="btn" (click)="addContactWay()">Add</button>
+			<button class="btn">Save</button>
+		</div>
+		
+	</div>
+	<div class="projects">
+		<h3 class="title">Projects</h3>
+		<div class="error" *ngIf="projectsError">{{ projectsError }}</div>
+		<div *ngFor="let project of projects, let i = index" class="project">
+			<svg class="close" icon="close" (click)="removeProject(project)"></svg>
+			<label class="control-wrapper">
+				Name
+				<input [(ngModel)]="project.name" class="control" type="text">
+			</label>
+			<label class="control-wrapper">
+				Role
+				<input [(ngModel)]="project.role"class="control" type="text">
+			</label>
+			<label class="control-wrapper">
+				Date
+				<input [(ngModel)]="project.date" class="control" type="date">
+			</label>
+			<label class="control-wrapper">
+				About
+				<textarea class="control-textarea" [(ngModel)]="project.about" rows="3" placeholder="Write about project"></textarea>
+			</label>
+			<div class="poster-upload">
+				Upload poster
+				<input class="hidden" type="file" (change)="uploadPosterHandler($event, project)" #input_file>
+				<button class="btn-outline upload" (click)="input_file.click()">Upload</button>
+				<div *ngIf="project.poster" class="uploaded" #uploaded>
+					<img [src]="project.poster.url" alt="poster">
+					<span class="size">{{ uploaded.clientWidth + 'x' + uploaded.clientHeight }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="controls">
+			<button class="btn" (click)="addProject()">Add</button>
+			<button class="btn">Save</button>
+		</div>
+	</div>
+	<div class="experience">
+		<h3 class="title">Experience</h3>
+		<div class="error" *ngIf="jobError">{{ jobError }}</div>
+		<div *ngFor="let job of experience" class="job">
+			<svg class="close" icon="close" (click)="removeJob(job)"></svg>
+			<div class="company">
+				<label class="control-wrapper">
+					Company
+					<input type="text" class="control" [(ngModel)]="job.companyName">
+				</label>
+			</div>
+			<div class="profession">
+				<label class="control-wrapper">
+					Profession
+					<input type="text" class="control" [(ngModel)]="job.profession">
+				</label>
+			</div>
+			<div class="start">
+				<label class="control-wrapper">
+					Worked from
+					<input type="date" class="control" [(ngModel)]="job.start">
+				</label>
+			</div>
+			<div class="end">
+				<label class="control-wrapper">
+					Worked to
+					<input type="date" class="control" [(ngModel)]="job.end">
+				</label>
+			</div>
+			<div class="logo">
+				Logo
+				<div *ngIf="job.logo" class="uploaded" #uploaded>
+					<img [src]="job.logo.url" alt="logo">
+					<span class="size">{{ uploaded.clientWidth + 'x' + uploaded.clientHeight }}</span>
+				</div>
+				<button class="btn-outline upload" (click)="job_logo_upload.click()">Upload</button>
+				<input type="file" class="hidden" #job_logo_upload (change)="uploadJobLogoHandler($event, job)">
+			</div>
+		</div>
+		<div class="controls">
+			<button class="btn" (click)="addJob()">Add</button>
+			<button class="btn" (click)="changeExperience()">Save</button>
+		</div>
+	</div>
+	<div class="education">
+		<h3 class="title">Education</h3>
+		<div class="error" *ngIf="educationError">{{ educationError }}</div>
+		
+		<div *ngFor="let university of education" class="university">
+			<svg class="close" icon="close" (click)="removeUniversity(university)"></svg>
+			<div class="name">
+				<label class="control-wrapper">
+					University name
+					<input type="text" class="control" [(ngModel)]="university.name">
+				</label>
+			</div>
+			<div class="faculty-and-degree">
+				<label class="control-wrapper">
+					Faculty and degree
+					<input type="text" class="control" [(ngModel)]="university.facultyAndDegree">
+				</label>
+			</div>
+			<div class="start">
+				<label class="control-wrapper">
+					Studied from
+					<input type="date" class="control" [(ngModel)]="university.start">
+				</label>
+			</div>
+			<div class="end">
+				<label class="control-wrapper">
+					Studied to
+					<input type="date" class="control" [(ngModel)]="university.end">
+				</label>
+			</div>
+			<div class="comment">
+				<label class="control-wrapper">
+					Comment
+					<textarea rows="3" class="control-textarea" [(ngModel)]="university.comment"></textarea>
+				</label>
+			</div>
+			<div class="logo">
+				Logo
+				<div *ngIf="university.logo" class="uploaded" #uploaded>
+					<img [src]="university.logo.url" alt="logo">
+					<span class="size">{{ uploaded.clientWidth + 'x' + uploaded.clientHeight }}</span>
+				</div>
+				<button class="btn-outline upload" (click)="university_logo_upload.click()">Upload</button>
+				<input type="file" class="hidden" #university_logo_upload (change)="uploadUniversityLogoHandler($event, university)">
+			</div>
+		</div>
+		
+		<div class="controls">
+			<button class="btn" (click)="addUniversity()">Add</button>
+			<button class="btn" (click)="changeEducation()">Save</button>
+		</div>
+	</div>
+</div>

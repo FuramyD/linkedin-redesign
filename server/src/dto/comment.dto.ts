@@ -1,10 +1,7 @@
+import { ICreator } from '../interfaces/post/creator'
+
 export interface CommentDto {
-    creator: {
-        id: number
-        fullName: string
-        profession: string
-        avatar: string | ArrayBuffer | null
-    }
+    creator: ICreator
     content: string
     dateOfLastModify?: number
     dateOfCreation: number

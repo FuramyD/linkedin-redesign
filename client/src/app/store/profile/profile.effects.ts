@@ -24,6 +24,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
 import { IUser } from '../../interfaces/user'
 import { EMPTY, Observable, of } from 'rxjs'
+import { Router } from '@angular/router'
 
 @Injectable()
 export class ProfileEffects {
@@ -31,6 +32,7 @@ export class ProfileEffects {
         private actions$: Actions,
         private profileService: ProfileService,
         private http: HttpClient,
+        private router: Router,
     ) {}
 
     @Effect()
@@ -47,7 +49,10 @@ export class ProfileEffects {
                                     profile: res.user,
                                 })
                             }),
-                            catchError(() => EMPTY),
+                            catchError(() => {
+                                this.router.navigate(['/profile/not-found'])
+                                return EMPTY
+                            }),
                         )
                 }
                 return EMPTY

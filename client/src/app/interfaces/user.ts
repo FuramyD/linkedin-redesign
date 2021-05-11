@@ -1,3 +1,9 @@
+import { IFile } from './file'
+import { IContact } from './contact'
+import { IProject } from './project'
+import { IExp } from './exp'
+import { IUniversity } from './university'
+
 export interface IUser {
     id: number
 
@@ -9,7 +15,9 @@ export interface IUser {
 
     info: {
         isOnline: boolean
+        role: string
         description: string
+        about: string
         views: {
             current: number
             prev: number
@@ -24,13 +32,19 @@ export interface IUser {
         posts: {
             postId: number
         }[]
-        avatar: string | ArrayBuffer | null
-        profileHeaderBg: string | ArrayBuffer | null
+        avatar: IFile | null
+        profileHeaderBg: IFile | null
         dateOfBirth: number
+        gender: string
         profession: string
         locality: {
             country: string
             city: string
         }
+        contactInfo: IContact[]
+        projects: IProject[]
+        experience: IExp[]
+        education: IUniversity[]
+        dateOfLastPasswordUpdate: number
     }
 }

@@ -17,4 +17,3 @@ export class NetworkComponent implements OnInit {
 
     ngOnInit(): void {}
 }
-

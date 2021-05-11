@@ -15,7 +15,7 @@ import {
     profileSentConnectionsSelector,
 } from '../../../store/profile/profile.selectors'
 import { IUser } from '../../../interfaces/user'
-import { filter, map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
 import {
     myProfileReceivedConnectionsSelector,
@@ -30,6 +30,7 @@ import {
     ProfileRemoveConnectionAction,
     ProfileSendConnectionAction,
 } from '../../../store/profile/profile.actions'
+import { ProfileService } from '../../../services/profile.service'
 
 @Component({
     selector: 'app-profile-main',
@@ -37,16 +38,19 @@ import {
     styleUrls: ['./profile-main.component.less', '../profile.component.less'],
 })
 export class ProfileMainComponent implements OnInit {
-    constructor(private store$: Store<ProfileState | MyProfileState>) {}
+    constructor(
+        private store$: Store<ProfileState | MyProfileState>,
+        private profileService: ProfileService,
+    ) {}
 
     @Input() isMyProfile: boolean = false
 
     currentTab = 'profile'
 
-    headerBg$: Observable<string | ArrayBuffer | null> = this.store$.pipe(
+    headerBg$: Observable<string> = this.store$.pipe(
         select(profileHeaderBgSelector),
     )
-    avatar$: Observable<string | ArrayBuffer | null> = this.store$.pipe(
+    avatar$: Observable<string> = this.store$.pipe(
         select(profileAvatarSelector),
     )
     fullName$: Observable<string> = this.store$.pipe(
@@ -58,8 +62,13 @@ export class ProfileMainComponent implements OnInit {
     profession$: Observable<string> = this.store$.pipe(
         select(profileProfessionSelector),
     )
-    connections$: Observable<{ userId: number }[]> = this.store$.pipe(
+    connections$: Observable<
+        { user: IUser; date: number }[]
+    > = this.store$.pipe(
         select(profileConnectionsSelector),
+        switchMap(connections => {
+            return this.profileService.getConnectionsById$(connections)
+        }),
     )
     connectionsLength$: Observable<number> = this.connections$.pipe(
         map(connections => connections.length),
@@ -74,6 +83,8 @@ export class ProfileMainComponent implements OnInit {
 
     myProfile = { id: 0 }
     profile = { id: 0 }
+
+    connectionsListModal: HystModal
 
     sendConnection(message: string): void {
         this.store$.dispatch(
@@ -126,6 +137,10 @@ export class ProfileMainComponent implements OnInit {
 
     ngOnInit(): void {
         const sendConnectionModal = new HystModal({
+            linkAttributeName: 'data-hystmodal',
+        })
+
+        const connectionsListModal = new HystModal({
             linkAttributeName: 'data-hystmodal',
         })
 

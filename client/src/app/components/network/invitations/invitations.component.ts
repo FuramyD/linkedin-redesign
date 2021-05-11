@@ -16,7 +16,7 @@ import {
     MyProfileCancelConnectionAction,
     MyProfileDeclineConnectionAction,
 } from '../../../store/my-profile/my-profile.actions'
-import {ChatService} from "../../../services/chat.service";
+import { ChatService } from '../../../services/chat.service'
 
 @Component({
     selector: 'app-invitations',
@@ -27,7 +27,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
     constructor(
         private store$: Store<MyProfileState | ProfileState>,
         private profileService: ProfileService,
-        private chatService: ChatService
+        private chatService: ChatService,
     ) {}
 
     private subs: Subscription[] = []
@@ -39,7 +39,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
 
     @Input() myConnections$: Observable<
         { user: IUser; date: number }[]
-        > = new Observable()
+    > = new Observable()
 
     currentTab: string = 'received'
 
@@ -93,8 +93,6 @@ export class InvitationsComponent implements OnInit, OnDestroy {
             else return of([])
         }),
     )
-
-
 
     newConnections: { user: IUser; message: string }[] = []
     sentConnections: { user: IUser; message: string }[] = []
@@ -189,13 +187,14 @@ export class InvitationsComponent implements OnInit, OnDestroy {
             }
         })
 
-        this.sub = this.myConnections$.pipe(
-            map(connections => {
-                console.log('map connections', connections)
-                return connections.reverse()
-            }),
-            filter((val, index) => index < 4),
-        )
+        this.sub = this.myConnections$
+            .pipe(
+                map(connections => {
+                    console.log('map connections', connections)
+                    return connections.reverse()
+                }),
+                filter((val, index) => index < 4),
+            )
             .subscribe(connections => {
                 this.recentConnections = connections
                 console.log('recent connections', connections)

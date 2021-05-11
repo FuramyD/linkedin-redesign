@@ -50,7 +50,19 @@ export const myProfilePrevViewsSelector = createSelector(
 
 export const myProfileAvatarSelector = createSelector(
     myProfileFeatureSelector,
-    state => state.info.avatar || '../../../assets/img/avatar-man.png',
+    state => {
+        return state.info.avatar?.url ?? '../../../assets/img/avatar-man.png'
+    },
+)
+
+export const myProfileProfessionSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.profession,
+)
+
+export const myProfileRoleSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.role,
 )
 
 export const myProfileDescriptionSelector = createSelector(
@@ -58,9 +70,29 @@ export const myProfileDescriptionSelector = createSelector(
     state => state.info.description,
 )
 
+export const myProfileAboutSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.about,
+)
+
 export const myProfileDOBSelector = createSelector(
     myProfileFeatureSelector,
     state => state.info.dateOfBirth,
+)
+
+export const myProfileLocalitySelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.locality,
+)
+
+export const myProfileGenderSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.gender,
+)
+
+export const myProfileDateOfLastPasswordUpdateSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.dateOfLastPasswordUpdate,
 )
 
 export const myProfileSentConnectionsSelector = createSelector(
@@ -76,4 +108,24 @@ export const myProfileReceivedConnectionsSelector = createSelector(
 export const myProfileConnectionsSelector = createSelector(
     myProfileFeatureSelector,
     state => state.info.connections,
+)
+
+export const myProfileContactInfoSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.contactInfo,
+)
+
+export const myProfileProjectsSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.projects,
+)
+
+export const myProfileExperienceSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.experience,
+)
+
+export const myProfileEducationSelector = createSelector(
+    myProfileFeatureSelector,
+    state => state.info.education,
 )

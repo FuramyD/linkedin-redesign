@@ -1,6 +1,6 @@
 export interface ICreator {
     id: number
     fullName: string
-    avatar: string | ArrayBuffer | null
+    avatar: string | number[] | null
     profession: string
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 
-import { IAttach } from '../../../../server/src/interfaces/post/attach'
-import { IAttached } from '../../../../server/src/interfaces/post/attached'
+import { IAttach } from '../interfaces/post/attach'
+import { IAttached } from '../interfaces/post/attached'
 
 @Injectable({
     providedIn: 'root',

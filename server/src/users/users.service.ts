@@ -6,6 +6,10 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { UserDocument } from './user.shema'
 import { ChatDocument } from '../chats/chat.shema'
+import { IPersonalInfo } from '../interfaces/edit-profile/personalInfo'
+import { Express } from 'express'
+
+const URL = 'http://localhost:3000'
 
 @Injectable()
 export class UsersService {
@@ -67,7 +71,9 @@ export class UsersService {
     async findUserById(id: number): Promise<UserDocument | null> {
         console.log('ID =>>', id)
         const user = await this.userModel.findOne({ id: id })
+
         if (user) return user
+
         return null
     }
 
@@ -81,10 +87,36 @@ export class UsersService {
         return null
     }
 
-    async removeUser(id: number): Promise<boolean | null> {
-        const user = await this.userModel.deleteOne({ id })
-        if (user) return true
+    async validateUserBySomething(id: number, fieldName: string, value: string): Promise<UserDocument | null> {
+        const user = await this.userModel.findOne({ id, [fieldName]: value })
+
+        if (user) {
+            console.log(user)
+            return user
+        }
+
         return null
+    }
+    async removeUser(id: number, password: string): Promise<boolean | null> {
+        const user = await this.userModel.findOne({ id })
+        if (user.password === password) {
+            const deleted = await this.userModel.deleteOne({ id })
+            const users = await this.userModel.find().exec()
+            const identifiers = []
+            users.forEach(user => {
+                identifiers.push(user.id)
+            })
+
+            for (let i = 0; i < identifiers.length; i++) {
+                let user = await this.userModel.findOne({ id: identifiers[i] })
+                user.info.connections = user.info.connections.filter(user => user.userId !== id)
+                await user.save()
+            }
+
+            if (deleted) return true
+            return null
+        }
+        return false
     }
 
     async sendConnection(senderId: number, userId: number, message: string): Promise<{ sent: boolean }> {
@@ -233,5 +265,77 @@ export class UsersService {
         const user = await this.userModel.findOne({ id })
         user.info.connections = []
         await user.save()
+    }
+
+    async editPersonalInfo(id: number, info: IPersonalInfo): Promise<string> {
+        const user = await this.userModel.findOne({ id })
+        if (!user) return 'not found'
+        user.firstName = info.firstName
+        user.lastName = info.lastName
+        user.info.dateOfBirth = info.dateOfBirth
+        user.info.gender = info.gender
+
+        await user.save()
+        return 'changed'
+    }
+
+    async uploadAvatar(file: Express.Multer.File, userId: number): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        console.log(file)
+
+        user.info.avatar = {
+            fileName: file.originalname,
+            encoding: file.encoding,
+            mimetype: file.mimetype,
+            url: `${URL}/uploads/${file.filename}`,
+            size: file.size,
+        }
+        await user.save()
+
+        return true
+    }
+
+    async deleteAvatar(userId: number): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.avatar = null
+        await user.save()
+
+        return true
+    }
+
+    async changeEmail(userId: number, email: string): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (user) {
+            user.email = email
+            await user.save()
+            return true
+        }
+        return false
+    }
+
+    async changePhone(userId: number, phone: string): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (user) {
+            user.phone = phone
+            await user.save()
+            return true
+        }
+        return false
+    }
+
+    async changePassword(userId: number, newPassword: string, oldPassword: string): Promise<boolean | null> {
+        const user = await this.userModel.findOne({ id: userId, password: oldPassword })
+        if (user) {
+            if (newPassword === oldPassword) return false
+
+            user.password = newPassword
+            await user.save()
+            return true
+        }
+        return null
     }
 }

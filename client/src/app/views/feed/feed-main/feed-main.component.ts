@@ -38,7 +38,7 @@ export class FeedMainComponent implements OnInit {
                 fullName: `${profile.firstName} ${profile.lastName}`,
                 profession: profile.info.profession,
                 avatar:
-                    profile.info.avatar ??
+                    profile.info.avatar?.url ??
                     '../../../../assets/img/avatar-man.png',
             }
         }),

@@ -27,9 +27,8 @@ import {
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators'
 import { PostsService } from '../../services/posts.service'
 import { Observable, of } from 'rxjs'
-import { PostDto } from '../../../../../server/src/dto/post.dto'
-import { IPost } from '../../../../../server/src/interfaces/post/post'
-import { CommentDto } from '../../../../../server/src/dto/comment.dto'
+import { PostDto } from '../../dto/post.dto'
+import { CommentDto } from '../../dto/comment.dto'
 
 @Injectable()
 export class PostEffects {

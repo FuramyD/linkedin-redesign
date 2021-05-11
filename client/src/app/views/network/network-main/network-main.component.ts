@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
 import { Observable, of, Subscription } from 'rxjs'
@@ -16,6 +16,7 @@ import {
     MyProfileCancelConnectionAction,
     MyProfileDeclineConnectionAction,
     MyProfileGetInfoAction,
+    MyProfileRemoveConnectionAction,
 } from '../../../store/my-profile/my-profile.actions'
 import { filter, map, switchMap } from 'rxjs/operators'
 
@@ -35,17 +36,29 @@ export class NetworkMainComponent implements OnInit, OnDestroy {
         this.subs.push(s)
     }
 
-    myConnections: { user: IUser, date: number }[] = []
+    myConnections: { user: IUser; date: number }[] = []
     myProfileId: number = -1
 
     @Input() activeTab: string = ''
-    // ОБЯЗАТЕЛЬНО ВЫНЕСТИ ЭТО В КАКОЙ НИБУДЬ СЕРВИС И ПОХОЖИЕ МАХИНАЦИИ
-    myConnections$: Observable<{ user: IUser, date: number }[]> = this.store$.pipe(
+
+    myConnections$: Observable<
+        { user: IUser; date: number }[]
+    > = this.store$.pipe(
         select(myProfileConnectionsSelector),
         switchMap(connections => {
             return this.profileService.getConnectionsById$(connections)
-        })
+        }),
     )
+
+    removeConnection(data: { action: string; userId: number }): void {
+        console.log(data)
+        this.store$.dispatch(
+            new MyProfileRemoveConnectionAction({
+                senderId: this.myProfileId,
+                userId: data.userId,
+            }),
+        )
+    }
 
     ngOnInit(): void {
         this.sub = this.store$
@@ -62,7 +75,9 @@ export class NetworkMainComponent implements OnInit, OnDestroy {
             new MyProfileGetInfoAction({ id: this.myProfileId }),
         ) // get info
 
-        this.sub = this.myConnections$.subscribe(connections => this.myConnections = connections)
+        this.sub = this.myConnections$.subscribe(
+            connections => (this.myConnections = connections),
+        )
     }
 
     ngOnDestroy(): void {

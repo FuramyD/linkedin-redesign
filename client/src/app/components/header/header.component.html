@@ -14,16 +14,12 @@
 				{{ route.name }}
 			</a>
 		</nav>
-		<div class="search">
-			<img alt="search" src="../../assets/img/search.png"/>
-			<input id="search" placeholder="Search" type="search"/>
-		</div>
 	</div>
 	<div class="right-side">
 		<a class="profile-link" routerLink="/profile">
 			<div class="profile">
 				<div class="photo">
-					<img [src]="avatar$ | async" alt="avatar" id="avatar"/>
+					<img [src]="(avatar$ | async)" alt="avatar" id="avatar"/>
 				</div>
 				<div class="info">
 					<p class="name">

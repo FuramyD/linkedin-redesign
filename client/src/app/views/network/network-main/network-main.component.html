@@ -4,8 +4,11 @@
 			[myProfileId]="myProfileId"
 			[myConnections$]="myConnections$"
 	></app-invitations>
+	<h2 *ngIf="activeTab === 'connections'" class="title">Connections</h2>
 	<app-users-list
 			*ngIf="activeTab === 'connections'"
-			[connections]="[myConnections[0], myConnections[0], myConnections[0], myConnections[0], myConnections[0], myConnections[0]]"
+			[connections]="myConnections"
+			[isMyProfile]="true"
+			(action)="removeConnection($event)"
 	></app-users-list>
 </div>

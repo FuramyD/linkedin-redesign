@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { IPost } from '../../../../server/src/interfaces/post/post'
+import { IPost } from '../interfaces/post/post'
 import { environment } from '../../environments/environment'
-import { PostDto } from '../../../../server/src/dto/post.dto'
-import { CommentDto } from '../../../../server/src/dto/comment.dto'
-import { IComment } from '../../../../server/src/interfaces/post/comment'
+import { PostDto } from '../dto/post.dto'
+import { CommentDto } from '../dto/comment.dto'
+import { IComment } from '../interfaces/post/comment'
 
 @Injectable({
     providedIn: 'root',

@@ -1,0 +1,224 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/text-mixins';
+
+.additional-info-edit {
+    & > div {
+        margin-bottom: 40px;
+        width: 80%;
+        .title {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+    }
+
+    input,
+    textarea {
+        font-family: @ff;
+    }
+
+    .control {
+        display: block;
+
+        width: 60%;
+        height: 40px;
+
+        padding: 10px;
+
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+
+        font-size: 16px;
+
+        transition: border-color 0.5s;
+
+        &:hover,
+        &:focus {
+            border: 1px solid lighten(@active, 10%);
+        }
+    }
+
+    .control-textarea {
+        width: 100%;
+        display: block;
+
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+
+        transition: border-color 0.5s;
+
+        &:focus,
+        &:hover {
+            border-color: lighten(@active, 10%);
+        }
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .control-wrapper {
+        display: block;
+        font-size: 14px;
+        color: @light;
+
+        margin-bottom: 20px;
+    }
+
+    .upload {
+        display: block;
+    }
+
+    .uploaded {
+        position: relative;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+        }
+
+        .size {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+
+            padding: 0 5px;
+
+            background-color: rgba(#000, 0.3);
+            color: white;
+            font-size: 12px;
+            text-align: center;
+        }
+    }
+
+    .role {
+        &__select {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .select {
+                width: 250px;
+            }
+
+            .btn {
+                height: 40px;
+                margin: 0;
+            }
+        }
+    }
+
+    .about {
+        &__textarea {
+            width: 100%;
+        }
+    }
+
+    .profession {
+    }
+
+    .contact-info {
+        .help {
+            font-size: 14px;
+            color: @light;
+        }
+
+        .control-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 15px 0;
+            margin: 10px 0 0;
+
+            .control {
+                margin-right: 10px;
+            }
+
+            .remove {
+                width: 18px;
+                height: 18px;
+
+                fill: #aaa;
+            }
+
+            & + .control-wrapper {
+                border-top: 1px solid lighten(@light, 25%);
+                margin-top: 0;
+            }
+        }
+    }
+
+    .projects {
+        .project {
+
+            .poster-upload {
+                font-size: 18px;
+                font-weight: 400;
+
+                .uploaded {
+                    margin-top: 20px;
+
+                    max-width: 250px;
+                    max-height: 160px;
+                }
+            }
+        }
+    }
+
+    .experience {
+        .uploaded {
+            max-width: 150px;
+            max-height: 150px;
+        }
+    }
+
+    .education {
+        .uploaded {
+            max-width: 150px;
+            max-height: 150px;
+        }
+    }
+
+    .project, .job, .university {
+        position: relative;
+        padding-bottom: 20px;
+        margin-top: 20px;
+
+        .close {
+            width: 16px;
+            height: 16px;
+
+            fill: @light;
+
+            position: absolute;
+            right: 0;
+            top: 10px;
+
+            cursor: pointer;
+        }
+
+        &:not(:nth-last-child(2)) {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #aaa;
+        }
+
+        .title, .error {
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
+    }
+
+    .projects, .experience, .education, .contact-info {
+        .error {
+            padding: 10px 20px;
+            margin-bottom: 10px;
+
+            background-color: rgba(@danger, .3);
+            border: 2px solid @danger;
+            border-radius: 8px;
+            color: darken(@danger, 10%);
+        }
+    }
+}

@@ -4,7 +4,7 @@
             <img [src]="headerBg$ | async" alt="bg" />
         </div>
         <div class="profile__header--info">
-            <div class="avatar">
+            <div class="avatar-box" [style]="'background: url(' + (avatar$ | async) + ')'">
                 <img [src]="avatar$ | async" alt="avatar" />
             </div>
             <div class="information">
@@ -27,7 +27,7 @@
                         {{ description$ | async }}
                     </p>
                     <button class="btn">Contact Info</button>
-                    <button *ngIf="isMyProfile" class="btn">
+                    <button routerLink="/profile/edit" *ngIf="isMyProfile" class="btn">
                         <i class="fas fa-user-edit"></i>
                         Edit profile
                     </button>
@@ -41,7 +41,7 @@
                         Accept connection
                     </button>
                     <button *ngIf="!isMyProfile && isConnection" class="btn-outline" (click)="removeConnection()">Remove connection</button>
-                    <button class="btn-outline">{{ connectionsLength$ | async }} Connections</button>
+                    <button class="btn-outline" data-hystmodal="#connectionsListModal">{{ connectionsLength$ | async }} Connections</button>
                     
                 </div>
             </div>
@@ -287,11 +287,11 @@
     </div>
 </div>
 
-
+<!-- Modal send connection -->
 <div class="hystmodal" id="sendConnectionModal" aria-hidden="true">
     <div class="hystmodal__wrap">
         <div class="hystmodal__window" role="dialog" aria-modal="true">
-            <button data-hystclose class="hystmodal__close">Закрыть</button>
+            <button data-hystclose class="hystmodal__close">Close</button>
             <div class="hystmodal__header">
                 <h2 class="hystmodal__title">Send connection</h2>
             </div>
@@ -313,6 +313,21 @@
                     <button (click)="textarea.value = ''" data-hystclose class="btn-outline decline">Decline</button>
                     <button (click)="sendConnection(textarea.value)" data-hystclose class="btn send">Send connection</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal connections -->
+<div class="hystmodal" id="connectionsListModal" aria-hidden="true">
+    <div class="hystmodal__wrap">
+        <div class="hystmodal__window" role="dialog" aria-modal="true">
+            <button data-hystclose class="hystmodal__close">Close</button>
+            <div class="hystmodal__header">
+                <h2 class="hystmodal__title">List of connections</h2>
+            </div>
+            <div class="hystmodal__body">
+                <app-users-list [connections]="(connections$ | async) || []" [isMyProfile]="isMyProfile"></app-users-list>
             </div>
         </div>
     </div>

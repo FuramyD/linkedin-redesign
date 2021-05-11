@@ -15,8 +15,8 @@ import {
     POST_LIKE_SUCCESS_ACTION_TYPE,
     PostActions,
 } from './post.actions'
-import { IPost } from '../../../../../server/src/interfaces/post/post'
-import { IComment } from '../../../../../server/src/interfaces/post/comment'
+import { IPost } from '../../interfaces/post/post'
+import { IComment } from '../../interfaces/post/comment'
 
 export const postNode = 'post'
 

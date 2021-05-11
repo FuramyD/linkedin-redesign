@@ -1,15 +1,11 @@
-import { IComment } from './comment'
 import { IAttached } from './attached'
+import { ICreator } from './creator'
+import { IComment } from './comment'
 
 export interface IPost {
     id: number
 
-    creator: {
-        id: number
-        fullName: string
-        profession: string
-        avatar: string | ArrayBuffer | null
-    }
+    creator: ICreator
     content: string
     dateOfLastModify?: number
     dateOfCreation: number

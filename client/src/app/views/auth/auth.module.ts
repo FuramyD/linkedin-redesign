@@ -6,15 +6,9 @@ import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms'
 import { SvgIconModule } from '../../svg-icon/svg-icon.module'
 import { RouterModule } from '@angular/router'
-import { AppModule } from '../../app.module'
-import { SelectComponent } from '../../components/select/select.component'
 
 @NgModule({
-    declarations: [
-        AuthorizationComponent,
-        RegistrationComponent,
-        SelectComponent,
-    ],
+    declarations: [AuthorizationComponent, RegistrationComponent],
     imports: [
         CommonModule,
         HttpClientModule,

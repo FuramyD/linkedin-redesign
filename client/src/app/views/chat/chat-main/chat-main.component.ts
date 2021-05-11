@@ -52,7 +52,7 @@ export class ChatMainComponent implements OnInit {
     ]
 
     sendMessage(): void {
-        this.chatService.sendMessage(this.messageContent)
+        this.chatService.test(this.messageContent)
     }
 
     dateParser(now: number, last: number): string {

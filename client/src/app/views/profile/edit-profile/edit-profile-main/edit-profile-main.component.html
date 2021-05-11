@@ -1,0 +1,16 @@
+<app-edit-personal-data *ngIf="currentTab === 'Personal data'" [editStatus]="editPersonalInfoStatus"
+						[firstName]="(firstName$ | async) || ''" [lastName]="(lastName$ | async) || ''"
+						[DOB]="(dateOfBirth$ | async) || 1" [gender]="(gender$ | async) || ''" [avatar]="(avatar$ | async) || 'assets/img/avatar-man.png'"
+						(saveChanges)="editPersonalInfo($event)" (changeAvatar)="changeAvatarHandler($event)"
+></app-edit-personal-data>
+<app-edit-login-and-security *ngIf="currentTab === 'Login and security'"
+							 [email]="(email$ | async) || ''" [phone]="(phone$ | async) || ''"
+							 [dateOfLastPasswordUpdate]="(dateOfLastPasswordUpdate$ | async) || null"
+							 [profileId]="profileId"
+></app-edit-login-and-security>
+<app-edit-additional-info *ngIf="currentTab === 'Additional information'"
+						  [role]="(role$ | async) || ''" [about]="(about$ | async) || ''" [profession]="(profession$ | async) || ''"
+						  [locality]="(locality$ | async) || { country: '', city: '' }" [contactInfo]="(contactInfo$ | async) || []"
+						  [projects]="(projects$ | async) || []" [experience]="(experience$ | async) || []"
+						  [education]="(education$ | async) || []" (onChange)="changeAdditionalInfoHandler($event)"
+></app-edit-additional-info>

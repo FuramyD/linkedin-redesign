@@ -1,0 +1,53 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/text-mixins';
+
+.edit-profile-sidebar {
+    .user-select-none();
+    .menu {
+        .tab {
+            font-size: 18px;
+
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+
+            background-color: #fff;
+            cursor: pointer;
+
+            transition: background-color 0.15s;
+
+            svg {
+                width: 24px;
+                height: 24px;
+
+                stroke: lighten(@active, 5%);
+                fill: lighten(@active, 5%);
+                color: lighten(@active, 5%);
+
+                vertical-align: text-top;
+
+                margin-right: 15px;
+            }
+
+            &:hover {
+                background-color: rgba(darken(@active, 10%), 0.1);
+
+                svg {
+                    stroke: @active;
+                    fill: @active;
+                    color: @active;
+                }
+            }
+
+            &.active {
+                background-color: rgba(darken(@active, 5%), 0.2);
+
+                svg {
+                    stroke: @active;
+                    fill: @active;
+                    color: @active;
+                }
+            }
+        }
+    }
+}

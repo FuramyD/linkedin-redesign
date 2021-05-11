@@ -1,12 +1,8 @@
 import { IAttached } from '../interfaces/post/attached'
+import { ICreator } from '../interfaces/post/creator'
 
 export interface PostDto {
-    creator: {
-        id: number
-        fullName: string
-        profession: string
-        avatar: string | ArrayBuffer | null
-    }
+    creator: ICreator
     content: string
     dateOfCreation: number
 

@@ -52,13 +52,14 @@ export const profilePrevViewsSelector = createSelector(
 
 export const profileAvatarSelector = createSelector(
     profileFeatureSelector,
-    state => state.info.avatar || '../../../assets/img/avatar-man.png',
+    state => state.info.avatar?.url ?? '../../../assets/img/avatar-man.png',
 )
 
 export const profileHeaderBgSelector = createSelector(
     profileFeatureSelector,
     state =>
-        state.info.profileHeaderBg || '../../../assets/img/profile-header.png',
+        state.info.profileHeaderBg?.url ??
+        '../../../assets/img/profile-header.png',
 )
 
 export const profileDescriptionSelector = createSelector(

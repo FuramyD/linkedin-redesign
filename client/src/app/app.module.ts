@@ -23,8 +23,7 @@ import { metaReducers, reducers } from './store'
 import { PostEffects } from './store/posts/post.effects'
 import { MyProfileEffects } from './store/my-profile/my-profile.effects'
 import { ProfileEffects } from './store/profile/profile.effects'
-import { InvitationsComponent } from './components/network/invitations/invitations.component'
-import { NetworkModule } from './views/network/network.module'
+import { DirectivesModule } from './directives/directives.module'
 
 const config: SocketIoConfig = { url: environment.server_url, options: {} }
 
@@ -42,6 +41,7 @@ const config: SocketIoConfig = { url: environment.server_url, options: {} }
         SvgIconModule,
         ViewsModule,
         PipesModule,
+        DirectivesModule,
         ReactiveFormsModule,
         StoreModule.forRoot(reducers, {
             metaReducers,

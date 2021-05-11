@@ -1,0 +1,195 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/text-mixins';
+
+.edit-personal-data {
+    &__header {
+        margin-bottom: 40px;
+
+        display: flex;
+        align-items: center;
+
+        .avatar-wrapper {
+            position: relative;
+
+            .avatar-box {
+                width: 68px;
+                height: 68px;
+
+                position: relative;
+                cursor: pointer;
+
+                &:hover {
+                    .shadow {
+                        background-color: rgba(#ddd, 0.1);
+                    }
+                }
+
+                .shadow {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    background-color: rgba(#000, 0.15);
+                }
+
+                svg {
+                    stroke: white;
+                    width: 28px;
+                    height: 28px;
+
+                    position: absolute;
+                    top: calc(50% - 14px);
+                    left: calc(50% - 12px);
+                }
+            }
+
+            .avatar-change {
+                position: absolute;
+                right: -30px;
+                top: 80px;
+
+                width: 150px;
+
+                border-radius: 8px;
+                box-shadow: 2px 2px 7px 1px #aaa;
+
+                background-color: #fff;
+
+                .user-select-none();
+
+                .change,
+                .delete {
+                    padding: 10px;
+                    cursor: pointer;
+
+                    &:hover {
+                        text-shadow: 0 0 2px #ccc;
+                    }
+                }
+
+                .change {
+                    border-bottom: 1px solid #cdcdcd;
+                }
+
+                .delete {
+                    color: @danger;
+                }
+
+                &:before,
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 60px;
+                    top: -20px;
+                    border: 10px solid transparent;
+                    border-bottom: 10px solid #ccc;
+                }
+                &:after {
+                    border-bottom: 10px solid white;
+                    top: -19px;
+                }
+            }
+        }
+
+        .helper {
+            .name {
+                font-weight: 500;
+            }
+
+            .help {
+                color: @light;
+                font-size: 14px;
+            }
+        }
+    }
+    &__body {
+        .edit-status {
+            border: 2px solid;
+            border-radius: 8px;
+            width: calc(80% + 40px);
+            margin: 40px 0;
+            padding: 10px 20px;
+
+            font-size: 18px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &.fail {
+                border-color: @danger;
+                background-color: rgba(@danger, 0.2);
+                color: darken(@danger, 5%);
+
+                .close {
+                    fill: darken(@danger, 10%);
+                }
+            }
+
+            &.success {
+                border-color: @success;
+                background-color: rgba(@success, 0.2);
+                color: darken(@success, 10%);
+
+                .close {
+                    fill: darken(@success, 10%);
+                }
+            }
+
+            .close {
+                width: 9px;
+                height: 9px;
+            }
+        }
+
+        form {
+            width: 100%;
+
+            display: flex;
+            flex-wrap: wrap;
+
+            .input-wrapper {
+                width: 40%;
+                display: flex;
+                flex-direction: column;
+
+                margin-right: 40px;
+
+                label {
+                    margin-bottom: 5px;
+                    color: @light;
+                }
+
+                input {
+                    font-family: @ff;
+                    font-size: 16px;
+
+                    height: 40px;
+
+                    padding: 10px;
+                    margin-bottom: 15px;
+
+                    border: 1px solid #ccc;
+                    border-radius: 8px;
+
+                    transition: border-color 0.5s;
+
+                    &:focus,
+                    &:hover {
+                        border-color: lighten(@active, 10%);
+                        outline: none;
+                    }
+                }
+
+                .error {
+                    border: 1px solid @danger;
+                }
+            }
+
+            .btn {
+                margin-top: 40px;
+            }
+        }
+    }
+}

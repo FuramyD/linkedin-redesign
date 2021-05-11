@@ -6,6 +6,7 @@ import {
     REMOVE_CONNECTION_SUCCESS_ACTION_TYPE,
     SEND_CONNECTION_SUCCESS_ACTION_TYPE,
 } from './profile.actions'
+import { IFile } from '../../interfaces/file'
 
 export const profileNode = 'profile'
 
@@ -31,8 +32,8 @@ export interface ProfileState {
         posts: {
             postId: number
         }[]
-        avatar: string | ArrayBuffer | null
-        profileHeaderBg: string | ArrayBuffer | null
+        avatar: IFile | null
+        profileHeaderBg: IFile | null
         dateOfBirth: number
         profession: string
         locality: {
@@ -61,8 +62,8 @@ const initialState: ProfileState = {
         sentConnections: [],
         receivedConnections: [],
         posts: [],
-        avatar: '',
-        profileHeaderBg: '',
+        avatar: null,
+        profileHeaderBg: null,
         dateOfBirth: 0,
         profession: '',
         locality: {

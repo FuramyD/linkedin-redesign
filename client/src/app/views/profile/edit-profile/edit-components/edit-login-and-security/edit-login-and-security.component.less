@@ -1,0 +1,357 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/text-mixins';
+
+.edit-login-and-security {
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+        padding: 10px 20px;
+        // border: 1px dashed #ccc;
+        margin-bottom: 40px;
+
+        & > .title {
+            font-weight: 500;
+            font-size: 18px;
+            margin-bottom: 20px;
+
+            svg {
+                margin-left: 5px;
+            }
+        }
+    }
+
+    .login-data {
+        .phone,
+        .email,
+        .password {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 5px;
+            margin-bottom: 5px;
+
+            cursor: pointer;
+
+            &:hover {
+                background-color: #eee;
+            }
+
+            .title {
+                .icon {
+                    vertical-align: text-top;
+                    color: @active;
+
+                    margin-right: 10px;
+                }
+            }
+
+            .value,
+            .date-of-last-update {
+                color: #ababab;
+            }
+        }
+    }
+
+    .increased-security {
+        & > .title {
+            margin-bottom: 5px;
+        }
+
+        .help {
+            font-size: 14px;
+            color: @light;
+            margin-bottom: 20px;
+        }
+
+        .confirm-email,
+        .confirm-phone {
+            padding: 10px;
+            font-size: 18px;
+
+            svg {
+                margin-right: 10px;
+                width: 28px;
+                height: 28px;
+            }
+
+            .confirmed-icon {
+                margin-left: 10px;
+            }
+
+            .title {
+                padding: 10px;
+
+                &:not(.confirmed) {
+                    cursor: pointer;
+                    border-radius: 8px;
+
+                    &:hover {
+                        background-color: rgba(@active, 0.1);
+                    }
+                }
+            }
+        }
+    }
+
+    .delete-profile {
+        .title {
+            margin-bottom: 5px;
+        }
+
+        .help {
+            color: @light;
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        .delete-account-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 150px;
+            height: 70px;
+
+            font-family: @ff;
+            font-size: 22px;
+            font-weight: 500;
+            color: @active;
+
+            border-radius: 12px;
+            border: 3px solid @active;
+            outline: none;
+
+            cursor: pointer;
+
+            transition: all 0.15s;
+
+            svg {
+                width: 32px;
+                height: 32px;
+
+                margin-right: 10px;
+            }
+
+            &:hover {
+                color: white;
+                background-color: @active;
+            }
+        }
+    }
+
+    .title {
+        svg {
+            height: 24px;
+            width: 24px;
+
+            vertical-align: text-top;
+            color: @active;
+            fill: @active;
+        }
+    }
+}
+
+.changeEmail,
+.changePhone,
+.changePassword {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+
+    .back {
+        width: 28px;
+        height: 28px;
+
+        color: @active;
+        border-radius: 50%;
+
+        background-color: #fff;
+        transition: background-color 0.2s;
+
+        cursor: pointer;
+
+        &:active {
+            background-color: #ddd;
+        }
+    }
+
+    .error {
+        width: 80%;
+        padding: 10px 20px;
+        margin: 40px auto 10px;
+
+        border: 2px solid @danger;
+        border-radius: 8px;
+        background-color: rgba(@danger, 0.2);
+        color: darken(@danger, 5%);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .close {
+            width: 9px;
+            height: 9px;
+
+            fill: darken(@danger, 10%);
+        }
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 40px;
+    }
+}
+
+.changeEmail,
+.changePhone {
+    .help {
+        font-size: 14px;
+        color: @light;
+        text-align: center;
+
+        margin-bottom: 30px;
+    }
+
+    .control {
+        margin: 0 auto 20px;
+        width: 80%;
+        height: 40px;
+
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+
+        font-family: @ff;
+        font-size: 16px;
+
+        transition: border-color 0.2s;
+
+        &:focus,
+        &:hover {
+            border-color: lighten(@active, 10%);
+        }
+    }
+
+    .btn {
+        margin: 0 auto;
+    }
+}
+
+.changePassword {
+    .title {
+        margin-bottom: 30px;
+    }
+
+    .changePasswordForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        input {
+            font-family: @ff;
+        }
+    }
+}
+
+.password-wrapper {
+    width: 80%;
+    margin-bottom: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    label {
+        color: @light;
+        font-size: 14px;
+        margin-bottom: 4px;
+
+        .user-select-none();
+    }
+
+    input {
+        height: 40px;
+
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+
+        padding: 10px;
+
+        transition: border-color 0.2s;
+
+        font-size: 16px;
+
+        &:focus,
+        &:hover {
+            border-color: lighten(@active, 10%);
+        }
+    }
+
+    .eye-icon {
+        position: absolute;
+        right: 12px;
+        top: 30px;
+
+        width: 32px;
+        height: 32px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        border-radius: 50%;
+        transition: background-color 0.2s;
+
+        svg {
+            width: 24px;
+            height: 24px;
+
+            color: @light;
+        }
+
+        &:active {
+            background-color: #ddd;
+        }
+    }
+}
+
+.hystmodal__window {
+    border-radius: 15px;
+}
+
+.delete-account-confirmation {
+    padding: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    svg {
+        color: @active;
+    }
+
+    .help {
+        width: 60%;
+        text-align: center;
+        color: @light;
+
+        margin: 20px 0;
+    }
+
+    input {
+        font-family: @ff;
+        font-weight: 500;
+    }
+}

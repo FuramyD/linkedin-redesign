@@ -1,3 +1,3 @@
 export interface ILike {
-    userId
+    userId: number
 }

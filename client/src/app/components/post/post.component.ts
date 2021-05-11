@@ -52,7 +52,7 @@ export class PostComponent implements OnInit {
         id: 0,
         fullName: '',
         profession: '',
-        avatar: '',
+        avatar: null,
     }
 
     likes: ILike[] = this.postInfo.likes
@@ -122,7 +122,7 @@ export class PostComponent implements OnInit {
                         fullName: `${profile.firstName} ${profile.lastName}`,
                         profession: profile.info.profession,
                         avatar:
-                            profile.info.avatar ||
+                            profile.info.avatar?.url ??
                             '../../../../assets/img/avatar-man.png',
                     }
                 }),

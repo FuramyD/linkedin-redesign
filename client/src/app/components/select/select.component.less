@@ -1,0 +1,133 @@
+@import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins/text-mixins';
+
+.select {
+    width: 100%;
+    height: auto;
+
+    position: relative;
+    border-radius: 8px;
+
+    background-color: #fff;
+    cursor: pointer;
+    z-index: 10;
+    .user-select-none();
+
+    .selected {
+        height: 40px;
+        line-height: 22px;
+        font-size: 16px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 9px;
+
+        border: 1px solid #ccc;
+        border-radius: 8px;
+
+        transition: border-color 0.5s;
+
+        svg {
+            width: 24px;
+            height: 24px;
+            stroke: @light;
+        }
+    }
+
+    .options {
+        width: 100%;
+
+        position: absolute;
+        display: none;
+
+        transition: border-color 0.5s;
+
+        border: 1px solid #ccc;
+        border-top: none;
+
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+
+        background-color: #fff;
+
+        .option {
+            height: 40px;
+            padding: 8px 10px;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid lighten(@active, 10%);
+            }
+
+            &:hover {
+                background-color: rgba(@active, 0.2);
+            }
+
+            &.disabled {
+                color: @light;
+                cursor: auto;
+
+                &:hover {
+                    background-color: white;
+                }
+            }
+        }
+    }
+
+    &.show {
+        .selected {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .options {
+            display: block;
+            top: 40px;
+        }
+    }
+
+    &.show,
+    &:hover {
+        .selected,
+        .options {
+            border-color: lighten(@active, 10%);
+        }
+        .selected {
+            svg {
+                stroke: @active;
+            }
+        }
+    }
+
+    &.error {
+        .selected {
+            border-color: @danger;
+
+            &:hover {
+                border-color: @danger;
+            }
+        }
+
+        .options {
+            border-color: @danger;
+
+            &:hover {
+                border-color: @danger;
+            }
+
+            .option {
+                border-color: @danger;
+            }
+        }
+    }
+}
+
+.select-bg {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 5;
+}

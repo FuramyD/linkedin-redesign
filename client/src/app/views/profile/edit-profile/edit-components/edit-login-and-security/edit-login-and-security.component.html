@@ -1,0 +1,158 @@
+<div class="edit-login-and-security" *ngIf="!isChangePassword && !isChangePhone && !isChangeEmail">
+	<div class="login-data">
+		<h3 class="title">
+			Data change
+			<svg icon="security"></svg>
+		</h3>
+		<div class="phone" (click)="changePhoneMode()">
+			<div class="title">
+				<svg icon="phone" class="icon"></svg>
+				Phone
+			</div>
+			<div class="value">{{ phone | maskedPhone }}</div>
+		</div>
+		<div class="email" (click)="changeEmailMode()">
+			<div class="title">
+				<svg icon="email" class="icon"></svg>
+				Email
+			</div>
+			<div class="value">{{ email | maskedEmail }}</div>
+		</div>
+		<div class="password" (click)="changePasswordMode()">
+			<div class="title">
+				<svg icon="key" class="icon"></svg>
+				Password
+			</div>
+			<div *ngIf="dateOfLastPasswordUpdate || dateOfLastPasswordUpdate === 0" class="date-of-last-update">updated {{ dateOfLastPasswordUpdate | date: 'dd.MM.yyyy' }}</div>
+			<div *ngIf="!dateOfLastPasswordUpdate && dateOfLastPasswordUpdate !== 0" class="date-of-last-update">password never updated</div>
+		</div>
+	</div>
+	<div class="increased-security">
+		<h3 class="title">
+			Increased security
+			<svg icon="confirm"></svg>
+		</h3>
+		<p class="help">Increase  the security of your account by verifying your email and phone</p>
+		
+		<div class="confirm-email">
+			<div *ngIf="!emailConfirmed" class="title">
+				<svg icon="email"></svg>
+				Confirm email
+			</div>
+			<div *ngIf="emailConfirmed" class="title confirmed">
+				<svg icon="email"></svg>
+				Email confirmed
+				<svg icon="confirmed" class="confirmed-icon"></svg>
+			</div>
+		</div>
+		<div class="confirm-phone">
+			<div *ngIf="!phoneConfirmed" class="title">
+				<svg icon="phone"></svg>
+				Confirm phone
+			</div>
+			<div *ngIf="phoneConfirmed" class="title confirmed">
+				<svg icon="phone"></svg>
+				Phone confirmed
+				<svg icon="confirmed" class="confirmed-icon"></svg>
+			</div>
+		</div>
+	</div>
+	<div class="delete-profile">
+		<h3 class="title">
+			Delete account
+			<svg icon="trash"></svg>
+		</h3>
+		<p class="help">
+			You can delete your profile with all data and cannot be restored
+		</p>
+		<button data-hystmodal="#delete-account-confirmation-modal" class="delete-account-btn">
+			<svg icon="trash"></svg>
+			Delete
+		</button>
+	</div>
+</div>
+
+<div class="changeEmail" *ngIf="isChangeEmail">
+	<svg (click)="closeChangeBlock()" class="back" icon="back"></svg>
+	<div class="error" *ngIf="changeEmailError">
+		{{ changeEmailError }}
+		<svg icon="close" class="close" (click)="changeEmailError = ''"></svg>
+	</div>
+	<h3 class="title">Change email</h3>
+	<p class="help">Current email: {{ email | maskedEmail }}</p>
+	
+	<input class="control" type="email" placeholder="Enter new email" #change_email_input>
+	<button class="btn" (click)="changeEmail(change_email_input.value)" [disabled]="change_email_input.value === ''">Save</button>
+</div>
+
+<div class="changePhone" *ngIf="isChangePhone">
+	<svg (click)="closeChangeBlock()" class="back" icon="back"></svg>
+	<div class="error" *ngIf="changePhoneError">
+		{{ changePhoneError }}
+		<svg icon="close" class="close" (click)="changePhoneError = ''"></svg>
+	</div>
+	<h3 class="title">Change phone</h3>
+	<p class="help">Current phone: {{ phone | maskedPhone }}</p>
+	
+	<input class="control" type="tel" id="phone" placeholder="Enter new phone" #change_phone_input>
+	<button class="btn" (click)="changePhone(change_phone_input.value)" [disabled]="change_phone_input.value === ''">Save</button>
+</div>
+
+<div class="changePassword" *ngIf="isChangePassword">
+	<svg (click)="closeChangeBlock()" class="back" icon="back"></svg>
+	<div class="error" *ngIf="changePasswordError">
+		{{ changePasswordError }}
+		<svg icon="close" class="close" (click)="changePasswordError = ''"></svg>
+	</div>
+	<h3 class="title">Change password</h3>
+	
+	<form [formGroup]="changePasswordForm" class="changePasswordForm" (ngSubmit)="changePassword()">
+		<div class="password-wrapper">
+			<label for="old-password">Old password</label>
+			<input id="old-password" [type]="showOld.var ? 'text' : 'password'" formControlName="currentPassword">
+			<span class="eye-icon" #showOld="var" [var]="false">
+				<svg *ngIf="!showOld.var" (click)="showOld.var = !showOld.var" icon="showPassword"></svg>
+				<svg *ngIf="showOld.var" (click)="showOld.var = !showOld.var" icon="hidePassword"></svg>
+			</span>
+		</div>
+		<div class="password-wrapper">
+			<label for="new-password">New password</label>
+			<input id="new-password" [type]="showNew.var ? 'text' : 'password'" formControlName="newPassword">
+			<span class="eye-icon" #showNew="var" [var]="false">
+				<svg *ngIf="!showNew.var" (click)="showNew.var = !showNew.var" icon="showPassword"></svg>
+				<svg *ngIf="showNew.var" (click)="showNew.var = !showNew.var" icon="hidePassword"></svg>
+			</span>
+		</div>
+		<div class="password-wrapper">
+			<label for="new-password-repeat">Repeat password</label>
+			<input id="new-password-repeat" [type]="showRepeat.var ? 'text' : 'password'" formControlName="newPasswordRepeat">
+			<span class="eye-icon" #showRepeat="var" [var]="false">
+				<svg *ngIf="!showRepeat.var" (click)="showRepeat.var = !showRepeat.var" icon="showPassword"></svg>
+				<svg *ngIf="showRepeat.var" (click)="showRepeat.var = !showRepeat.var" icon="hidePassword"></svg>
+			</span>
+		</div>
+		
+		<button [disabled]="changePasswordForm.invalid" class="btn" type="submit">Change</button>
+	</form>
+</div>
+
+<div class="hystmodal" id="delete-account-confirmation-modal" aria-hidden="true">
+	<div class="hystmodal__wrap">
+		<div class="hystmodal__window" role="dialog" aria-modal="true">
+			<button data-hystclose class="hystmodal__close">Закрыть</button>
+			<div class="delete-account-confirmation">
+				<svg icon="trash"></svg>
+				<p class="help">You will not be able to return your account details, you really want to delete your account?</p>
+				<div class="password-wrapper">
+					<label for="password">Enter your password</label>
+					<input id="password" [type]="showPas.var ? 'text' : 'password'" #pass>
+					<span class="eye-icon" #showPas="var" [var]="false">
+						<svg *ngIf="!showPas.var" (click)="showPas.var = !showPas.var" icon="showPassword"></svg>
+						<svg *ngIf="showPas.var" (click)="showPas.var = !showPas.var" icon="hidePassword"></svg>
+					</span>
+				</div>
+				<button class="btn" data-hystclose (click)="deleteAccount(pass.value)">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>

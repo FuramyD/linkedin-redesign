@@ -81,6 +81,11 @@
     font-weight: 600;
 
     cursor: pointer;
+
+    &[disabled] {
+        opacity: 0.5;
+        cursor: auto;
+    }
 }
 
 .btn,
@@ -92,7 +97,7 @@
     color: #fff;
     background-color: @active;
 
-    &:hover {
+    &:not([disabled]):hover {
         background-color: lighten(@active, 2%);
     }
 
@@ -160,6 +165,8 @@
     margin-right: 15px;
     overflow: hidden;
 
+    .user-select-none();
+
     img {
         width: 100%;
     }
@@ -193,10 +200,16 @@ textarea {
         background-color: white;
     }
 
+    ::-webkit-scrollbar-track {
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
     /* ползунок скроллбара */
     &::-webkit-scrollbar-thumb {
         background-color: lighten(@light, 30%);
         border-radius: 20px;
+        z-index: -1;
     }
 }
 

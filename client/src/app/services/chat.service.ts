@@ -16,6 +16,10 @@ export class ChatService {
         this.socketService
             .listen('connection')
             .subscribe(() => this.onConnection())
+
+        this.socketService
+            .listen('new-message')
+            .subscribe(message => console.log('WS response => ', message))
     }
 
     joinToChat(chatId: number): void {
@@ -24,6 +28,11 @@ export class ChatService {
 
     sendMessage(message: string): void {
         this.socketService.emit('sendMessage', { message })
+    }
+
+    test(message: string): void {
+        console.log(message)
+        this.socketService.emit('new-message', message)
     }
 
     onConnection(): void {

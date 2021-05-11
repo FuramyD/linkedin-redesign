@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store'
-import { PostDto } from '../../../../../server/src/dto/post.dto'
-import { IPost } from '../../../../../server/src/interfaces/post/post'
-import { CommentDto } from '../../../../../server/src/dto/comment.dto'
+import { PostDto } from '../../dto/post.dto'
+import { IPost } from '../../interfaces/post/post'
+import { CommentDto } from '../../dto/comment.dto'
 
 /* TYPES */
 /* POSTS TYPES */

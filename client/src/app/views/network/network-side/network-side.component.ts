@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 
 @Component({
     selector: 'app-network-side',
@@ -22,7 +22,8 @@ export class NetworkSideComponent implements OnInit {
             listItems.forEach(el => el.classList.remove('active'))
             element.classList.add('active')
 
-            this.activeMenuItem = element.querySelector('.title')?.textContent ?? ''
+            this.activeMenuItem =
+                element.querySelector('.title')?.textContent ?? ''
             this.activateItem.emit(this.activeMenuItem.toLowerCase().trim())
         }
     }

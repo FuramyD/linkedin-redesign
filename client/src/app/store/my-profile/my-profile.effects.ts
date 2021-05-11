@@ -3,10 +3,10 @@ import { Actions, Effect, ofType } from '@ngrx/effects'
 import { ProfileService } from '../../services/profile.service'
 import {
     ACCEPT_CONNECTION_ACTION_TYPE,
-    ACCEPT_CONNECTION_SUCCESS_ACTION_TYPE,
     CANCEL_CONNECTION_ACTION_TYPE,
     DECLINE_CONNECTION_ACTION_TYPE,
     GET_MY_PROFILE_INFO_ACTION_TYPE,
+    REMOVE_CONNECTION_ACTION_TYPE,
     JOIN_TO_CHAT,
     MyProfileAcceptConnectionAction,
     MyProfileAcceptConnectionSuccessAction,
@@ -17,6 +17,29 @@ import {
     MyProfileDeclineConnectionSuccessAction,
     MyProfileGetInfoAction,
     MyProfileGetInfoSuccessAction,
+    MyProfileRemoveConnectionAction,
+    MyProfileRemoveConnectionSuccessAction,
+    MyProfileChangeRoleAction,
+    CHANGE_ROLE_ACTION_TYPE,
+    CHANGE_ABOUT_ACTION_TYPE,
+    MyProfileChangeAboutAction,
+    CHANGE_PROFESSION_ACTION_TYPE,
+    MyProfileChangeProfessionAction,
+    MyProfileChangeRoleSuccessAction,
+    MyProfileChangeAboutSuccessAction,
+    MyProfileChangeProfessionSuccessAction,
+    MyProfileChangeLocalityAction,
+    MyProfileChangeLocalitySuccessAction,
+    CHANGE_LOCALITY_ACTION_TYPE,
+    MyProfileChangeContactInfoAction,
+    CHANGE_CONTACT_INFO_ACTION_TYPE,
+    MyProfileChangeContactInfoSuccessAction,
+    CHANGE_PROJECTS_ACTION_TYPE,
+    MyProfileChangeProjectsAction,
+    MyProfileChangeProjectsSuccessAction,
+    CHANGE_EXPERIENCE_ACTION_TYPE,
+    MyProfileChangeExperienceAction,
+    MyProfileChangeEducationSuccessAction, CHANGE_EDUCATION_ACTION_TYPE, MyProfileChangeEducationAction,
 } from './my-profile.actions'
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
@@ -70,15 +93,13 @@ export class MyProfileEffects {
                         payload.date,
                     )
                     .pipe(
-                        map(
-                            res => {
-                                this.chatService.joinToChat(res.chatId)
-                                return new MyProfileAcceptConnectionSuccessAction({
-                                    senderId: payload.senderId,
-                                    date: payload.date,
-                                })
-                            }
-                        ),
+                        map(res => {
+                            this.chatService.joinToChat(res.chatId)
+                            return new MyProfileAcceptConnectionSuccessAction({
+                                senderId: payload.senderId,
+                                date: payload.date,
+                            })
+                        }),
                         catchError(err => {
                             console.log(
                                 'MyProfileAcceptConnectionAction error: ',
@@ -136,6 +157,211 @@ export class MyProfileEffects {
                         catchError(err => EMPTY),
                     )
             }),
+        )
+    }
+
+    @Effect()
+    removeConnection$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(REMOVE_CONNECTION_ACTION_TYPE),
+            mergeMap((action: MyProfileRemoveConnectionAction) => {
+                const payload = action.payload
+                return this.profileService
+                    .removeConnection(payload.senderId, payload.userId)
+                    .pipe(
+                        map(
+                            () =>
+                                new MyProfileRemoveConnectionSuccessAction({
+                                    userId: payload.userId,
+                                }),
+                        ),
+                        catchError(err => {
+                            console.log(
+                                'ProfileRemoveConnectionAction error:',
+                                err,
+                            )
+                            return EMPTY
+                        }),
+                    )
+            }),
+        )
+    }
+
+    @Effect()
+    changeRole$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_ROLE_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeRoleAction) => {
+                const { role, id } = action.payload
+                return this.profileService
+                    .changeRole(role, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeRoleSuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
+        )
+    }
+
+    // changeCompany$(): Observable<MyProfileActions> {}
+
+    @Effect()
+    changeAbout$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_ABOUT_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeAboutAction) => {
+                const { about, id } = action.payload
+                return this.profileService
+                    .changeAbout(about, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeAboutSuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
+        )
+    }
+
+    @Effect()
+    changeProfession$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_PROFESSION_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeProfessionAction) => {
+                const { profession, id } = action.payload
+                return this.profileService
+                    .changeProfession(profession, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeProfessionSuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
+        )
+    }
+
+    @Effect()
+    changeLocality$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_LOCALITY_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeLocalityAction) => {
+                const { locality, id } = action.payload
+                return this.profileService
+                    .changeLocality(locality, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeLocalitySuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
+        )
+    }
+
+    @Effect()
+    changeContactInfo$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_CONTACT_INFO_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeContactInfoAction) => {
+                const { contactInfo, id } = action.payload
+                return this.profileService
+                    .changeContactInfo(contactInfo, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeContactInfoSuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
+        )
+    }
+
+    @Effect()
+    changeProjects$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_PROJECTS_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeProjectsAction) => {
+                const { projects, id } = action.payload
+                return this.profileService
+                    .changeProjects(projects, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeProjectsSuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
+        )
+    }
+
+    @Effect()
+    changeExperience$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_EXPERIENCE_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeExperienceAction) => {
+                const { experience, id } = action.payload
+                return this.profileService
+                    .changeExperience(experience, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeEducationSuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
+        )
+    }
+
+    @Effect()
+    changeEducation$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(
+            ofType(CHANGE_EDUCATION_ACTION_TYPE),
+            mergeMap((action: MyProfileChangeEducationAction) => {
+                const { education, id } = action.payload
+                return this.profileService
+                    .changeEducation(education, id)
+                    .pipe(
+                        map(changed => {
+                            console.log(changed)
+                            return new MyProfileChangeEducationSuccessAction({})
+                        }),
+                        catchError(err => {
+                            console.log(err)
+                            return EMPTY
+                        })
+                    )
+            })
         )
     }
 }

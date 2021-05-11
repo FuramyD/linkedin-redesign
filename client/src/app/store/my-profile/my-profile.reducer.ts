@@ -1,11 +1,18 @@
 import {
     ACCEPT_CONNECTION_SUCCESS_ACTION_TYPE,
     CANCEL_CONNECTION_SUCCESS_ACTION_TYPE,
+    CHANGE_AVATAR_SUCCESS_ACTION_TYPE,
     DECLINE_CONNECTION_SUCCESS_ACTION_TYPE,
+    DELETE_AVATAR_SUCCESS_ACTION_TYPE,
     GET_MY_PROFILE_INFO_SUCCESS_ACTION_TYPE,
     MyProfileActions,
+    REMOVE_CONNECTION_SUCCESS_ACTION_TYPE,
 } from './my-profile.actions'
-import { IUser } from '../../interfaces/user'
+import { IFile } from '../../interfaces/file'
+import { IContact } from '../../interfaces/contact'
+import { IProject } from '../../interfaces/project'
+import { IExp } from '../../interfaces/exp'
+import { IUniversity } from '../../interfaces/university'
 
 export const myProfileNode = 'my profile'
 
@@ -20,7 +27,9 @@ export interface MyProfileState {
 
     info: {
         isOnline: boolean
+        role: string
         description: string
+        about: string
         views: {
             current: number
             prev: number
@@ -31,10 +40,20 @@ export interface MyProfileState {
         posts: {
             postId: number
         }[]
-        avatar: string | ArrayBuffer | null
-        profileHeaderBg: string | ArrayBuffer | null
+        avatar: IFile | null
+        profileHeaderBg: IFile | null
         dateOfBirth: number
+        gender: string
         profession: string
+        locality: {
+            country: string
+            city: string
+        }
+        contactInfo: IContact[]
+        projects: IProject[]
+        experience: IExp[]
+        education: IUniversity[]
+        dateOfLastPasswordUpdate: number
     }
 }
 
@@ -48,7 +67,9 @@ const initialState: MyProfileState = {
 
     info: {
         isOnline: false,
+        role: '',
         description: '',
+        about: '',
         views: {
             current: 0,
             prev: 0,
@@ -57,10 +78,20 @@ const initialState: MyProfileState = {
         sentConnections: [],
         receivedConnections: [],
         posts: [],
-        avatar: '',
-        profileHeaderBg: '',
+        avatar: null,
+        profileHeaderBg: null,
         dateOfBirth: 0,
+        gender: '',
         profession: '',
+        locality: {
+            country: '',
+            city: '',
+        },
+        contactInfo: [],
+        projects: [],
+        experience: [],
+        education: [],
+        dateOfLastPasswordUpdate: 0,
     },
 }
 
@@ -105,6 +136,35 @@ export const myProfileReducer = (
                     sentConnections: state.info.sentConnections.filter(
                         user => user.userId !== action.payload.userId,
                     ),
+                },
+            }
+        case REMOVE_CONNECTION_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    connections: state.info.connections.filter(
+                        user => user.userId !== action.payload.userId,
+                    ),
+                },
+            }
+        case CHANGE_AVATAR_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    avatar: {
+                        ...state.info.avatar,
+                        url: action.payload.url,
+                    },
+                },
+            }
+        case DELETE_AVATAR_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    avatar: null,
                 },
             }
         default:

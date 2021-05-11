@@ -1,6 +1,14 @@
-<div class="select">
-	<div class="selected"></div>
+<div class="select" [class.error]="error" #select>
+	<div (click)="toggleOptions(select)" class="selected">
+		{{ selected || selectedByDefault }}
+		<svg icon="chevronDown"></svg>
+	</div>
 	<div class="options">
-	
+		<div *ngFor="let option of options"
+			 (click)="changeSelected(option, select)"
+			 [class.disabled]="selected ? option === selected : option === selectedByDefault"
+			 class="option"
+		>{{ option }}</div>
 	</div>
 </div>
+<div (click)="closeOptions(select)" *ngIf="select.classList.contains('show')" class="select-bg"></div>

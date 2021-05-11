@@ -4,6 +4,7 @@ import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
 import { Observable } from 'rxjs'
 import { myProfileSelector } from '../../../store/my-profile/my-profile.selectors'
 import { map } from 'rxjs/operators'
+import { IBuffer } from '../../../interfaces/buffer'
 
 @Component({
     selector: 'app-feed-side',
@@ -25,8 +26,8 @@ export class FeedSideComponent implements OnInit {
         map(profile => profile.info.description),
     )
 
-    avatar$: Observable<string | ArrayBuffer | null> = this.profile$.pipe(
-        map(profile => profile.info.avatar || 'assets/img/avatar-man.png'),
+    avatar$: Observable<string> = this.profile$.pipe(
+        map(profile => profile.info.avatar?.url ?? 'assets/img/avatar-man.png'),
     )
 
     ngOnInit(): void {}

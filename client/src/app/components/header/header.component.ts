@@ -13,6 +13,7 @@ import {
     myProfileNameSelector,
     myProfilePrevViewsSelector,
 } from '../../store/my-profile/my-profile.selectors'
+import { IBuffer } from '../../interfaces/buffer'
 
 @Component({
     selector: 'app-header',
@@ -35,8 +36,11 @@ export class HeaderComponent implements OnInit {
         select(myProfileNameSelector),
         map(name => `${name.firstName[0]}. ${name.lastName}`),
     )
-    avatar$: Observable<string | ArrayBuffer | null> = this.store$.pipe(
+    avatar$: Observable<string> = this.store$.pipe(
         select(myProfileAvatarSelector),
+        map(avatar => {
+            return avatar
+        }),
     )
 
     routes: IRoute[] = [

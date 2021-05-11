@@ -1,0 +1,57 @@
+<div class="edit-personal-data">
+	<div class="edit-personal-data__header">
+		<div class="avatar-wrapper">
+			<div class="avatar-box" (click)="toggleChangeAvatarMenu(avatar_change)">
+				<img [src]="avatar" alt="avatar">
+				<div class="shadow"></div>
+				<svg icon="camera"></svg>
+			</div>
+			<div class="hidden avatar-change" #avatar_change>
+				<div class="change" (click)="input_avatar_upload.click()">Change avatar</div>
+				<div class="delete" (click)="deleteAvatarHandler()">Delete avatar</div>
+			</div>
+		</div>
+		
+		<div class="helper">
+			<h3 class="name">{{ firstName + ' ' + lastName }}</h3>
+			<p class="help">Provide basic information about yourself</p>
+		</div>
+	</div>
+	<div class="edit-personal-data__body">
+		
+		<div *ngIf="editStatus" class="edit-status"
+			 [class.success]="editStatus.status === 'success'"
+			 [class.fail]="editStatus.status === 'fail'"
+		>
+			{{ editStatus.message }}
+			<svg (click)="editStatus = null" class="close" icon="close"></svg>
+		</div>
+		
+		<form [formGroup]="editProfileDataForm" id="edit-personal-data-form" (ngSubmit)="onSubmit()">
+			<div class="input-wrapper">
+				<label for="first_name">First name</label>
+				<input id="first_name" type="text" formControlName="firstName">
+			</div>
+			<div class="input-wrapper">
+				<label for="last_name">Last name</label>
+				<input id="last_name" type="text" formControlName="lastName">
+			</div>
+			<div class="input-wrapper">
+				<label>Gender</label>
+				<app-select [options]="['Male', 'Female']" [error]="genderIsRequiredError"
+							[selectedByDefault]="gender || 'Indicate your gender'"
+							(onChange)="selectOnChange($event)"
+				></app-select>
+			</div>
+			<div class="input-wrapper">
+				<label for="DOB">Date of birth</label>
+				<input id="DOB" type="date" formControlName="dateOfBirth">
+			</div>
+			
+			<button class="btn" type="submit">Save</button>
+		</form>
+	</div>
+</div>
+
+<input type="file" class="hidden" accept=".jpg,.png,.gif" (change)="changeAvatarHandler($event)" #input_avatar_upload>
+

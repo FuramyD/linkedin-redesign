@@ -37,5 +37,6 @@ import { PostsService } from '../services/posts.service'
         },
         PostsService,
     ],
+    exports: [],
 })
 export class ViewsModule {}
