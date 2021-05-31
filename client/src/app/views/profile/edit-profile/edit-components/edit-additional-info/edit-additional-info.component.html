@@ -10,7 +10,7 @@
 			></app-select>
 			<button class="btn" [disabled]="role === '' || role === 'Choose your role'" (click)="changeRole()">Choose</button>
 		</div>
-		
+
 	</div>
 	<div class="company" *ngIf="role === 'HR'"></div>
 	<div class="about">
@@ -20,11 +20,13 @@
 	</div>
 	<div class="profession">
 		<h3 class="title">Profession</h3>
+
 		<input class="control" [(ngModel)]="profession" type="text" id="profession" placeholder="White your profession">
 		<button class="btn" [disabled]="profession === ''" (click)="changeProfession()">Save</button>
 	</div>
 	<div class="locality">
 		<h3 class="title">Locality</h3>
+
 		<form [formGroup]="localityForm" id="locality" (ngSubmit)="changeLocality()">
 			<label class="control-wrapper">
 				Country
@@ -40,24 +42,40 @@
 	<div class="contact-info">
 		<h3 class="title">Contact Information</h3>
 		<p class="help">Write here ways of contacting you. Please note that this data will be available to everyone!</p>
-		
-		<div class="error" *ngIf="projectsError">{{ projectsError }}</div>
-		
+
+		<div class="alert-error" *ngIf="contactInfoError">
+            {{ contactInfoError }}
+            <svg class="close" icon="close" (click)="contactInfoError = ''"></svg>
+        </div>
+		<div class="alert-success" *ngIf="true">
+            {{ 'Contact information has not been changed, please try again' }}
+            <svg class="close" icon="close"></svg>
+        </div>
+
 		<label *ngFor="let contact of contactInfo" class="control-wrapper">
 			<input class="control" [(ngModel)]="contact.contactWay" type="text" placeholder="Way of contact">
 			<input class="control" [(ngModel)]="contact.data" type="text" placeholder="Contact data">
 			<svg icon="close" class="remove" (click)="removeContactWay(contact)"></svg>
 		</label>
-		
+
 		<div class="controls">
 			<button class="btn" (click)="addContactWay()">Add</button>
-			<button class="btn">Save</button>
+			<button class="btn" (click)="changeContactInfo()">Save</button>
 		</div>
-		
+
 	</div>
 	<div class="projects">
 		<h3 class="title">Projects</h3>
-		<div class="error" *ngIf="projectsError">{{ projectsError }}</div>
+
+        <div class="alert-error" *ngIf="projectsError">
+            {{ projectsError }}
+            <svg class="close" icon="close" (click)="projectsError = ''"></svg>
+        </div>
+        <div class="alert-success" *ngIf="false">
+            {{ '123' }}
+            <svg class="close" icon="close"></svg>
+        </div>
+
 		<div *ngFor="let project of projects, let i = index" class="project">
 			<svg class="close" icon="close" (click)="removeProject(project)"></svg>
 			<label class="control-wrapper">
@@ -79,21 +97,30 @@
 			<div class="poster-upload">
 				Upload poster
 				<input class="hidden" type="file" (change)="uploadPosterHandler($event, project)" #input_file>
+                <div *ngIf="project.poster" class="uploaded" #uploaded>
+                    <img [src]="project.poster.url" alt="poster">
+                    <span class="size">{{ uploaded.clientWidth + 'x' + uploaded.clientHeight }}</span>
+                </div>
 				<button class="btn-outline upload" (click)="input_file.click()">Upload</button>
-				<div *ngIf="project.poster" class="uploaded" #uploaded>
-					<img [src]="project.poster.url" alt="poster">
-					<span class="size">{{ uploaded.clientWidth + 'x' + uploaded.clientHeight }}</span>
-				</div>
 			</div>
 		</div>
 		<div class="controls">
 			<button class="btn" (click)="addProject()">Add</button>
-			<button class="btn">Save</button>
+			<button class="btn" (click)="changeProjects()">Save</button>
 		</div>
 	</div>
 	<div class="experience">
 		<h3 class="title">Experience</h3>
-		<div class="error" *ngIf="jobError">{{ jobError }}</div>
+
+        <div class="alert-error" *ngIf="jobError">
+            {{ jobError }}
+            <svg class="close" icon="close" (click)="jobError = ''"></svg>
+        </div>
+        <div class="alert-success" *ngIf="false">
+            {{ '123' }}
+            <svg class="close" icon="close"></svg>
+        </div>
+
 		<div *ngFor="let job of experience" class="job">
 			<svg class="close" icon="close" (click)="removeJob(job)"></svg>
 			<div class="company">
@@ -137,8 +164,16 @@
 	</div>
 	<div class="education">
 		<h3 class="title">Education</h3>
-		<div class="error" *ngIf="educationError">{{ educationError }}</div>
-		
+
+        <div class="alert-error" *ngIf="educationError">
+            {{ educationError }}
+            <svg class="close" icon="close" (click)="educationError = ''"></svg>
+        </div>
+        <div class="alert-success" *ngIf="false">
+            {{ '123' }}
+            <svg class="close" icon="close"></svg>
+        </div>
+
 		<div *ngFor="let university of education" class="university">
 			<svg class="close" icon="close" (click)="removeUniversity(university)"></svg>
 			<div class="name">
@@ -181,7 +216,7 @@
 				<input type="file" class="hidden" #university_logo_upload (change)="uploadUniversityLogoHandler($event, university)">
 			</div>
 		</div>
-		
+
 		<div class="controls">
 			<button class="btn" (click)="addUniversity()">Add</button>
 			<button class="btn" (click)="changeEducation()">Save</button>

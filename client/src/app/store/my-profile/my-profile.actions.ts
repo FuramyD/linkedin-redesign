@@ -193,7 +193,7 @@ export class MyProfileChangeRoleAction implements Action {
 export class MyProfileChangeRoleSuccessAction implements Action {
     readonly type = CHANGE_ROLE_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        role: string
     }) {}
 }
 
@@ -223,7 +223,7 @@ export class MyProfileChangeAboutAction implements Action {
 export class MyProfileChangeAboutSuccessAction implements Action {
     readonly type = CHANGE_ABOUT_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        about: string,
     }) {}
 }
 
@@ -238,7 +238,7 @@ export class MyProfileChangeProfessionAction implements Action {
 export class MyProfileChangeProfessionSuccessAction implements Action {
     readonly type = CHANGE_PROFESSION_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        profession: string
     }) {}
 }
 
@@ -253,7 +253,7 @@ export class MyProfileChangeLocalityAction implements Action {
 export class MyProfileChangeLocalitySuccessAction implements Action {
     readonly type = CHANGE_LOCALITY_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        locality: { country: string, city: string },
     }) {}
 }
 
@@ -268,7 +268,7 @@ export class MyProfileChangeContactInfoAction implements Action {
 export class MyProfileChangeContactInfoSuccessAction implements Action {
     readonly type = CHANGE_CONTACT_INFO_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        contactInfo: IContact[],
     }) {}
 }
 
@@ -283,7 +283,7 @@ export class MyProfileChangeProjectsAction implements Action {
 export class MyProfileChangeProjectsSuccessAction implements Action {
     readonly type = CHANGE_PROJECTS_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        projects: IProject[],
     }) {}
 }
 
@@ -298,7 +298,7 @@ export class MyProfileChangeExperienceAction implements Action {
 export class MyProfileChangeExperienceSuccessAction implements Action {
     readonly type = CHANGE_EXPERIENCE_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        experience: IExp[],
     }) {}
 }
 
@@ -313,7 +313,7 @@ export class MyProfileChangeEducationAction implements Action {
 export class MyProfileChangeEducationSuccessAction implements Action {
     readonly type = CHANGE_EDUCATION_SUCCESS_ACTION_TYPE
     constructor(public payload: {
-
+        education: IUniversity[],
     }) {}
 }
 

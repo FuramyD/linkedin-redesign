@@ -92,6 +92,41 @@
         }
     }
 
+    .alert-error, .alert-success {
+        width: 100%;
+
+        margin-top: 20px;
+        padding: 5px 20px;
+        border: 2px solid;
+        border-radius: 8px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        word-break: break-word;
+
+        .close {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+
+            cursor: pointer;
+        }
+    }
+
+    .alert-error {
+        background-color: rgba(@danger, .2);
+        border-color: @danger;
+        color: darken(@danger, 10%);
+    }
+
+    .alert-success {
+        background-color: rgba(@success, .2);
+        border-color: @success;
+        color: darken(@success, 10%);
+    }
+
     .role {
         &__select {
             display: flex;
@@ -112,6 +147,8 @@
     .about {
         &__textarea {
             width: 100%;
+            font-weight: 400;
+            font-size: 16px;
         }
     }
 
@@ -141,6 +178,12 @@
                 height: 18px;
 
                 fill: #aaa;
+                transition: fill .1s linear;
+                cursor: pointer;
+
+                &:hover {
+                    fill: #777;
+                }
             }
 
             & + .control-wrapper {
@@ -154,9 +197,6 @@
         .project {
 
             .poster-upload {
-                font-size: 18px;
-                font-weight: 400;
-
                 .uploaded {
                     margin-top: 20px;
 
@@ -190,13 +230,18 @@
             width: 16px;
             height: 16px;
 
-            fill: @light;
+            fill: #aaa;
+            cursor: pointer;
 
             position: absolute;
             right: 0;
             top: 10px;
 
-            cursor: pointer;
+            transition: fill .1s linear;
+
+            &:hover {
+                fill: #777;
+            }
         }
 
         &:not(:nth-last-child(2)) {

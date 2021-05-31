@@ -13,6 +13,7 @@ import {IContact} from "../interfaces/contact";
 import {IProject} from "../interfaces/project";
 import {IExp} from "../interfaces/exp";
 import {IUniversity} from "../interfaces/university";
+import {ILocality} from "../interfaces/locality";
 
 const storage = diskStorage({
     destination: (req, file, callback) => {
@@ -124,15 +125,13 @@ export class UsersController {
     )
     async avatarUpload(@UploadedFile() file: Express.Multer.File, @Param() param: { id: string }, @Res() res: Response): Promise<void> {
         console.log('upload')
-        res.send(file)
-        /*
         const result = await this.usersService.uploadAvatar(file, +param.id)
         if (result)
             res.status(HttpStatus.OK).send({
                 message: 'Avatar uploaded successfully',
                 url: `http://localhost:3000/uploads/${file.filename}`,
             })
-        if (!result) res.status(HttpStatus.CONFLICT).send({ message: 'Avatar not loaded' })*/
+        if (!result) res.status(HttpStatus.CONFLICT).send({ message: 'Avatar not loaded' })
     }
 
     @Delete(':id/avatar/delete')
@@ -187,49 +186,80 @@ export class UsersController {
 
     @Post(':id/change/role')
     async changeRole(@Param() param: { id: string }, @Body() data: { role: string }, @Res() res: Response): Promise<void> {
+        const changed = await this.usersService.changeRole(+param.id, data.role)
 
+        if (changed) res.status(HttpStatus.OK).send({ message: 'Role has been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'Role has not been changed, please try again' })
     }
 
     @Post(':id/change/company')
     async changeCompany(@Param() param: { id: string }, @Body() data: { company: any }, @Res() res: Response): Promise<void> {
-
+        // const changed = await this.usersService.changeCompany(+param.id, data.company)
     }
 
     @Post(':id/change/about')
     async changeAbout(@Param() param: { id: string }, @Body() data: { about: string }, @Res() res: Response): Promise<void> {
+        const changed = await this.usersService.changeAbout(+param.id, data.about)
 
+        if (changed) res.status(HttpStatus.OK).send({ message: 'About has been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'About has not been changed, please try again' })
     }
     @Post(':id/change/profession')
     async changeProfession(@Param() param: { id: string }, @Body() data: { profession: string }, @Res() res: Response): Promise<void> {
+        const changed = await this.usersService.changeProfession(+param.id, data.profession)
 
+        if (changed) res.status(HttpStatus.OK).send({ message: 'Profession has been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'Profession has not been changed, please try again' })
     }
 
     @Post(':id/change/locality')
     async changeLocality(
         @Param() param: { id: string },
-        @Body() data: { locality: { country: string, city: string } },
+        @Body() data: { locality: ILocality },
         @Res() res: Response
     ): Promise<void> {
+        const changed = await this.usersService.changeLocality(+param.id, data.locality)
 
+        if (changed) res.status(HttpStatus.OK).send({ message: 'Locality has been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'Locality has not been changed, please try again' })
     }
 
     @Post(':id/change/contact-info')
     async changeContactInfo(@Param() param: { id: string }, @Body() data: { contactInfo: IContact[] }, @Res() res: Response): Promise<void> {
+        const changed = await this.usersService.changeContactInfo(+param.id, data.contactInfo)
 
+        if (changed) res.status(HttpStatus.OK).send({ message: 'Contact information has been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'Contact information has not been changed, please try again' })
     }
 
     @Post(':id/change/projects')
     async changeProjects(@Param() param: { id: string }, @Body() data: { projects: IProject[] }, @Res() res: Response): Promise<void> {
+        const changed = await this.usersService.changeProjects(+param.id, data.projects)
 
+        if (changed) res.status(HttpStatus.OK).send({ message: 'Projects have been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'Projects have not been changed, please try again' })
     }
 
     @Post(':id/change/experience')
     async changeExperience(@Param() param: { id: string }, @Body() data: { experience: IExp[] }, @Res() res: Response): Promise<void> {
+        const changed = await this.usersService.changeExperience(+param.id, data.experience)
 
+        if (changed) res.status(HttpStatus.OK).send({ message: 'Experience has been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'Experience has not been changed, please try again' })
     }
 
     @Post(':id/change/education')
     async changeEducation(@Param() param: { id: string }, @Body() data: { education: IUniversity[] }, @Res() res: Response): Promise<void> {
+        const changed = await this.usersService.changeEducation(+param.id, data.education)
+
+        if (changed) res.status(HttpStatus.OK).send({ message: 'Education has been changed' })
+        else res.status(HttpStatus.CONFLICT).send({ message: 'Education has not been changed, please try again' })
+    }
+
+    @Post(':id/ddd')
+    async a(@Param() param) {
+        console.log('aaaa')
+        await this.usersService.a(+param.id)
     }
 
 }

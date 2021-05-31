@@ -19,16 +19,8 @@ export class EditAdditionalInfoComponent implements OnInit {
         country: '',
         city: '',
     }
-    @Input() contactInfo: IContact[] = [{ contactWay: null, data: null }]
-    @Input() projects: IProject[] = [
-        {
-            name: null,
-            role: null,
-            date: null,
-            about: null,
-            poster: null,
-        },
-    ]
+    @Input() contactInfo: IContact[] = []
+    @Input() projects: IProject[] = []
     @Input() experience: IExp[] = []
     @Input() education: IUniversity[] = []
 
@@ -39,17 +31,22 @@ export class EditAdditionalInfoComponent implements OnInit {
         city: new FormControl(this.locality.city, [Validators.required]),
     })
 
+    roleError: string = ''
+    aboutError: string = ''
+    professionError: string = ''
+    localityError: string = ''
     contactInfoError: string = ''
     projectsError: string = ''
     jobError: string = ''
     educationError: string = ''
 
+
     constructor() {}
 
     addContactWay(): void {
         this.contactInfo.push({
-            contactWay: null,
-            data: null,
+            contactWay: '',
+            data: '',
         })
     }
 
@@ -58,11 +55,12 @@ export class EditAdditionalInfoComponent implements OnInit {
     }
 
     addProject(): void {
+        console.log(this.projects)
         this.projects.push({
-            name: null,
-            role: null,
-            date: null,
-            about: null,
+            name: '',
+            role: '',
+            date: '',
+            about: '',
             poster: null,
         })
     }
@@ -192,9 +190,13 @@ export class EditAdditionalInfoComponent implements OnInit {
     }
 
     changeContactInfo(): void {
+        if (!this.contactInfo[0]) {
+            this.contactInfoError = 'Enter anything'
+            return
+        }
         for (const contactWay of this.contactInfo) {
             if (this.isEmpty(contactWay)) {
-                this.projectsError = 'All fields must be filled'
+                this.contactInfoError = 'All fields must be filled'
                 return
             }
         }
@@ -203,6 +205,10 @@ export class EditAdditionalInfoComponent implements OnInit {
     }
 
     changeProjects(): void {
+        if (!this.projects[0]) {
+            this.projectsError = 'Enter anything'
+            return
+        }
         for (const project of this.projects) {
             if (this.isEmpty(project)) {
                 this.projectsError = 'All fields must be filled'
@@ -215,6 +221,10 @@ export class EditAdditionalInfoComponent implements OnInit {
     }
 
     changeExperience(): void {
+        if (!this.experience[0]) {
+            this.jobError = 'Enter anything'
+            return
+        }
         for (const job of this.experience) {
             console.log(job)
             if (this.isEmpty(job)) {
@@ -233,9 +243,13 @@ export class EditAdditionalInfoComponent implements OnInit {
     }
 
     changeEducation(): void {
+        if (!this.education[0]) {
+            this.educationError = 'Enter anything'
+            return
+        }
         for (const university of this.education) {
             if (this.isEmpty(university)) {
-                this.jobError = 'All fields must be filled'
+                this.educationError = 'All fields must be filled'
                 return
             }
 
@@ -247,10 +261,6 @@ export class EditAdditionalInfoComponent implements OnInit {
 
         this.onChange.emit({ type: 'education', data: this.education })
         this.educationError = ''
-    }
-
-    entries(object: any): Array<any> {
-        return Object.entries(object)
     }
 
     isEmpty(entity: any): boolean {

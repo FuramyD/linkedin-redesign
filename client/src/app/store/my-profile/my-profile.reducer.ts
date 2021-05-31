@@ -1,18 +1,26 @@
 import {
     ACCEPT_CONNECTION_SUCCESS_ACTION_TYPE,
     CANCEL_CONNECTION_SUCCESS_ACTION_TYPE,
+    CHANGE_ABOUT_SUCCESS_ACTION_TYPE,
     CHANGE_AVATAR_SUCCESS_ACTION_TYPE,
+    CHANGE_CONTACT_INFO_SUCCESS_ACTION_TYPE,
+    CHANGE_EDUCATION_SUCCESS_ACTION_TYPE,
+    CHANGE_EXPERIENCE_SUCCESS_ACTION_TYPE,
+    CHANGE_LOCALITY_SUCCESS_ACTION_TYPE,
+    CHANGE_PROFESSION_SUCCESS_ACTION_TYPE,
+    CHANGE_PROJECTS_SUCCESS_ACTION_TYPE,
+    CHANGE_ROLE_SUCCESS_ACTION_TYPE,
     DECLINE_CONNECTION_SUCCESS_ACTION_TYPE,
     DELETE_AVATAR_SUCCESS_ACTION_TYPE,
     GET_MY_PROFILE_INFO_SUCCESS_ACTION_TYPE,
     MyProfileActions,
     REMOVE_CONNECTION_SUCCESS_ACTION_TYPE,
 } from './my-profile.actions'
-import { IFile } from '../../interfaces/file'
-import { IContact } from '../../interfaces/contact'
-import { IProject } from '../../interfaces/project'
-import { IExp } from '../../interfaces/exp'
-import { IUniversity } from '../../interfaces/university'
+import {IFile} from '../../interfaces/file'
+import {IContact} from '../../interfaces/contact'
+import {IProject} from '../../interfaces/project'
+import {IExp} from '../../interfaces/exp'
+import {IUniversity} from '../../interfaces/university'
 
 export const myProfileNode = 'my profile'
 
@@ -166,6 +174,70 @@ export const myProfileReducer = (
                     ...state.info,
                     avatar: null,
                 },
+            }
+        case CHANGE_ROLE_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    role: action.payload.role
+                }
+            }
+        case CHANGE_ABOUT_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    about: action.payload.about
+                }
+            }
+        case CHANGE_PROFESSION_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    profession: action.payload.profession
+                }
+            }
+        case CHANGE_LOCALITY_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    locality: action.payload.locality
+                }
+            }
+        case CHANGE_CONTACT_INFO_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    contactInfo: action.payload.contactInfo
+                }
+            }
+        case CHANGE_PROJECTS_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    projects: action.payload.projects
+                }
+            }
+        case CHANGE_EXPERIENCE_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    experience: action.payload.experience
+                }
+            }
+        case CHANGE_EDUCATION_SUCCESS_ACTION_TYPE:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    education: action.payload.education
+                }
             }
         default:
             return state

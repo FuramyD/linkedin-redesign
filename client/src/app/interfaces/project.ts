@@ -1,9 +1,9 @@
 import { IFile } from './file'
 
 export interface IProject {
-    name: string | null
-    role: string | null
-    date: string | null
-    about: string | null
+    name: string
+    role: string
+    date: string
+    about: string
     poster: (IFile & { file: File }) | null
 }

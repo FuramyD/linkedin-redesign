@@ -109,6 +109,11 @@ export class EditProfileMainComponent implements OnInit {
 
     contactInfo$: Observable<IContact[]> = this.store$.pipe(
         select(myProfileContactInfoSelector),
+        map(contacts => {
+            if (!contacts[0])
+                return [{ contactWay: '', data: '' }]
+            return contacts
+        })
     )
 
     locality$: Observable<{ country: string; city: string }> = this.store$.pipe(
@@ -117,14 +122,29 @@ export class EditProfileMainComponent implements OnInit {
 
     projects$: Observable<IProject[]> = this.store$.pipe(
         select(myProfileProjectsSelector),
+        map(projects => {
+            if (!projects[0])
+                return [{ name: '', role: '', date: '', about: '', poster: null }]
+            return projects
+        })
     )
 
     experience$: Observable<IExp[]> = this.store$.pipe(
         select(myProfileExperienceSelector),
+        map(experience => {
+            if (!experience[0])
+                return [{ companyName: '', profession: '', start: '', end: '', logo: null }]
+            return experience
+        })
     )
 
     education$: Observable<IUniversity[]> = this.store$.pipe(
         select(myProfileEducationSelector),
+        map(education => {
+            if (!education[0])
+                return [{ name: '', facultyAndDegree: '', comment: '', start: '', end: '', logo: null }]
+            return education
+        })
     )
 
     editPersonalInfoStatus: { status: string; message: string } | null = null
@@ -220,10 +240,6 @@ export class EditProfileMainComponent implements OnInit {
         this.store$.dispatch(new MyProfileChangeEducationAction({ education, id: this.profileId }))
     }
 
-    ngOnInit(): void {
-        this.profileId$.subscribe(id => (this.profileId = id))
-    }
-
     changeAdditionalInfoHandler(ev: { type: string; data: any }): void {
         switch (ev.type) {
             case 'role':
@@ -251,5 +267,9 @@ export class EditProfileMainComponent implements OnInit {
                 this.changeEducation(ev.data)
                 return
         }
+    }
+
+    ngOnInit(): void {
+        this.profileId$.subscribe(id => (this.profileId = id))
     }
 }

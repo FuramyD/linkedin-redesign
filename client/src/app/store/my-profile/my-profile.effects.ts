@@ -39,7 +39,10 @@ import {
     MyProfileChangeProjectsSuccessAction,
     CHANGE_EXPERIENCE_ACTION_TYPE,
     MyProfileChangeExperienceAction,
-    MyProfileChangeEducationSuccessAction, CHANGE_EDUCATION_ACTION_TYPE, MyProfileChangeEducationAction,
+    MyProfileChangeEducationSuccessAction,
+    CHANGE_EDUCATION_ACTION_TYPE,
+    MyProfileChangeEducationAction,
+    MyProfileChangeExperienceSuccessAction,
 } from './my-profile.actions'
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
@@ -84,7 +87,7 @@ export class MyProfileEffects {
     acceptConnection$(): Observable<MyProfileActions> {
         return this.actions$.pipe(
             ofType(ACCEPT_CONNECTION_ACTION_TYPE),
-            switchMap((action: MyProfileAcceptConnectionAction) => {
+            mergeMap((action: MyProfileAcceptConnectionAction) => {
                 const payload = action.payload
                 return this.profileService
                     .acceptConnection(
@@ -116,7 +119,7 @@ export class MyProfileEffects {
     declineConnection$(): Observable<MyProfileActions> {
         return this.actions$.pipe(
             ofType(DECLINE_CONNECTION_ACTION_TYPE),
-            switchMap((action: MyProfileDeclineConnectionAction) => {
+            mergeMap((action: MyProfileDeclineConnectionAction) => {
                 const payload = action.payload
                 return this.profileService
                     .declineConnection(payload.senderId, payload.userId)
@@ -143,7 +146,7 @@ export class MyProfileEffects {
     cancelConnection$(): Observable<MyProfileActions> {
         return this.actions$.pipe(
             ofType(CANCEL_CONNECTION_ACTION_TYPE),
-            switchMap((action: MyProfileCancelConnectionAction) => {
+            mergeMap((action: MyProfileCancelConnectionAction) => {
                 const payload = action.payload
                 return this.profileService
                     .cancelConnection(payload.senderId, payload.userId)
@@ -198,7 +201,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeRoleSuccessAction({})
+                            return new MyProfileChangeRoleSuccessAction({ role })
                         }),
                         catchError(err => {
                             console.log(err)
@@ -222,7 +225,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeAboutSuccessAction({})
+                            return new MyProfileChangeAboutSuccessAction({ about })
                         }),
                         catchError(err => {
                             console.log(err)
@@ -244,7 +247,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeProfessionSuccessAction({})
+                            return new MyProfileChangeProfessionSuccessAction({ profession })
                         }),
                         catchError(err => {
                             console.log(err)
@@ -266,7 +269,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeLocalitySuccessAction({})
+                            return new MyProfileChangeLocalitySuccessAction({ locality })
                         }),
                         catchError(err => {
                             console.log(err)
@@ -288,7 +291,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeContactInfoSuccessAction({})
+                            return new MyProfileChangeContactInfoSuccessAction({ contactInfo })
                         }),
                         catchError(err => {
                             console.log(err)
@@ -310,7 +313,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeProjectsSuccessAction({})
+                            return new MyProfileChangeProjectsSuccessAction({ projects })
                         }),
                         catchError(err => {
                             console.log(err)
@@ -332,7 +335,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeEducationSuccessAction({})
+                            return new MyProfileChangeExperienceSuccessAction({ experience })
                         }),
                         catchError(err => {
                             console.log(err)
@@ -354,7 +357,7 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeEducationSuccessAction({})
+                            return new MyProfileChangeEducationSuccessAction({ education })
                         }),
                         catchError(err => {
                             console.log(err)

@@ -8,6 +8,11 @@ import { UserDocument } from './user.shema'
 import { ChatDocument } from '../chats/chat.shema'
 import { IPersonalInfo } from '../interfaces/edit-profile/personalInfo'
 import { Express } from 'express'
+import {IUniversity} from "../interfaces/university";
+import {IExp} from "../interfaces/exp";
+import {IProject} from "../interfaces/project";
+import {IContact} from "../interfaces/contact";
+import {ILocality} from "../interfaces/locality";
 
 const URL = 'http://localhost:3000'
 
@@ -25,7 +30,7 @@ export class UsersService {
     }
 
     async createUser(user: CreateUserDto | IUser): Promise<CreateUserDto | null> {
-        if ((await this.userModel.find({ email: user.email }).exec())[0] || (await this.userModel.find({ phone: user.phone }).exec())[0])
+        if ((await this.userModel.findOne({ email: user.email }).exec()) || (await this.userModel.findOne({ phone: user.phone }).exec()))
             return null
 
         const USER = new this.userModel({
@@ -309,33 +314,118 @@ export class UsersService {
 
     async changeEmail(userId: number, email: string): Promise<boolean> {
         const user = await this.userModel.findOne({ id: userId })
-        if (user) {
-            user.email = email
-            await user.save()
-            return true
-        }
-        return false
+        if (!user) return false
+
+        user.email = email
+        await user.save()
+        return true
     }
 
     async changePhone(userId: number, phone: string): Promise<boolean> {
         const user = await this.userModel.findOne({ id: userId })
-        if (user) {
-            user.phone = phone
-            await user.save()
-            return true
-        }
-        return false
+        if (!user) return false
+
+        user.phone = phone
+        await user.save()
+        return true
     }
 
     async changePassword(userId: number, newPassword: string, oldPassword: string): Promise<boolean | null> {
-        const user = await this.userModel.findOne({ id: userId, password: oldPassword })
-        if (user) {
-            if (newPassword === oldPassword) return false
+        const user = await this.userModel.findOne({id: userId, password: oldPassword})
+        if (!user) return null
 
-            user.password = newPassword
-            await user.save()
-            return true
-        }
-        return null
+        if (newPassword === oldPassword) return false
+
+        user.password = newPassword
+        await user.save()
+        return true
+    }
+
+    async changeRole(userId: number, role: string): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.role = role
+        await user.save()
+
+        return true
+    }
+
+    // async changeCompany(userId: number, company: string): Promise<boolean> {}
+
+    async changeAbout(userId: number, about: string): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.about = about
+        await user.save()
+
+        return true
+    }
+
+    async changeProfession(userId: number, profession: string): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.profession = profession
+        await user.save()
+
+        return true
+    }
+
+    async changeLocality(userId: number, locality: ILocality): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.locality = locality
+        await user.save()
+
+        return true
+    }
+
+    async changeContactInfo(userId: number, contactInfo: IContact[]): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.contactInfo = contactInfo
+        await user.save()
+
+        return true
+    }
+
+    async changeProjects(userId: number, projects: IProject[]): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.projects = projects
+        await user.save()
+
+        return true
+    }
+
+    async changeExperience(userId: number, experience: IExp[]): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.experience = experience
+        await user.save()
+
+        return true
+    }
+
+    async changeEducation(userId: number, education: IUniversity[]): Promise<boolean> {
+        const user = await this.userModel.findOne({ id: userId })
+        if (!user) return false
+
+        user.info.education = education
+        await user.save()
+
+        return true
+    }
+    async a(userId: number) {
+        const user = await this.userModel.findOne({ id: userId })
+        user.info.projects = []
+        user.info.contactInfo = []
+        await user.save()
     }
 }
