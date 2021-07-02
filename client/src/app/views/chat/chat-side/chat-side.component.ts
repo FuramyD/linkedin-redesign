@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core'
 import { IChat } from '../../../interfaces/chat/chat'
 import { IUser } from '../../../interfaces/user'
-import { Observable } from 'rxjs'
+import {Observable, Subject} from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 import { ChatService } from '../../../services/chat.service'
 import { select, Store } from '@ngrx/store'
@@ -22,6 +22,8 @@ export class ChatSideComponent implements OnInit {
         private chatService: ChatService,
         private store$: Store<MyProfileState | ChatState>,
     ) {}
+
+
 
     @Input() profileId: number = -1
 

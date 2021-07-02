@@ -88,6 +88,11 @@ export const profileLocalitySelector = createSelector(
     },
 )
 
+export const profileContactInfoSelector = createSelector(
+    profileFeatureSelector,
+    state => state.info.contactInfo
+)
+
 export const profileSentConnectionsSelector = createSelector(
     profileFeatureSelector,
     state => state.info.sentConnections,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import { FileService } from 'src/app/services/file.service'
 import { select, Store } from '@ngrx/store'
 import { PostState } from '../../../store/posts/post.reducer'
@@ -7,8 +7,8 @@ import {
     PostGetAction,
     SortingPostsAction,
 } from '../../../store/posts/post.actions'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import {Observable, Subject} from 'rxjs'
+import {map, takeUntil} from 'rxjs/operators'
 import { postsSelector } from '../../../store/posts/post.selectors'
 import { IPost } from '../../../interfaces/post/post'
 import { ICreator } from '../../../interfaces/post/creator'
@@ -24,11 +24,13 @@ import {
     templateUrl: './feed-main.component.html',
     styleUrls: ['./feed-main.component.less', '../feed.component.less'],
 })
-export class FeedMainComponent implements OnInit {
+export class FeedMainComponent implements OnInit, OnDestroy {
     constructor(
         private fileService: FileService,
         private store$: Store<PostState | MyProfileState>,
     ) {}
+
+    unsub$ = new Subject()
 
     posts$: Observable<IPost[]> = this.store$.pipe(select(postsSelector))
 
@@ -98,9 +100,14 @@ export class FeedMainComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.creator$.subscribe(creator => (this.creator = creator))
-        this.posts$.subscribe(posts => console.log('posts =>', posts))
+        this.creator$.pipe(takeUntil(this.unsub$)).subscribe(creator => (this.creator = creator))
+        this.posts$.pipe(takeUntil(this.unsub$)).subscribe(posts => console.log('posts =>', posts))
 
         this.store$.dispatch(new PostGetAction({ id: 'all' }))
+    }
+
+    ngOnDestroy(): void {
+        this.unsub$.next()
+        this.unsub$.complete()
     }
 }

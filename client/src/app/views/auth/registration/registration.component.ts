@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core'
+import {Component, OnDestroy, OnInit} from '@angular/core'
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 import { environment } from 'src/environments/environment'
 import { AuthService } from 'src/app/services/auth.service'
-import { debounceTime } from 'rxjs/operators'
+import {debounceTime, takeUntil} from 'rxjs/operators'
 import { IsdCountryCode } from '../../../../../../server/src/interfaces/auth/isdCountryCode'
 import { RegistrationForm } from '../../../../../../server/src/interfaces/auth/registration'
 import { IAuthError } from '../../../../../../server/src/interfaces/auth/authError'
 import { Router } from '@angular/router'
+import { Subject } from 'rxjs'
 
 @Component({
     selector: 'app-registration',
     templateUrl: './registration.component.html',
     styleUrls: ['./registration.component.less', '../auth.styles.less'],
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
     constructor(private authService: AuthService, private router: Router) {}
+
+    unsub$ = new Subject()
 
     IsdCountryCodes: IsdCountryCode[] | undefined
 
@@ -73,6 +76,7 @@ export class RegistrationComponent implements OnInit {
     ngOnInit(): void {
         this.authService
             .getIsdCountryCode()
+            .pipe(takeUntil(this.unsub$))
             .subscribe(val => (this.IsdCountryCodes = val))
 
         this.registrationForm.valueChanges
@@ -82,5 +86,12 @@ export class RegistrationComponent implements OnInit {
                     this.repeatPasswordError = false
                 else this.repeatPasswordError = true
             })
+    }
+
+
+
+    ngOnDestroy(): void {
+        this.unsub$.next()
+        this.unsub$.complete()
     }
 }

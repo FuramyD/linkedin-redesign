@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs'
 import { select, Store } from '@ngrx/store'
 import {
     profileAvatarSelector,
-    profileConnectionsSelector,
+    profileConnectionsSelector, profileContactInfoSelector,
     profileDescriptionSelector,
     profileHeaderBgSelector,
     profileLocalitySelector,
@@ -24,6 +24,7 @@ import {
 
 // @ts-ignore
 import { HystModal } from '../../../plugins/hystModal_.js'
+
 import {
     ProfileAcceptConnectionAction,
     ProfileDeclineConnectionAction,
@@ -31,6 +32,7 @@ import {
     ProfileSendConnectionAction,
 } from '../../../store/profile/profile.actions'
 import { ProfileService } from '../../../services/profile.service'
+import {IContact} from "../../../interfaces/contact";
 
 @Component({
     selector: 'app-profile-main',
@@ -78,6 +80,10 @@ export class ProfileMainComponent implements OnInit, OnDestroy {
     )
     locality$: Observable<string | null> = this.store$.pipe(
         select(profileLocalitySelector),
+    )
+
+    contactInfo$: Observable<IContact[]> = this.store$.pipe(
+        select(profileContactInfoSelector)
     )
 
     sentConnection: boolean = false
@@ -148,6 +154,10 @@ export class ProfileMainComponent implements OnInit, OnDestroy {
             linkAttributeName: 'data-hystmodal',
         })
 
+        const contactInfoModal = new HystModal({
+            linkAttributeName: 'data-hystmodal',
+        })
+
         const profile$ = this.store$.pipe(
             select(profileSelector),
             takeUntil(this.unsub$),
@@ -190,6 +200,12 @@ export class ProfileMainComponent implements OnInit, OnDestroy {
                 takeUntil(this.unsub$),
             )
             .subscribe(res => (this.isConnection = res))
+
+        this.contactInfo$.subscribe(res => {
+            console.log(res)
+        })
+
+
     }
 
     ngOnDestroy(): void {

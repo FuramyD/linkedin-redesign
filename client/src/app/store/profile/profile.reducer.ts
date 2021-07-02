@@ -7,6 +7,10 @@ import {
     SEND_CONNECTION_SUCCESS_ACTION_TYPE,
 } from './profile.actions'
 import { IFile } from '../../interfaces/file'
+import {IContact} from "../../interfaces/contact";
+import {IProject} from "../../interfaces/project";
+import {IExp} from "../../interfaces/exp";
+import {IUniversity} from "../../interfaces/university";
 
 export const profileNode = 'profile'
 
@@ -40,6 +44,10 @@ export interface ProfileState {
             country: string
             city: string
         }
+        contactInfo: IContact[]
+        projects: IProject[]
+        experience: IExp[]
+        education: IUniversity[]
     }
 }
 
@@ -70,6 +78,10 @@ const initialState: ProfileState = {
             country: '',
             city: '',
         },
+        contactInfo: [],
+        projects: [],
+        experience: [],
+        education: [],
     },
 }
 

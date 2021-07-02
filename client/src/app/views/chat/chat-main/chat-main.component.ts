@@ -1,9 +1,9 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core'
 import { ChatService } from '../../../services/chat.service'
-import { Observable } from 'rxjs'
+import {Observable, Subject} from 'rxjs'
 import { select, Store } from '@ngrx/store'
 import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
-import { map, take } from 'rxjs/operators'
+import {map, take, takeUntil} from 'rxjs/operators'
 import { Chat, ChatState } from '../../../store/chat/chat.reducer'
 import {
     currentChatSelector,
@@ -16,11 +16,13 @@ import { IMessages } from '../../../interfaces/chat/messages'
     templateUrl: './chat-main.component.html',
     styleUrls: ['./chat-main.component.less'],
 })
-export class ChatMainComponent implements OnInit {
+export class ChatMainComponent implements OnInit, OnDestroy {
     constructor(
         private chatService: ChatService,
         private store$: Store<MyProfileState | ChatState>,
     ) {}
+
+    unsub$ = new Subject()
 
     @Input() profileId: number = -1
 
@@ -84,11 +86,11 @@ export class ChatMainComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.currentChat$.subscribe(chat => {
+        this.currentChat$.pipe(takeUntil(this.unsub$)).subscribe(chat => {
             this.currentChatId = chat?.chat.chatId ?? -1
         })
 
-        this.messages$.subscribe(() => {
+        this.messages$.pipe(takeUntil(this.unsub$)).subscribe(() => {
             if (this.messages) {
                 setTimeout(() => {
                     const { nativeElement: messages } = this.messages as {
@@ -98,5 +100,10 @@ export class ChatMainComponent implements OnInit {
                 })
             }
         })
+    }
+
+    ngOnDestroy(): void {
+        this.unsub$.next()
+        this.unsub$.complete()
     }
 }

@@ -1,21 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 // @ts-ignore
 import { HystModal } from '../../../../../plugins/hystModal_.js'
 import { ProfileService } from '../../../../../services/profile.service'
 import { Router } from '@angular/router'
+import {takeUntil} from 'rxjs/operators'
+import {Subject} from 'rxjs'
 
 @Component({
     selector: 'app-edit-login-and-security',
     templateUrl: './edit-login-and-security.component.html',
     styleUrls: ['./edit-login-and-security.component.less'],
 })
-export class EditLoginAndSecurityComponent implements OnInit {
+export class EditLoginAndSecurityComponent implements OnInit, OnDestroy {
     constructor(
         private profileService: ProfileService,
         private router: Router,
     ) {}
+
+    unsub$ = new Subject()
 
     @Input() profileId: number = -1
     @Input() email: string = ''
@@ -97,7 +101,7 @@ export class EditLoginAndSecurityComponent implements OnInit {
             return
         }
 
-        this.profileService.changeEmail(this.profileId, email).subscribe(
+        this.profileService.changeEmail(this.profileId, email).pipe(takeUntil(this.unsub$)).subscribe(
             res => {
                 console.log(res.message)
             },
@@ -166,5 +170,10 @@ export class EditLoginAndSecurityComponent implements OnInit {
         const deleteAccountModal = new HystModal({
             linkAttributeName: 'data-hystmodal',
         })
+    }
+
+    ngOnDestroy(): void {
+        this.unsub$.next()
+        this.unsub$.complete()
     }
 }

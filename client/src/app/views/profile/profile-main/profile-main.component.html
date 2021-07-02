@@ -36,7 +36,7 @@
                         {{ description$ | async }}
                     </p>
                     <div class="controls">
-                        <button class="btn">Contact Info</button>
+                        <button class="btn" data-hystmodal="#contactInfoModal">Contact Info</button>
                         <button
                             routerLink="/profile/edit"
                             *ngIf="isMyProfile"
@@ -389,3 +389,23 @@
         </div>
     </div>
 </div>
+
+<!-- Contact Info Modal -->
+<div class="hystmodal" id="contactInfoModal" aria-hidden="true">
+    <div class="hystmodal__wrap">
+        <div class="hystmodal__window" role="dialog" aria-modal="true">
+            <button data-hystclose class="hystmodal__close">Close</button>
+            <div class="hystmodal__header">
+                <h2 class="hystmodal__title">Contact Info</h2>
+            </div>
+            <div class="hystmodal__body">
+                <div class="contactInfo">
+                    <div class="contact" *ngFor="let contact of (contactInfo$ | async)">{{
+                        contact.contactWay + ': ' + contact.data
+                    }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

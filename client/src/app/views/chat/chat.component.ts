@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { Observable } from 'rxjs'
+import {Observable, Subject} from 'rxjs'
 import { select, Store } from '@ngrx/store'
 import { myProfileIdSelector } from '../../store/my-profile/my-profile.selectors'
 import { ChatService } from '../../services/chat.service'
@@ -10,6 +10,7 @@ import {
     ChangeCurrentChatAction,
 } from '../../store/chat/chat.actions'
 import { EntityState } from '@ngrx/entity'
+import {takeUntil} from "rxjs/operators";
 
 @Component({
     selector: 'app-chat',
@@ -21,6 +22,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private store$: Store<MyProfileState | ChatState | EntityState<Chat>>,
     ) {}
+
+    unsub$ = new Subject()
 
     profileId: number = -1
     activeChat: number = -1
@@ -56,7 +59,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.profileId$.subscribe(id => {
+        this.profileId$.pipe(takeUntil(this.unsub$)).subscribe(id => {
             this.profileId = id
         })
 
@@ -67,5 +70,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         }, 100)
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        this.unsub$.next()
+        this.unsub$.complete()
+    }
 }
