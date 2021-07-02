@@ -1,26 +1,40 @@
 <div class="wrapper">
-	<div class="container">
-		<div class="container__header">
-			<h2 class="logo">Linked<svg icon="whiteLogo"></svg></h2>
-		</div>
-		<div class="container__body">
-			<div *ngIf="message" class="message">{{ message }}</div>
-			<form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="form">
-				<ul class="form__errors">
-					<li *ngIf="backendError">{{ backendError }}</li>
-				</ul>
-				
-				<div>
-					<label class="form__label" for="email">E-mail</label>
-					<input class="form__control" type="email" id="email" formControlName="email" required>
-				</div>
-				<div>
-					<label class="form__label" for="password">Password</label>
-					<input class="form__control" type="password" id="password" formControlName="password" required>
-				</div>
-				<button class="submit" type="submit">Sign in</button>
-				<span class="auth-link">New to LinkedIn? <a routerLink="/signup">Join now</a></span>
-			</form>
-		</div>
-	</div>
+    <div class="container">
+        <div class="container__header">
+            <h2 class="logo">Linked<svg icon="whiteLogo"></svg></h2>
+        </div>
+        <div class="container__body">
+            <div *ngIf="message" class="message">{{ message }}</div>
+            <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="form">
+                <ul class="form__errors">
+                    <li *ngIf="backendError">{{ backendError }}</li>
+                </ul>
+
+                <div>
+                    <label class="form__label" for="email">E-mail</label>
+                    <input
+                        class="form__control"
+                        type="email"
+                        id="email"
+                        formControlName="email"
+                        required
+                    />
+                </div>
+                <div>
+                    <label class="form__label" for="password">Password</label>
+                    <input
+                        class="form__control"
+                        type="password"
+                        id="password"
+                        formControlName="password"
+                        required
+                    />
+                </div>
+                <button class="submit" type="submit">Sign in</button>
+                <span class="auth-link"
+                    >New to LinkedIn? <a routerLink="/signup">Join now</a></span
+                >
+            </form>
+        </div>
+    </div>
 </div>

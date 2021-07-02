@@ -196,19 +196,17 @@ export class MyProfileEffects {
             ofType(CHANGE_ROLE_ACTION_TYPE),
             mergeMap((action: MyProfileChangeRoleAction) => {
                 const { role, id } = action.payload
-                return this.profileService
-                    .changeRole(role, id)
-                    .pipe(
-                        map(changed => {
-                            console.log(changed)
-                            return new MyProfileChangeRoleSuccessAction({ role })
-                        }),
-                        catchError(err => {
-                            console.log(err)
-                            return EMPTY
-                        })
-                    )
-            })
+                return this.profileService.changeRole(role, id).pipe(
+                    map(changed => {
+                        console.log(changed)
+                        return new MyProfileChangeRoleSuccessAction({ role })
+                    }),
+                    catchError(err => {
+                        console.log(err)
+                        return EMPTY
+                    }),
+                )
+            }),
         )
     }
 
@@ -220,19 +218,17 @@ export class MyProfileEffects {
             ofType(CHANGE_ABOUT_ACTION_TYPE),
             mergeMap((action: MyProfileChangeAboutAction) => {
                 const { about, id } = action.payload
-                return this.profileService
-                    .changeAbout(about, id)
-                    .pipe(
-                        map(changed => {
-                            console.log(changed)
-                            return new MyProfileChangeAboutSuccessAction({ about })
-                        }),
-                        catchError(err => {
-                            console.log(err)
-                            return EMPTY
-                        })
-                    )
-            })
+                return this.profileService.changeAbout(about, id).pipe(
+                    map(changed => {
+                        console.log(changed)
+                        return new MyProfileChangeAboutSuccessAction({ about })
+                    }),
+                    catchError(err => {
+                        console.log(err)
+                        return EMPTY
+                    }),
+                )
+            }),
         )
     }
 
@@ -247,14 +243,16 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeProfessionSuccessAction({ profession })
+                            return new MyProfileChangeProfessionSuccessAction({
+                                profession,
+                            })
                         }),
                         catchError(err => {
                             console.log(err)
                             return EMPTY
-                        })
+                        }),
                     )
-            })
+            }),
         )
     }
 
@@ -264,19 +262,19 @@ export class MyProfileEffects {
             ofType(CHANGE_LOCALITY_ACTION_TYPE),
             mergeMap((action: MyProfileChangeLocalityAction) => {
                 const { locality, id } = action.payload
-                return this.profileService
-                    .changeLocality(locality, id)
-                    .pipe(
-                        map(changed => {
-                            console.log(changed)
-                            return new MyProfileChangeLocalitySuccessAction({ locality })
-                        }),
-                        catchError(err => {
-                            console.log(err)
-                            return EMPTY
+                return this.profileService.changeLocality(locality, id).pipe(
+                    map(changed => {
+                        console.log(changed)
+                        return new MyProfileChangeLocalitySuccessAction({
+                            locality,
                         })
-                    )
-            })
+                    }),
+                    catchError(err => {
+                        console.log(err)
+                        return EMPTY
+                    }),
+                )
+            }),
         )
     }
 
@@ -291,14 +289,16 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeContactInfoSuccessAction({ contactInfo })
+                            return new MyProfileChangeContactInfoSuccessAction({
+                                contactInfo,
+                            })
                         }),
                         catchError(err => {
                             console.log(err)
                             return EMPTY
-                        })
+                        }),
                     )
-            })
+            }),
         )
     }
 
@@ -308,19 +308,19 @@ export class MyProfileEffects {
             ofType(CHANGE_PROJECTS_ACTION_TYPE),
             mergeMap((action: MyProfileChangeProjectsAction) => {
                 const { projects, id } = action.payload
-                return this.profileService
-                    .changeProjects(projects, id)
-                    .pipe(
-                        map(changed => {
-                            console.log(changed)
-                            return new MyProfileChangeProjectsSuccessAction({ projects })
-                        }),
-                        catchError(err => {
-                            console.log(err)
-                            return EMPTY
+                return this.profileService.changeProjects(projects, id).pipe(
+                    map(changed => {
+                        console.log(changed)
+                        return new MyProfileChangeProjectsSuccessAction({
+                            projects,
                         })
-                    )
-            })
+                    }),
+                    catchError(err => {
+                        console.log(err)
+                        return EMPTY
+                    }),
+                )
+            }),
         )
     }
 
@@ -335,14 +335,16 @@ export class MyProfileEffects {
                     .pipe(
                         map(changed => {
                             console.log(changed)
-                            return new MyProfileChangeExperienceSuccessAction({ experience })
+                            return new MyProfileChangeExperienceSuccessAction({
+                                experience,
+                            })
                         }),
                         catchError(err => {
                             console.log(err)
                             return EMPTY
-                        })
+                        }),
                     )
-            })
+            }),
         )
     }
 
@@ -352,19 +354,24 @@ export class MyProfileEffects {
             ofType(CHANGE_EDUCATION_ACTION_TYPE),
             mergeMap((action: MyProfileChangeEducationAction) => {
                 const { education, id } = action.payload
-                return this.profileService
-                    .changeEducation(education, id)
-                    .pipe(
-                        map(changed => {
-                            console.log(changed)
-                            return new MyProfileChangeEducationSuccessAction({ education })
-                        }),
-                        catchError(err => {
-                            console.log(err)
-                            return EMPTY
+                return this.profileService.changeEducation(education, id).pipe(
+                    map(changed => {
+                        console.log(changed)
+                        return new MyProfileChangeEducationSuccessAction({
+                            education,
                         })
-                    )
-            })
+                    }),
+                    catchError(err => {
+                        console.log(err)
+                        return EMPTY
+                    }),
+                )
+            }),
         )
+    }
+
+    @Effect()
+    findOtherUsers$(): Observable<MyProfileActions> {
+        return this.actions$.pipe(ofType())
     }
 }

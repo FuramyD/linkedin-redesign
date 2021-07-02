@@ -1,4 +1,16 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { IChat } from '../../../interfaces/chat/chat'
+import { IUser } from '../../../interfaces/user'
+import { Observable } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
+import { ChatService } from '../../../services/chat.service'
+import { select, Store } from '@ngrx/store'
+import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
+import { Chat, ChatState } from '../../../store/chat/chat.reducer'
+import {
+    allChatsSelector,
+    currentChatSelector,
+} from '../../../store/chat/chat.selectors'
 
 @Component({
     selector: 'app-chat-side',
@@ -6,23 +18,25 @@ import { Component, OnInit } from '@angular/core'
     styleUrls: ['./chat-side.component.less'],
 })
 export class ChatSideComponent implements OnInit {
-    constructor() {}
+    constructor(
+        private chatService: ChatService,
+        private store$: Store<MyProfileState | ChatState>,
+    ) {}
 
-    unread = [1]
+    @Input() profileId: number = -1
 
-    activeChat: string = ''
+    @Output() action = new EventEmitter<{ type: string; data: any }>()
 
-    activateChat(e: MouseEvent, chatList: HTMLElement): void {
-        if (e.target === chatList) return
+    allChats$: Observable<Chat[]> = this.store$.pipe(select(allChatsSelector))
 
-        const element = (e.target as HTMLElement).closest('.chat')
-        const chats = Array.from(chatList.children)
+    currentChat$: Observable<Chat | null | undefined> = this.store$.pipe(
+        select(currentChatSelector),
+    )
 
-        chats.forEach(chat => chat.classList.remove('active'))
-        element?.classList.add('active')
+    unread = []
 
-        this.activeChat = element?.querySelector('.name')?.textContent ?? ''
-        console.log(this.activeChat)
+    activateChat(chatId: number | string): void {
+        this.action.emit({ type: 'changeActiveChat', data: chatId })
     }
 
     ngOnInit(): void {}

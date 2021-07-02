@@ -30,6 +30,8 @@ export const POST_DONT_LIKE_ACTION_TYPE = '[POST] Dont like'
 export const POST_DONT_LIKE_SUCCESS_ACTION_TYPE = '[POST] Dont like success'
 export const POST_DONT_LIKE_FAILED_ACTION_TYPE = '[POST] Dont like failed'
 
+export const SORTING_POSTS_ACTION_TYPE = '[POST] sorting posts'
+
 /* COMMENTS TYPES */
 
 export const COMMENT_CREATE_ACTION_TYPE = '[COMMENT] Create'
@@ -223,6 +225,11 @@ export class PostCommentsCloseAction implements Action {
     ) {}
 }
 
+export class SortingPostsAction implements Action {
+    readonly type = SORTING_POSTS_ACTION_TYPE
+    constructor(public payload: { sortType: string }) {}
+}
+
 /* COMMENTS */
 
 export class CommentCreateAction implements Action {
@@ -355,6 +362,7 @@ export type PostActions =
     | PostDontLikeFailedAction
     | PostCommentsOpenAction
     | PostCommentsCloseAction
+    | SortingPostsAction
     | CommentCreateSuccessAction
     | CommentCreateFailedAction
     | CommentEditSuccessAction

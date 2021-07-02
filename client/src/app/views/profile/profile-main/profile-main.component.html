@@ -4,7 +4,10 @@
             <img [src]="headerBg$ | async" alt="bg" />
         </div>
         <div class="profile__header--info">
-            <div class="avatar-box" [style]="'background: url(' + (avatar$ | async) + ')'">
+            <div
+                class="avatar-box"
+                [style]="'background: url(' + (avatar$ | async) + ')'"
+            >
                 <img [src]="avatar$ | async" alt="avatar" />
             </div>
             <div class="information">
@@ -12,37 +15,76 @@
                     <h3 class="name">
                         {{ fullName$ | async }}
                         <span>
-                            <img src="../../../../assets/img/gold-logo.png" alt="gold-logo" />
+                            <img
+                                src="../../../../assets/img/gold-logo.png"
+                                alt="gold-logo"
+                            />
                         </span>
                     </h3>
-                    <p class="location">
+                    <p class="location" *ngIf="locality$ | async as locality">
                         <span>
-                            <img src="../../../../assets/img/location.png" alt="location" />
+                            <img
+                                src="../../../../assets/img/location.png"
+                                alt="location"
+                            />
                         </span>
-                        {{ locality$ | async }}
+                        {{ locality }}
                     </p>
                 </div>
                 <div class="information__content">
                     <p>
                         {{ description$ | async }}
                     </p>
-                    <button class="btn">Contact Info</button>
-                    <button routerLink="/profile/edit" *ngIf="isMyProfile" class="btn">
-                        <i class="fas fa-user-edit"></i>
-                        Edit profile
-                    </button>
-                    <button *ngIf="!isMyProfile && !sentConnection && !isConnection && !incomingConnection" data-hystmodal="#sendConnectionModal" class="btn">
-                        Send connection
-                    </button>
-                    <button *ngIf="!isMyProfile && sentConnection" class="btn-outline" (click)="declineConnection()">
-                        Connection was sent
-                    </button>
-                    <button *ngIf="!isMyProfile && incomingConnection" class="btn-outline" (click)="acceptConnection()">
-                        Accept connection
-                    </button>
-                    <button *ngIf="!isMyProfile && isConnection" class="btn-outline" (click)="removeConnection()">Remove connection</button>
-                    <button class="btn-outline" data-hystmodal="#connectionsListModal">{{ connectionsLength$ | async }} Connections</button>
-                    
+                    <div class="controls">
+                        <button class="btn">Contact Info</button>
+                        <button
+                            routerLink="/profile/edit"
+                            *ngIf="isMyProfile"
+                            class="btn"
+                        >
+                            <i class="fas fa-user-edit"></i>
+                            Edit profile
+                        </button>
+                        <button
+                            *ngIf="
+                                !isMyProfile &&
+                                !sentConnection &&
+                                !isConnection &&
+                                !incomingConnection
+                            "
+                            data-hystmodal="#sendConnectionModal"
+                            class="btn"
+                        >
+                            Send connection
+                        </button>
+                        <button
+                            *ngIf="!isMyProfile && sentConnection"
+                            class="btn-outline"
+                            (click)="declineConnection()"
+                        >
+                            Connection was sent
+                        </button>
+                        <button
+                            *ngIf="!isMyProfile && incomingConnection"
+                            class="btn-outline"
+                            (click)="acceptConnection()"
+                        >
+                            Accept connection
+                        </button>
+                        <button
+                            *ngIf="!isMyProfile && isConnection"
+                            class="btn-outline"
+                            (click)="removeConnection()"
+                        >
+                            Remove connection
+                        </button>
+                        <button
+                            class="btn-outline"
+                            data-hystmodal="#connectionsListModal"
+                        >
+                            {{ connectionsLength$ | async }} Connections
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -299,19 +341,30 @@
                 <div class="message">
                     <p class="message__title">Message</p>
                     <textarea
-                            class="message__textarea"
-                            id="message"
-                            rows="6"
-                            placeholder="If you want to say something, write it here"
-                            #textarea
+                        class="message__textarea"
+                        id="message"
+                        rows="6"
+                        placeholder="If you want to say something, write it here"
+                        #textarea
                     ></textarea>
                 </div>
-                
             </div>
             <div class="hystmodal__footer">
                 <div class="controls">
-                    <button (click)="textarea.value = ''" data-hystclose class="btn-outline decline">Decline</button>
-                    <button (click)="sendConnection(textarea.value)" data-hystclose class="btn send">Send connection</button>
+                    <button
+                        (click)="textarea.value = ''"
+                        data-hystclose
+                        class="btn-outline decline"
+                    >
+                        Decline
+                    </button>
+                    <button
+                        (click)="sendConnection(textarea.value)"
+                        data-hystclose
+                        class="btn send"
+                    >
+                        Send connection
+                    </button>
                 </div>
             </div>
         </div>
@@ -327,7 +380,11 @@
                 <h2 class="hystmodal__title">List of connections</h2>
             </div>
             <div class="hystmodal__body">
-                <app-users-list [connections]="(connections$ | async) || []" [isMyProfile]="isMyProfile"></app-users-list>
+                <app-users-list-mdl
+                    [connections]="(connections$ | async) || []"
+                    [isMyProfile]="isMyProfile"
+                    (action)="removeConnection($event.userId)"
+                ></app-users-list-mdl>
             </div>
         </div>
     </div>

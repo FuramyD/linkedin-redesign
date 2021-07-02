@@ -14,6 +14,7 @@ import {
     POST_LIKE_FAILED_ACTION_TYPE,
     POST_LIKE_SUCCESS_ACTION_TYPE,
     PostActions,
+    SORTING_POSTS_ACTION_TYPE,
 } from './post.actions'
 import { IPost } from '../../interfaces/post/post'
 import { IComment } from '../../interfaces/post/comment'
@@ -131,6 +132,41 @@ export const postReducer = (
                     return post
                 }),
             }
+        case SORTING_POSTS_ACTION_TYPE: {
+            if (action.payload.sortType === 'trending')
+                return {
+                    ...state,
+                    posts: state.posts
+                        .slice()
+                        .sort(
+                            (post1, post2) =>
+                                post2?.likes.length - post1?.likes.length,
+                        ),
+                }
+
+            if (action.payload.sortType === 'newest first')
+                return {
+                    ...state,
+                    posts: state.posts
+                        .slice()
+                        .sort(
+                            (post1, post2) =>
+                                post2.dateOfCreation - post1.dateOfCreation,
+                        ),
+                }
+            if (action.payload.sortType === 'lastest first')
+                return {
+                    ...state,
+                    posts: state.posts
+                        .slice()
+                        .sort(
+                            (post1, post2) =>
+                                post1.dateOfCreation - post2.dateOfCreation,
+                        ),
+                }
+
+            return state
+        }
         case COMMENT_CREATE_SUCCESS_ACTION_TYPE:
             const payload = action.payload as {
                 postId: number

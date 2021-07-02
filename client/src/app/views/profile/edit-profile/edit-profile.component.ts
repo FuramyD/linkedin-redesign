@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core'
 export class EditProfileComponent implements OnInit {
     constructor() {}
 
-    currentTab: string = 'Additional information' // 'Personal data'
+    currentTab: string = 'Personal data' // 'Additional information'
 
     changeTab(tab: string): void {
         this.currentTab = tab.trim()

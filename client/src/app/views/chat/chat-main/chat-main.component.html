@@ -1,55 +1,80 @@
-<div class="chat">
-	<div class="chat__header">
-		<div class="buddy-info">
-			<div class="name">Chat with <span>{{ 'buddy name' }}</span></div>
-			<div class="online-status" >
-				{{
-                	buddy.isOnline
-                    ? 'Online'
-                    : 'Last seen ' + dateParser(Date.now(), buddy.lastOnline)
-				}}
-			</div>
-		</div>
-		<div class="shared-media">
-			Shared media ({{ 'shared.length' }})
-		</div>
-	</div>
-	<div class="chat__body">
-		<div class="messages">
-			<div class="day">
-				Yesterday, 12 apr
-			</div>
-			<div *ngFor="let message of messages"
-				 [class.message-in]="message.type === 'in'"
-				 [class.message-out]="message.type === 'out'"
-			>
-				<div class="message">
-					<div class="content">{{ message.content }}</div>
-					<div class="info">
-						<div class="time">{{ message.time | date: 'h:mm a' }}</div>
-						<div *ngIf="message.type === 'out' && message.status" class="status">
-							<svg *ngIf="message.status === 'wait'" icon="chatStatusWait"></svg>
-							<svg *ngIf="message.status === 'sent'" icon="chatStatusSent"></svg>
-							<svg *ngIf="message.status === 'read'" icon="chatStatusRead"></svg>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="chat__footer">
-		<textarea
-				rows="3"
-				contenteditable="true"
-				onblur="this.value = this.value.trim()"
-				placeholder="White your message"
-				[(ngModel)]="messageContent"
-		></textarea>
-		<div class="controls">
-			<svg class="attach" icon="attach"></svg>
-			<button (click)="sendMessage()" class="send">
-				<svg icon="send"></svg>
-			</button>
-		</div>
-	</div>
+<div class="chat" *ngIf="currentChat$ | async as entity">
+    <div class="chat__header">
+        <div class="buddy-info">
+            <div class="name">
+                Chat with
+                <a [routerLink]="'/profile/' + entity.buddy.id">{{
+                    entity.buddy.firstName + ' ' + entity.buddy.lastName
+                }}</a>
+            </div>
+            <div class="online-status">
+                {{
+                    buddy.isOnline
+                        ? 'Online'
+                        : 'Last seen ' +
+                          dateParser(Date.now(), buddy.lastOnline)
+                }}
+            </div>
+        </div>
+        <div *ngIf="entity.chat as chat" class="shared-media">
+            Shared media ({{ chat.attached.length }})
+        </div>
+    </div>
+    <div class="chat__body" #messages>
+        <div class="messages" *ngFor="let dayMessages of messages$ | async">
+            <div class="day">
+                {{ dayMessages.day }}
+            </div>
+            <div
+                *ngFor="let message of dayMessages.dayMessages"
+                [class.message-in]="message.senderId !== profileId"
+                [class.message-out]="message.senderId === profileId"
+            >
+                <div class="message">
+                    <div class="content">{{ message.content }}</div>
+                    <div class="info">
+                        <div class="time">
+                            {{ message.time | date: 'h:mm a' }}
+                        </div>
+                        <div
+                            *ngIf="
+                                message.senderId === profileId && message.status
+                            "
+                            class="status"
+                        >
+                            <svg
+                                *ngIf="message.status === 'wait'"
+                                icon="chatStatusWait"
+                            ></svg>
+                            <svg
+                                *ngIf="message.status === 'sent'"
+                                icon="chatStatusSent"
+                            ></svg>
+                            <svg
+                                *ngIf="message.status === 'read'"
+                                icon="chatStatusRead"
+                            ></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat__footer">
+        <textarea
+            rows="3"
+            contenteditable="true"
+            onblur="this.value = this.value.trim()"
+            placeholder="Write your message"
+            [(ngModel)]="messageContent"
+        ></textarea>
+        <div class="controls">
+            <svg class="attach" icon="attach"></svg>
+            <button (click)="sendMessage()" class="send">
+                <svg icon="send"></svg>
+            </button>
+        </div>
+    </div>
 </div>
+
+<h2 *ngIf="!(currentChat$ | async)" class="info">Select a chat buddy</h2>

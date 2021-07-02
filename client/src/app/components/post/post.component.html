@@ -11,20 +11,26 @@
                 <div class="avatar-box">
                     <img
                         class="avatar"
-                        [src]="postInfo.creator.avatar || 'assets/img/avatar-man.png'"
+                        [src]="
+                            postInfo.creator.avatar ||
+                            'assets/img/avatar-man.png'
+                        "
                         alt="avatar"
                     />
                 </div>
                 <div class="description">
                     <span class="name">{{ postInfo.creator.fullName }}</span>
-                    <span class="profession">{{ postInfo.creator.profession }}</span>
+                    <span class="profession">{{
+                        postInfo.creator.profession
+                    }}</span>
                 </div>
             </div>
             <span class="date">
                 {{
                     !!postInfo.dateOfLastModify
-                    ? (postInfo.dateOfLastModify | date: 'medium') + '(edited)'
-                    : postInfo.dateOfCreation | date: 'medium'
+                        ? (postInfo.dateOfLastModify | date: 'medium') +
+                          '(edited)'
+                        : (postInfo.dateOfCreation | date: 'medium')
                 }}
             </span>
         </div>
@@ -32,7 +38,12 @@
     </div>
     <div class="post__footer">
         <div class="left-side">
-            <span (click)="likePost(like)" class="like" [class.liked]="liked" #like>
+            <span
+                (click)="likePost(like)"
+                class="like"
+                [class.liked]="liked"
+                #like
+            >
                 <svg icon="like"></svg>
                 {{ likes.length }}
             </span>
@@ -51,9 +62,9 @@
             <div *ngFor="let comment of postInfo.comments" class="comment">
                 <div class="avatar-box">
                     <img
-                            class="avatar"
-                            [src]="comment.creator.avatar"
-                            alt="avatar"
+                        class="avatar"
+                        [src]="comment.creator.avatar"
+                        alt="avatar"
                     />
                 </div>
                 <div class="content">
@@ -63,8 +74,9 @@
                         <span class="date">
                             {{
                                 !!comment.dateOfLastModify
-                                ? (comment.dateOfLastModify | date: 'medium') + '(edited)'
-                                : comment.dateOfCreation | date: 'medium'
+                                    ? (comment.dateOfLastModify
+                                          | date: 'medium') + '(edited)'
+                                    : (comment.dateOfCreation | date: 'medium')
                             }}
                         </span>
                         <span class="like">
@@ -75,9 +87,10 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="new-comment">
-            <textarea #commentInput
+            <textarea
+                #commentInput
                 rows="1"
                 contenteditable="true"
                 (input)="textareaResize($event)"

@@ -1,37 +1,44 @@
 <div class="feed__sidebar">
-	<div class="feed__sidebar__header">
-		<img src="../../../../assets/img/header-bg-2.png" alt="bg" class="header-bg">
-		<div class="profile-info">
-			<div class="avatar-box">
-				<img [src]="avatar$ | async" alt="avatar">
-			</div>
-			<div class="name">
-				{{ fullName$ | async }}
-				<span class="account-status"></span>
-			</div>
-			<div class="description">
-				{{ description$ | async }}
-			</div>
-			<button class="btn">Write new article</button>
-		</div>
-	</div>
-	<div class="groups">
-		<div class="groups__header">
-			<span class="title">My groups</span>
-			<a href="#" class="edit-list more">Edit list</a>
-		</div>
-		<div class="groups__body">
-			<div class="group">
-				<div class="group__icon">
-					<img src="../../../../assets/img/NGTU.jpg" alt="group-icon">
-				</div>
-				<div class="group__name">
-					{{ 'Nizhniy Novgorod State Technical University' }}
-				</div>
-			</div>
-		</div>
-		<div class="groups__footer">
-			<a class="more" href="#">show all ({{ 8 }})</a>
-		</div>
-	</div>
+    <div class="feed__sidebar__header">
+        <img
+            src="../../../../assets/img/header-bg-2.png"
+            alt="bg"
+            class="header-bg"
+        />
+        <div class="profile-info">
+            <div class="avatar-box">
+                <img [src]="avatar$ | async" alt="avatar" />
+            </div>
+            <div class="name">
+                {{ fullName$ | async }}
+                <span class="account-status"></span>
+            </div>
+            <div class="description">
+                {{ description$ | async }}
+            </div>
+            <button class="btn">Write new article</button>
+        </div>
+    </div>
+    <div class="groups">
+        <div class="groups__header">
+            <span class="title">My groups</span>
+            <a href="#" class="edit-list more">Edit list</a>
+        </div>
+        <div class="groups__body">
+            <div class="group">
+                <div class="group__icon">
+                    <img
+                        src="../../../../assets/img/NGTU.jpg"
+                        alt="group-icon"
+                    />
+                </div>
+                <div class="group__name">
+                    {{ 'Nizhniy Novgorod State Technical University' }}
+                </div>
+            </div>
+        </div>
+        <div class="groups__footer">
+            <a class="more" href="#">show all ({{ 8 }})</a>
+        </div>
+    </div>
 </div>

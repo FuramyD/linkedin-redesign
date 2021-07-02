@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Query, Res, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { Express, Request } from 'express'
 import { UsersService } from './users.service'
 import { CreateUserDto } from '../dto/create-user.dto'
@@ -9,11 +9,11 @@ import { IPersonalInfo } from '../interfaces/edit-profile/personalInfo'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
 import { extname } from 'path'
-import {IContact} from "../interfaces/contact";
-import {IProject} from "../interfaces/project";
-import {IExp} from "../interfaces/exp";
-import {IUniversity} from "../interfaces/university";
-import {ILocality} from "../interfaces/locality";
+import { IContact } from '../interfaces/contact'
+import { IProject } from '../interfaces/project'
+import { IExp } from '../interfaces/exp'
+import { IUniversity } from '../interfaces/university'
+import { ILocality } from '../interfaces/locality'
 
 const storage = diskStorage({
     destination: (req, file, callback) => {
@@ -49,9 +49,9 @@ export class UsersController {
     }
 
     @Get('find/:id')
-    async findUserById(@Param() param, @Res() res: Response): Promise<void> {
+    async findUserById(@Param() param, @Res() res: Response, @Query() query: { fullName?: string }): Promise<void> {
         if (param.id === 'all') {
-            const users = await this.usersService.findAllUsers()
+            const users = await this.usersService.findAllUsers(query)
             res.status(HttpStatus.OK).send({ users })
             return
         }
@@ -213,11 +213,7 @@ export class UsersController {
     }
 
     @Post(':id/change/locality')
-    async changeLocality(
-        @Param() param: { id: string },
-        @Body() data: { locality: ILocality },
-        @Res() res: Response
-    ): Promise<void> {
+    async changeLocality(@Param() param: { id: string }, @Body() data: { locality: ILocality }, @Res() res: Response): Promise<void> {
         const changed = await this.usersService.changeLocality(+param.id, data.locality)
 
         if (changed) res.status(HttpStatus.OK).send({ message: 'Locality has been changed' })
@@ -225,7 +221,11 @@ export class UsersController {
     }
 
     @Post(':id/change/contact-info')
-    async changeContactInfo(@Param() param: { id: string }, @Body() data: { contactInfo: IContact[] }, @Res() res: Response): Promise<void> {
+    async changeContactInfo(
+        @Param() param: { id: string },
+        @Body() data: { contactInfo: IContact[] },
+        @Res() res: Response,
+    ): Promise<void> {
         const changed = await this.usersService.changeContactInfo(+param.id, data.contactInfo)
 
         if (changed) res.status(HttpStatus.OK).send({ message: 'Contact information has been changed' })
@@ -261,5 +261,4 @@ export class UsersController {
         console.log('aaaa')
         await this.usersService.a(+param.id)
     }
-
 }

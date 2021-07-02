@@ -1,36 +1,73 @@
 <div class="invitations">
-	<div (click)="activateTab($event)" class="tabs">
-		<div class="tab active">Received</div>
-		<div class="tab">Sent</div>
-	</div>
-	
-	<div class="content">
-		<h2 class="no-connections" *ngIf="!newConnections.length && currentTab === 'received'">
-			You have no incoming connections yet
-		</h2>
-		<h2 class="no-connections" *ngIf="!sentConnections.length && currentTab === 'sent'">
-			You have no sent connections yet
-		</h2>
-		
-		<app-connections-list *ngIf="newConnections.length && currentTab === 'received'" [connections]="newConnections" [type]="'incoming'" (action)="action($event)"></app-connections-list>
-		<app-connections-list *ngIf="sentConnections.length && currentTab === 'sent'" [connections]="sentConnections" [type]="'sent'" (action)="action($event)"></app-connections-list>
-		
-		<div *ngIf="recentConnections.length" class="recent-connections">
-			<div class="title">Recent connections</div>
-			<div class="users">
-				<a *ngFor="let connection of recentConnections" [routerLink]="'/profile/' + connection.user.id" class="profile-link">
-					<div class="user">
-						<div class="avatar-box">
-							<img [src]="connection.user.info.avatar ? connection.user.info.avatar.url : 'assets/img/avatar-man.png'" alt="avatar">
-						</div>
-						<div class="info">
-							<div class="name">{{ connection.user.firstName + ' ' + connection.user.lastName }}</div>
-							<div class="profession">{{ connection.user.info.profession }}</div>
-						</div>
-						<div class="date">{{ connection.date | date: 'medium' }}</div>
-					</div>
-				</a>
-			</div>
-		</div>
-	</div>
+    <div (click)="activateTab($event)" class="tabs">
+        <div class="tab active">Received</div>
+        <div class="tab">Sent</div>
+    </div>
+
+    <div class="content">
+        <h2
+            class="no-connections"
+            *ngIf="!newConnections.length && currentTab === 'received'"
+        >
+            You have no incoming connections yet
+        </h2>
+        <h2
+            class="no-connections"
+            *ngIf="!sentConnections.length && currentTab === 'sent'"
+        >
+            You have no sent connections yet
+        </h2>
+
+        <app-connections-list
+            *ngIf="newConnections.length && currentTab === 'received'"
+            [connections]="newConnections"
+            [type]="'incoming'"
+            (action)="action($event)"
+        ></app-connections-list>
+        <app-connections-list
+            *ngIf="sentConnections.length && currentTab === 'sent'"
+            [connections]="sentConnections"
+            [type]="'sent'"
+            (action)="action($event)"
+        ></app-connections-list>
+
+        <div *ngIf="recentConnections.length" class="recent-connections">
+            <div class="title">Recent connections</div>
+            <div class="users">
+                <a
+                    *ngFor="let connection of recentConnections"
+                    [routerLink]="'/profile/' + connection.user.id"
+                    class="profile-link"
+                >
+                    <div class="user">
+                        <div class="avatar-box">
+                            <img
+                                [src]="
+                                    connection.user.info.avatar
+                                        ? connection.user.info.avatar.url
+                                        : 'assets/img/avatar-man.png'
+                                "
+                                alt="avatar"
+                            />
+                        </div>
+                        <div class="info">
+                            <div class="name">
+                                {{
+                                    connection.user.firstName +
+                                        ' ' +
+                                        connection.user.lastName
+                                }}
+                            </div>
+                            <div class="profession">
+                                {{ connection.user.info.profession }}
+                            </div>
+                        </div>
+                        <div class="date">
+                            {{ connection.date | date: 'medium' }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>

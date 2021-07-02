@@ -26,6 +26,12 @@ export class EditAdditionalInfoComponent implements OnInit {
 
     @Output() onChange = new EventEmitter<{ type: string; data: any }>()
 
+    /*
+     * Заполнение форм данными полученными из @Input() locality не работает, наверное
+     * форма создается раньше, чем данные приходят из родительского компонента.
+     * Поэтому заполнение формы текущими значениями идет в хуке ngOnInit.
+     */
+
     localityForm = new FormGroup({
         country: new FormControl(this.locality.country, [Validators.required]),
         city: new FormControl(this.locality.city, [Validators.required]),
@@ -40,6 +46,14 @@ export class EditAdditionalInfoComponent implements OnInit {
     jobError: string = ''
     educationError: string = ''
 
+    roleSuccessAlert: string = ''
+    aboutSuccessAlert: string = ''
+    professionSuccessAlert: string = ''
+    localitySuccessAlert: string = ''
+    contactInfoSuccessAlert: string = ''
+    projectsSuccessAlert: string = ''
+    jobSuccessAlert: string = ''
+    educationSuccessAlert: string = ''
 
     constructor() {}
 
@@ -233,7 +247,8 @@ export class EditAdditionalInfoComponent implements OnInit {
             }
 
             if (!this.dateValidation(job.start, job.end)) {
-                this.jobError = 'The date of dismissal cannot be earlier than the date of employment'
+                this.jobError =
+                    'The date of dismissal cannot be earlier than the date of employment'
                 return
             }
         }
@@ -254,7 +269,8 @@ export class EditAdditionalInfoComponent implements OnInit {
             }
 
             if (!this.dateValidation(university.start, university.end)) {
-                this.educationError = 'The graduation date of the university cannot be earlier than the admission date'
+                this.educationError =
+                    'The graduation date of the university cannot be earlier than the admission date'
                 return
             }
         }
@@ -277,13 +293,20 @@ export class EditAdditionalInfoComponent implements OnInit {
         const [endYear, endMonth, endDay] = end.split('-')
 
         if (
-            endYear < startYear
-            || ((endYear === startYear) && (endMonth < startMonth))
-            || ((endYear === startYear) && (endMonth === startMonth) && (endDay < startDay))
-        ) return false
+            endYear < startYear ||
+            (endYear === startYear && endMonth < startMonth) ||
+            (endYear === startYear &&
+                endMonth === startMonth &&
+                endDay < startDay)
+        )
+            return false
 
         return true
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        const { country, city } = this.localityForm.controls
+        country.setValue(this.locality.country)
+        city.setValue(this.locality.city)
+    }
 }

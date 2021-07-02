@@ -16,11 +16,11 @@ import {
     MyProfileActions,
     REMOVE_CONNECTION_SUCCESS_ACTION_TYPE,
 } from './my-profile.actions'
-import {IFile} from '../../interfaces/file'
-import {IContact} from '../../interfaces/contact'
-import {IProject} from '../../interfaces/project'
-import {IExp} from '../../interfaces/exp'
-import {IUniversity} from '../../interfaces/university'
+import { IFile } from '../../interfaces/file'
+import { IContact } from '../../interfaces/contact'
+import { IProject } from '../../interfaces/project'
+import { IExp } from '../../interfaces/exp'
+import { IUniversity } from '../../interfaces/university'
 
 export const myProfileNode = 'my profile'
 
@@ -180,64 +180,64 @@ export const myProfileReducer = (
                 ...state,
                 info: {
                     ...state.info,
-                    role: action.payload.role
-                }
+                    role: action.payload.role,
+                },
             }
         case CHANGE_ABOUT_SUCCESS_ACTION_TYPE:
             return {
                 ...state,
                 info: {
                     ...state.info,
-                    about: action.payload.about
-                }
+                    about: action.payload.about,
+                },
             }
         case CHANGE_PROFESSION_SUCCESS_ACTION_TYPE:
             return {
                 ...state,
                 info: {
                     ...state.info,
-                    profession: action.payload.profession
-                }
+                    profession: action.payload.profession,
+                },
             }
         case CHANGE_LOCALITY_SUCCESS_ACTION_TYPE:
             return {
                 ...state,
                 info: {
                     ...state.info,
-                    locality: action.payload.locality
-                }
+                    locality: action.payload.locality,
+                },
             }
         case CHANGE_CONTACT_INFO_SUCCESS_ACTION_TYPE:
             return {
                 ...state,
                 info: {
                     ...state.info,
-                    contactInfo: action.payload.contactInfo
-                }
+                    contactInfo: action.payload.contactInfo,
+                },
             }
         case CHANGE_PROJECTS_SUCCESS_ACTION_TYPE:
             return {
                 ...state,
                 info: {
                     ...state.info,
-                    projects: action.payload.projects
-                }
+                    projects: action.payload.projects,
+                },
             }
         case CHANGE_EXPERIENCE_SUCCESS_ACTION_TYPE:
             return {
                 ...state,
                 info: {
                     ...state.info,
-                    experience: action.payload.experience
-                }
+                    experience: action.payload.experience,
+                },
             }
         case CHANGE_EDUCATION_SUCCESS_ACTION_TYPE:
             return {
                 ...state,
                 info: {
                     ...state.info,
-                    education: action.payload.education
-                }
+                    education: action.payload.education,
+                },
             }
         default:
             return state

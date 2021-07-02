@@ -7,16 +7,24 @@ import { AuthState } from '../store/auth/auth.reducer'
 import { IUser } from '../interfaces/user'
 import { map } from 'rxjs/operators'
 import { IPersonalInfo } from '../interfaces/edit-profile/personalInfo'
-import {IContact} from "../interfaces/contact";
-import {IProject} from "../interfaces/project";
-import {IExp} from "../interfaces/exp";
-import {IUniversity} from "../interfaces/university";
+import { IContact } from '../interfaces/contact'
+import { IProject } from '../interfaces/project'
+import { IExp } from '../interfaces/exp'
+import { IUniversity } from '../interfaces/university'
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProfileService {
     constructor(private http: HttpClient) {}
+
+    findUsersByFullName(fullName: string): Observable<IUser[]> {
+        return this.http
+            .get<{ users: IUser[] }>(
+                `${environment.server_url}/users/find/all?fullName=${fullName}`,
+            )
+            .pipe(map(res => res.users))
+    }
 
     getProfileInfo<T>(id: number | string): Observable<T> {
         return this.http.get<T>(`${environment.server_url}/users/find/${id}`)
@@ -55,7 +63,7 @@ export class ProfileService {
                 }),
             )
         } else {
-            console.log('connections is empty')
+            // console.log('connections is empty')
             return of([])
         }
     }
@@ -158,30 +166,60 @@ export class ProfileService {
     }
 
     changeRole(role: string, id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/role`, { role })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/role`,
+            { role },
+        )
     }
     changeCompany(company: any, id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/company`, { company })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/company`,
+            { company },
+        )
     }
     changeAbout(about: string, id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/about`, { about })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/about`,
+            { about },
+        )
     }
     changeProfession(profession: string, id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/profession`, { profession })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/profession`,
+            { profession },
+        )
     }
-    changeLocality(locality: { country: string; city: string }, id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/locality`, { locality })
+    changeLocality(
+        locality: { country: string; city: string },
+        id: number,
+    ): Observable<any> {
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/locality`,
+            { locality },
+        )
     }
     changeContactInfo(contactInfo: IContact[], id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/contact-info`, { contactInfo })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/contact-info`,
+            { contactInfo },
+        )
     }
     changeProjects(projects: IProject[], id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/projects`, { projects })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/projects`,
+            { projects },
+        )
     }
     changeExperience(experience: IExp[], id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/experience`, { experience })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/experience`,
+            { experience },
+        )
     }
     changeEducation(education: IUniversity[], id: number): Observable<any> {
-        return this.http.post(`${environment.server_url}/users/${id}/change/education`, { education })
+        return this.http.post(
+            `${environment.server_url}/users/${id}/change/education`,
+            { education },
+        )
     }
 }

@@ -7,14 +7,14 @@ import {
     Output,
 } from '@angular/core'
 import { Subscription } from 'rxjs'
-import { IUser } from '../../../interfaces/user'
+import { IUser } from '../../../../interfaces/user'
 
 @Component({
-    selector: 'app-users-list',
-    templateUrl: './users-list.component.html',
-    styleUrls: ['./users-list.component.less'],
+    selector: 'app-users-list-mdl',
+    templateUrl: './users-list-mdl.component.html',
+    styleUrls: ['../users-list.component.less'],
 })
-export class UsersListComponent implements OnInit, OnDestroy {
+export class UsersListMdlComponent implements OnInit, OnDestroy {
     constructor() {}
 
     private subs: Subscription[] = []

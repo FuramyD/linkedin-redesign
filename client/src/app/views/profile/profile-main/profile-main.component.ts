@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { ProfileState } from '../../../store/profile/profile.reducer'
 import { initialProfileState } from '../profile.component'
-import { Observable } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { select, Store } from '@ngrx/store'
 import {
     profileAvatarSelector,
@@ -15,7 +15,7 @@ import {
     profileSentConnectionsSelector,
 } from '../../../store/profile/profile.selectors'
 import { IUser } from '../../../interfaces/user'
-import { map, switchMap } from 'rxjs/operators'
+import { map, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
 import {
     myProfileReceivedConnectionsSelector,
@@ -37,11 +37,13 @@ import { ProfileService } from '../../../services/profile.service'
     templateUrl: './profile-main.component.html',
     styleUrls: ['./profile-main.component.less', '../profile.component.less'],
 })
-export class ProfileMainComponent implements OnInit {
+export class ProfileMainComponent implements OnInit, OnDestroy {
     constructor(
         private store$: Store<ProfileState | MyProfileState>,
         private profileService: ProfileService,
     ) {}
+
+    unsub$ = new Subject()
 
     @Input() isMyProfile: boolean = false
 
@@ -69,11 +71,12 @@ export class ProfileMainComponent implements OnInit {
         switchMap(connections => {
             return this.profileService.getConnectionsById$(connections)
         }),
+        startWith([]),
     )
     connectionsLength$: Observable<number> = this.connections$.pipe(
         map(connections => connections.length),
     )
-    locality$: Observable<string> = this.store$.pipe(
+    locality$: Observable<string | null> = this.store$.pipe(
         select(profileLocalitySelector),
     )
 
@@ -83,8 +86,6 @@ export class ProfileMainComponent implements OnInit {
 
     myProfile = { id: 0 }
     profile = { id: 0 }
-
-    connectionsListModal: HystModal
 
     sendConnection(message: string): void {
         this.store$.dispatch(
@@ -115,11 +116,14 @@ export class ProfileMainComponent implements OnInit {
         )
     }
 
-    removeConnection(): void {
+    removeConnection(
+        userId: number = this.profile.id,
+        senderId: number = this.myProfile.id,
+    ): void {
         this.store$.dispatch(
             new ProfileRemoveConnectionAction({
-                senderId: this.myProfile.id,
-                userId: this.profile.id,
+                senderId,
+                userId,
             }),
         )
     }
@@ -144,25 +148,28 @@ export class ProfileMainComponent implements OnInit {
             linkAttributeName: 'data-hystmodal',
         })
 
-        const profile$ = this.store$.pipe(select(profileSelector))
+        const profile$ = this.store$.pipe(
+            select(profileSelector),
+            takeUntil(this.unsub$),
+        )
 
         this.store$
-            .pipe(select(myProfileSelector))
+            .pipe(select(myProfileSelector), takeUntil(this.unsub$))
             .subscribe(res => (this.myProfile = res))
 
         profile$.subscribe(res => {
             this.profile = res
-            this.store$
-                .pipe(
-                    select(profileSentConnectionsSelector),
-                    map(incoming =>
-                        incoming.some(
-                            user => user.userId === this.myProfile.id,
-                        ),
-                    ),
-                )
-                .subscribe(resp => (this.incomingConnection = resp))
         })
+
+        this.store$
+            .pipe(
+                select(profileSentConnectionsSelector),
+                map(incoming =>
+                    incoming.some(user => user.userId === this.myProfile.id),
+                ),
+                takeUntil(this.unsub$),
+            )
+            .subscribe(resp => (this.incomingConnection = resp))
 
         profile$
             .pipe(
@@ -170,6 +177,7 @@ export class ProfileMainComponent implements OnInit {
                 map(received =>
                     received.some(user => user.userId === this.myProfile.id),
                 ),
+                takeUntil(this.unsub$),
             )
             .subscribe(res => (this.sentConnection = res))
 
@@ -179,7 +187,13 @@ export class ProfileMainComponent implements OnInit {
                 map(connections =>
                     connections.some(user => user.userId === this.myProfile.id),
                 ),
+                takeUntil(this.unsub$),
             )
             .subscribe(res => (this.isConnection = res))
+    }
+
+    ngOnDestroy(): void {
+        this.unsub$.next()
+        this.unsub$.complete()
     }
 }

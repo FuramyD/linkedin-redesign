@@ -2,7 +2,8 @@ import { IAttach } from '../post/attach'
 import { IMessages } from './messages'
 
 export interface IChat {
-    userId: number
-    attached: IAttach[]
+    chatId: number
+    users: { userId: number }[]
     messages: IMessages[]
+    attached: IAttach[]
 }

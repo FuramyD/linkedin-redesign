@@ -1,63 +1,89 @@
 import { IChat } from '../../interfaces/chat/chat'
-import { ChatActions, RECEIVE_MESSAGE } from './chat.actions'
+import { IUser } from '../../interfaces/user'
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity'
+import {
+    CHANGE_CURRENT_CHAT,
+    ChatActions,
+    LOAD_CHATS_SUCCESS,
+    READ_MESSAGES,
+    RECEIVE_MESSAGE,
+} from './chat.actions'
+import { IMessages } from '../../interfaces/chat/messages'
 
-export interface ChatState {
+export const chatNode = 'chat'
+
+export interface Chat1 {
     chats: IChat[]
+    currentChat: IChat | null
+    currentBuddy: IUser | null
 }
 
-const initialState: ChatState = {
-    chats: [],
+export interface Chat {
+    chat: IChat
+    buddy: IUser
 }
 
-export const chatReducer = (
-    state: ChatState = initialState,
-    action: ChatActions,
-) => {
-    let oldChat
+export interface ChatState extends EntityState<Chat> {
+    currentChat: number | null
+    messages: IMessages[]
+}
+
+export const adapter: EntityAdapter<Chat> = createEntityAdapter<Chat>({
+    selectId: instance => instance.chat.chatId,
+})
+
+export const initialState: ChatState = adapter.getInitialState({
+    currentChat: null,
+    messages: [],
+})
+
+export const chatReducer = (state = initialState, action: ChatActions) => {
     switch (action.type) {
-        case RECEIVE_MESSAGE:
-            oldChat = state.chats.find(
-                chat => chat.userId === action.payload.senderId,
-            )
+        case LOAD_CHATS_SUCCESS:
+            if (state.currentChat !== -1) {
+                const curChat = action.payload.chats.find(
+                    c => c.chat.chatId === state.currentChat,
+                )
+                if (curChat) {
+                    return {
+                        ...adapter.setAll(action.payload.chats, state),
+                        messages: curChat.chat.messages,
+                    }
+                }
+            }
+            return adapter.setAll(action.payload.chats, state)
+        case CHANGE_CURRENT_CHAT:
             return {
                 ...state,
-                chats: [
-                    {
-                        userId: action.payload.senderId,
-                        attached: [
-                            ...(oldChat as IChat).attached,
-                            ...(action.payload.content.attached || []),
-                        ],
-                        messages: [
-                            ...(oldChat?.messages ?? []),
-                            ...(((oldChat?.messages ?? []).some(msg => {
-                                const day = new Date().toDateString()
-                                return msg.day === day
-                            }) &&
-                                (oldChat?.messages ?? []).map(msg => {
-                                    const day = new Date().toDateString()
-                                    if (msg.day === day) {
-                                        return {
-                                            day,
-                                            dayMessages: [
-                                                ...msg.dayMessages,
-                                                action.payload.content,
-                                            ],
-                                        }
-                                    }
-                                    return msg
-                                })) || [
-                                {
-                                    day: new Date().toDateString(),
-                                    dayMessages: [action.payload.content],
-                                },
-                            ]),
-                        ],
-                    },
-                    ...state.chats,
-                ],
+                currentChat: action.payload.id,
+                messages: state.entities[action.payload.id]?.chat.messages,
+            }
+        case RECEIVE_MESSAGE:
+            if (action.payload.chatId === state.currentChat) {
+                return {
+                    ...state,
+                    messages: action.payload.messages,
+                }
+            }
+            return state
+        case READ_MESSAGES:
+            return {
+                ...state,
+                messages: action.payload.messages,
             }
         default:
             return state
     }
 }
+
+const {
+    selectIds,
+    selectEntities,
+    selectAll,
+    selectTotal,
+} = adapter.getSelectors()
+
+export const selectChatIds = selectIds
+export const selectChatEntities = selectEntities
+export const selectAllChats = selectAll
+export const selectChatTotal = selectTotal

@@ -80,8 +80,11 @@ export const profileDOBSelector = createSelector(
 export const profileLocalitySelector = createSelector(
     profileFeatureSelector,
     state => {
-        const locality = state.info.locality
-        return `${locality.city}, ${locality.country}`
+        const { city, country } = state.info.locality
+        if (city && country) return `${city}, ${country}`
+        if (city) return `${city}`
+        if (country) return `${country}`
+        return null
     },
 )
 

@@ -1,5 +1,15 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
 import { ChatService } from '../../../services/chat.service'
+import { Observable } from 'rxjs'
+import { select, Store } from '@ngrx/store'
+import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
+import { map, take } from 'rxjs/operators'
+import { Chat, ChatState } from '../../../store/chat/chat.reducer'
+import {
+    currentChatSelector,
+    messagesSelector,
+} from '../../../store/chat/chat.selectors'
+import { IMessages } from '../../../interfaces/chat/messages'
 
 @Component({
     selector: 'app-chat-main',
@@ -7,7 +17,28 @@ import { ChatService } from '../../../services/chat.service'
     styleUrls: ['./chat-main.component.less'],
 })
 export class ChatMainComponent implements OnInit {
-    constructor(private chatService: ChatService) {}
+    constructor(
+        private chatService: ChatService,
+        private store$: Store<MyProfileState | ChatState>,
+    ) {}
+
+    @Input() profileId: number = -1
+
+    currentChatId: number = -1
+
+    // allChats$: Observable<IChat[]> = this.store$.pipe(
+    //     select(chatsSelector)
+    // )
+
+    @ViewChild('messages') messages: ElementRef | null = null
+
+    currentChat$: Observable<Chat | null | undefined> = this.store$.pipe(
+        select(currentChatSelector),
+    )
+
+    messages$: Observable<IMessages[] | never[] | undefined> = this.store$.pipe(
+        select(messagesSelector),
+    )
 
     buddy = {
         isOnline: false,
@@ -18,41 +49,17 @@ export class ChatMainComponent implements OnInit {
 
     messageContent: string = ''
 
-    messages = [
-        {
-            type: 'in',
-            content: 'Hello!',
-            time: Date.now(),
-            status: 'sent',
-        },
-        {
-            type: 'in',
-            content: 'How do you do?',
-            time: Date.now(),
-            status: 'sent',
-        },
-        {
-            type: 'out',
-            content: 'Hello, my friend!',
-            time: Date.now(),
-            status: 'read',
-        },
-        {
-            type: 'out',
-            content: "I'm fine, thank you)",
-            time: Date.now(),
-            status: 'read',
-        },
-        {
-            type: 'out',
-            content: 'And you?',
-            time: Date.now(),
-            status: 'read',
-        },
-    ]
-
     sendMessage(): void {
-        this.chatService.test(this.messageContent)
+        console.log('chatId:', this.currentChatId)
+        console.log('profileID:', this.profileId)
+        console.log('message:', this.messageContent)
+        if (this.messageContent === '') return
+        this.chatService.sendMessage(
+            this.messageContent,
+            this.profileId,
+            this.currentChatId,
+        )
+        this.messageContent = ''
     }
 
     dateParser(now: number, last: number): string {
@@ -76,5 +83,20 @@ export class ChatMainComponent implements OnInit {
         } else return 'minute ago'
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.currentChat$.subscribe(chat => {
+            this.currentChatId = chat?.chat.chatId ?? -1
+        })
+
+        this.messages$.subscribe(() => {
+            if (this.messages) {
+                setTimeout(() => {
+                    const { nativeElement: messages } = this.messages as {
+                        nativeElement: HTMLElement
+                    }
+                    messages.scrollTop = messages.scrollHeight
+                })
+            }
+        })
+    }
 }

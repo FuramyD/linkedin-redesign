@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core'
 
-import { io } from 'socket.io-client'
+import * as io from 'socket.io-client'
 import { Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { Socket } from 'ngx-socket-io'
 
 @Injectable({
     providedIn: 'root',
 })
 export class WebSocketService {
-    constructor(private socket: Socket) {
-        // this.socket = io(environment.server_url)
+    private socket: SocketIOClient.Socket
+
+    constructor() {
+        this.socket = io(environment.server_url, {
+            transports: ['websocket', 'polling'],
+        })
     }
 
     listen<T>(eventName: string): Observable<T> {
@@ -21,7 +24,7 @@ export class WebSocketService {
         })
     }
 
-    emit(eventName: string, data: any): void {
+    emit<T>(eventName: string, data: T): void {
         this.socket.emit(eventName, data)
     }
 }

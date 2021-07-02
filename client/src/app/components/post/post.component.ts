@@ -127,9 +127,12 @@ export class PostComponent implements OnInit {
                     }
                 }),
             )
-            .subscribe(creator => (this.profile = creator))
-
-        this.liked = !!this.likes.find(like => like.userId === this.profile.id)
+            .subscribe(creator => {
+                this.profile = creator
+                this.liked = this.likes.some(
+                    like => like.userId === this.profile.id,
+                )
+            })
 
         console.log('likes', this.likes)
         console.log('liked', this.liked)

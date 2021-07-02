@@ -84,8 +84,10 @@ export class InvitationsComponent implements OnInit, OnDestroy {
                                     message: (connections.find(
                                         connection =>
                                             connection.userId === user.id,
-                                    ) as { userId: number; message: string })
-                                        .message,
+                                    ) as {
+                                        userId: number
+                                        message: string
+                                    }).message,
                                 },
                             ]
                         }),

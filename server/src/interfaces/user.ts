@@ -1,9 +1,8 @@
 import { IFile } from './file'
-import {IContact} from "./contact";
-import {IProject} from "./project";
-import {IExp} from "./exp";
-import {IUniversity} from "./university";
-
+import { IContact } from './contact'
+import { IProject } from './project'
+import { IExp } from './exp'
+import { IUniversity } from './university'
 
 export interface IUser {
     id: number

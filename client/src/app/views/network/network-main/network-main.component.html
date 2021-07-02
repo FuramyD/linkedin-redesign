@@ -1,14 +1,15 @@
 <div class="network-main">
-	<app-invitations
-			*ngIf="activeTab === 'invitations'"
-			[myProfileId]="myProfileId"
-			[myConnections$]="myConnections$"
-	></app-invitations>
-	<h2 *ngIf="activeTab === 'connections'" class="title">Connections</h2>
-	<app-users-list
-			*ngIf="activeTab === 'connections'"
-			[connections]="myConnections"
-			[isMyProfile]="true"
-			(action)="removeConnection($event)"
-	></app-users-list>
+    <app-invitations
+        *ngIf="activeTab === 'invitations'"
+        [myProfileId]="myProfileId"
+        [myConnections$]="myConnections$"
+    ></app-invitations>
+    <h2 *ngIf="activeTab === 'connections'" class="title">Connections</h2>
+    <app-users-list-nwk
+        *ngIf="activeTab === 'connections'"
+        [connections]="myConnections"
+        [isMyProfile]="true"
+        [myProfileId]="myProfileId"
+        (action)="connectionsActionHandler($event)"
+    ></app-users-list-nwk>
 </div>

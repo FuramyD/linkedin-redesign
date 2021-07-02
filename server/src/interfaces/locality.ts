@@ -1,4 +1,4 @@
 export interface ILocality {
-    country: string,
+    country: string
     city: string
 }

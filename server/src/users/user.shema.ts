@@ -1,10 +1,10 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 import { strict } from 'assert'
-import {IContact} from "../interfaces/contact";
-import {IProject} from "../interfaces/project";
-import {IExp} from "../interfaces/exp";
-import {IUniversity} from "../interfaces/university";
+import { IContact } from '../interfaces/contact'
+import { IProject } from '../interfaces/project'
+import { IExp } from '../interfaces/exp'
+import { IUniversity } from '../interfaces/university'
 
 export type UserDocument = User & Document
 
@@ -55,17 +55,32 @@ export class User {
             contactInfo: [{ contactWay: String, data: String }],
             projects: [
                 {
-                    name: String, role: String, date: String, about: String,
-                    poster: { fileName: String, encoding: String, mimetype: String, url: String, size: Number }
-                }],
-            experience: [{
-                companyName: String, profession: String, start: String, end: String,
-                logo: { fileName: String, encoding: String, mimetype: String, url: String, size: Number }
-            }],
-            education: [{
-                name: String, facultyAndDegree: String, comment: String, start: String, end: String,
-                logo: { fileName: String, encoding: String, mimetype: String, url: String, size: Number }
-            }],
+                    name: String,
+                    role: String,
+                    date: String,
+                    about: String,
+                    poster: { fileName: String, encoding: String, mimetype: String, url: String, size: Number },
+                },
+            ],
+            experience: [
+                {
+                    companyName: String,
+                    profession: String,
+                    start: String,
+                    end: String,
+                    logo: { fileName: String, encoding: String, mimetype: String, url: String, size: Number },
+                },
+            ],
+            education: [
+                {
+                    name: String,
+                    facultyAndDegree: String,
+                    comment: String,
+                    start: String,
+                    end: String,
+                    logo: { fileName: String, encoding: String, mimetype: String, url: String, size: Number },
+                },
+            ],
             dateOfLastPasswordUpdate: Number,
         }),
     )

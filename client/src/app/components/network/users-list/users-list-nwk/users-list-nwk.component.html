@@ -1,0 +1,166 @@
+<div class="connections">
+    <input
+        type="search"
+        placeholder="Search connections"
+        class="connections__search"
+        #searchConnections
+    />
+    <h2 *ngIf="connections.length === 0" class="no-connections">
+        You have no connections yet
+    </h2>
+    <div *ngIf="connections.length" class="connections__list">
+        <div
+            *ngFor="let connection of connections"
+            class="connection"
+            [class.justify-content-center]="!isMyProfile"
+        >
+            <a
+                data-hystclose
+                [routerLink]="'/profile/' + connection.user.id"
+                class="user"
+            >
+                <div class="avatar-box">
+                    <img
+                        [src]="
+                            connection.user.info.avatar?.url ||
+                            'assets/img/avatar-man.png'
+                        "
+                        alt="avatar"
+                    />
+                </div>
+                <div class="info">
+                    <div class="name">
+                        {{ connection.user.firstName }}
+                        {{ connection.user.lastName }}
+                    </div>
+                    <div class="profession">
+                        {{ connection.user.info.profession }}
+                    </div>
+                    <div class="user-connections">
+                        {{
+                            connection.user.info.connections.length
+                        }}
+                        connections
+                    </div>
+                    <!--					<div class="date">{{ connection.date }}</div>-->
+                </div>
+            </a>
+            <button
+                *ngIf="isMyProfile"
+                (click)="removeConnection(connection.user.id)"
+                class="btn"
+            >
+                Remove
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="otherUsers.length" class="connections__list other">
+        <h2>Other users</h2>
+        <div
+            *ngFor="let connection of otherUsers"
+            class="connection"
+            [class.justify-content-center]="!isMyProfile"
+        >
+            <a
+                data-hystclose
+                [routerLink]="'/profile/' + connection.id"
+                class="user"
+            >
+                <div class="avatar-box">
+                    <img
+                        [src]="
+                            connection.info.avatar?.url ||
+                            'assets/img/avatar-man.png'
+                        "
+                        alt="avatar"
+                    />
+                </div>
+                <div class="info">
+                    <div class="name">
+                        {{ connection.firstName }} {{ connection.lastName }}
+                    </div>
+                    <div class="profession">
+                        {{ connection.info.profession }}
+                    </div>
+                    <div class="user-connections">
+                        {{ connection.info.connections.length }} connections
+                    </div>
+                    <!--					<div class="date">{{ connection.date }}</div>-->
+                </div>
+            </a>
+            <button
+                *ngIf="
+                    !isMyConnection(connections, connection.id) &&
+                    !isMySentConnection(connection) &&
+                    !isMyIncomingConnection(connection)
+                "
+                (click)="currentUserId = connection.id"
+                data-hystmodal="#sendConnectionModal"
+                class="btn"
+            >
+                Add
+            </button>
+            <button
+                *ngIf="isMySentConnection(connection)"
+                (click)="cancelConnection(connection.id)"
+                class="btn"
+            >
+                Cancel
+            </button>
+            <div *ngIf="isMyIncomingConnection(connection)" class="controls">
+                <button (click)="acceptConnection(connection.id)" class="btn">
+                    Accept
+                </button>
+                <button
+                    (click)="declineConnection(connection.id)"
+                    class="btn-outline decline"
+                >
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal send connection -->
+<div class="hystmodal" id="sendConnectionModal" aria-hidden="true">
+    <div class="hystmodal__wrap">
+        <div class="hystmodal__window" role="dialog" aria-modal="true">
+            <button data-hystclose class="hystmodal__close">Close</button>
+            <div class="hystmodal__header">
+                <h2 class="hystmodal__title">Send connection</h2>
+            </div>
+            <div class="hystmodal__body">
+                <div class="message">
+                    <p class="message__title">Message</p>
+                    <textarea
+                        class="message__textarea"
+                        id="message"
+                        rows="6"
+                        placeholder="If you want to say something, write it here"
+                        #textarea
+                    ></textarea>
+                </div>
+            </div>
+            <div class="hystmodal__footer">
+                <div class="controls">
+                    <button
+                        (click)="textarea.value = ''"
+                        data-hystclose
+                        class="btn-outline decline"
+                    >
+                        Decline
+                    </button>
+                    <button
+                        (click)="sendConnection(currentUserId, textarea.value)"
+                        data-hystclose
+                        class="btn send"
+                    >
+                        Send connection
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

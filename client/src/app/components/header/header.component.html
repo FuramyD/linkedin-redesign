@@ -1,48 +1,46 @@
 <header class="header">
-	<div class="left-side">
-		<nav class="navigation">
-			<a class="link" id="logo" routerLink="/feed">
-				<img alt="logo" src="../../assets/img/logo.png"/>
-			</a>
-			<a
-					*ngFor="let route of routes"
-					[class.active]="location.pathname === route.path"
-					[routerLink]="route.path"
-					class="link"
-			>
-				<svg [icon]="route.icon" class="icon"></svg>
-				{{ route.name }}
-			</a>
-		</nav>
-	</div>
-	<div class="right-side">
-		<a class="profile-link" routerLink="/profile">
-			<div class="profile">
-				<div class="photo">
-					<img [src]="(avatar$ | async)" alt="avatar" id="avatar"/>
-				</div>
-				<div class="info">
-					<p class="name">
-						{{ fullName$ | async }} <span>YOU</span>
-					</p>
-					<p class="views">
-						{{ currentViews$ | async }} views today
-						<span id="progress"
-							  [class.danger]="viewsProgress() < 0"
-							  [class.success]="viewsProgress() > 0"
-							  [class.base]="viewsProgress() === 0"
-						>
+    <div class="left-side">
+        <nav class="navigation">
+            <a class="link" id="logo" routerLink="/feed">
+                <img alt="logo" src="../../assets/img/logo.png" />
+            </a>
+            <a
+                *ngFor="let route of routes"
+                [class.active]="location.pathname === route.path"
+                [routerLink]="route.path"
+                class="link"
+            >
+                <svg [icon]="route.icon" class="icon"></svg>
+                {{ route.name }}
+            </a>
+        </nav>
+    </div>
+    <div class="right-side">
+        <a class="profile-link" routerLink="/profile">
+            <div class="profile">
+                <div class="photo">
+                    <img [src]="avatar$ | async" alt="avatar" id="avatar" />
+                </div>
+                <div class="info">
+                    <p class="name">{{ fullName$ | async }} <span>YOU</span></p>
+                    <p class="views">
+                        {{ currentViews$ | async }} views today
+                        <span
+                            id="progress"
+                            [class.danger]="viewsProgress() < 0"
+                            [class.success]="viewsProgress() > 0"
+                            [class.base]="viewsProgress() === 0"
+                        >
                             {{ viewsProgress() | prefixPlus }}
-							<svg [icon]="trendingIcon()"
-							></svg>
+                            <svg [icon]="trendingIcon()"></svg>
                         </span>
-					</p>
-				</div>
-			</div>
-		</a>
-		<a class="link" href="#">
-			<svg class="icon" icon="other"></svg>
-			<p>OTHER</p>
-		</a>
-	</div>
+                    </p>
+                </div>
+            </div>
+        </a>
+        <a class="link" href="#">
+            <svg class="icon" icon="other"></svg>
+            <p>OTHER</p>
+        </a>
+    </div>
 </header>

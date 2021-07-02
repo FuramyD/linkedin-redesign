@@ -1,18 +1,43 @@
 <div class="chat-side">
-	<div class="title">Chats</div>
-	
-	<div class="chats" (click)="activateChat($event, chats)" #chats>
-		<div class="chat" *ngFor="let a of [1,2,3,4,5,6,7]">
-			<div class="user">
-				<div class="avatar-box">
-					<img src="assets/img/avatar-man.png" alt="avatar">
-				</div>
-				<div class="info">
-					<div class="name">{{ 'User Name' }}</div>
-					<div class="last-message">{{ 'Last message' }}</div>
-				</div>
-			</div>
-			<div *ngIf="unread.length" class="unread">{{ unread.length+4 }}</div>
-		</div>
-	</div>
+    <div class="title">Chats</div>
+
+    <div class="chats" #chats>
+        <div
+            class="chat"
+            *ngFor="let entity of allChats$ | async"
+            [class.active]="
+                (currentChat$ | async)?.buddy?.id === entity.buddy.id
+            "
+            (click)="activateChat(entity.chat.chatId)"
+        >
+            <div class="user">
+                <div class="avatar-box">
+                    <img
+                        [src]="
+                            entity.buddy.info.avatar?.url ||
+                            'assets/img/avatar-man.png'
+                        "
+                        alt="avatar"
+                    />
+                </div>
+                <div class="info">
+                    <div class="name">
+                        {{
+                            entity.buddy.firstName + ' ' + entity.buddy.lastName
+                        }}
+                    </div>
+                    <div class="profession">
+                        {{ entity.buddy.info.profession }}
+                    </div>
+                    <!--					<div class="last-message">-->
+                    <!--                        {{-->
+                    <!--                            (entity.chat.messages[entity.chat.messages.length - 1]?.dayMessages-->
+                    <!--                            [entity.chat.messages[entity.chat.messages.length]?.dayMessages.length - 1].content) || ''-->
+                    <!--                        }}-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+            <div *ngIf="unread.length" class="unread">{{ unread.length }}</div>
+        </div>
+    </div>
 </div>

@@ -92,7 +92,8 @@
         }
     }
 
-    .alert-error, .alert-success {
+    .alert-error,
+    .alert-success {
         width: 100%;
 
         margin-top: 20px;
@@ -116,13 +117,13 @@
     }
 
     .alert-error {
-        background-color: rgba(@danger, .2);
+        background-color: rgba(@danger, 0.2);
         border-color: @danger;
         color: darken(@danger, 10%);
     }
 
     .alert-success {
-        background-color: rgba(@success, .2);
+        background-color: rgba(@success, 0.2);
         border-color: @success;
         color: darken(@success, 10%);
     }
@@ -178,7 +179,7 @@
                 height: 18px;
 
                 fill: #aaa;
-                transition: fill .1s linear;
+                transition: fill 0.1s linear;
                 cursor: pointer;
 
                 &:hover {
@@ -195,7 +196,6 @@
 
     .projects {
         .project {
-
             .poster-upload {
                 .uploaded {
                     margin-top: 20px;
@@ -221,7 +221,9 @@
         }
     }
 
-    .project, .job, .university {
+    .project,
+    .job,
+    .university {
         position: relative;
         padding-bottom: 20px;
         margin-top: 20px;
@@ -237,7 +239,7 @@
             right: 0;
             top: 10px;
 
-            transition: fill .1s linear;
+            transition: fill 0.1s linear;
 
             &:hover {
                 fill: #777;
@@ -249,18 +251,22 @@
             border-bottom: 1px solid #aaa;
         }
 
-        .title, .error {
+        .title,
+        .error {
             padding-bottom: 0;
             border-bottom: 0;
         }
     }
 
-    .projects, .experience, .education, .contact-info {
+    .projects,
+    .experience,
+    .education,
+    .contact-info {
         .error {
             padding: 10px 20px;
             margin-bottom: 10px;
 
-            background-color: rgba(@danger, .3);
+            background-color: rgba(@danger, 0.3);
             border: 2px solid @danger;
             border-radius: 8px;
             color: darken(@danger, 10%);

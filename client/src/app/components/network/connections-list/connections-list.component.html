@@ -1,30 +1,71 @@
 <div class="connections">
-	<div class="connections__have">
-		You have <span>{{ connections.length }} {{ type }} connections</span>
-	</div>
-	
-	<div class="connections__list">
-		<div *ngFor="let connection of connections" class="connection">
-			<a class="profile-link" [routerLink]="'/profile/' + connection.user.id">
-				<div class="user">
-					<div class="avatar-box">
-						<img [src]="connection.user.info.avatar ? connection.user.info.avatar.url : 'assets/img/avatar-man.png'" alt="avatar">
-					</div>
-					<div class="info">
-						<div class="name">{{ connection.user.firstName + ' ' + connection.user.lastName }}</div>
-						<div class="profession">{{ connection.user.info.profession }}</div>
-						<div class="connections-count">{{ connection.user.info.connections.length + ' connections' }}</div>
-					</div>
-				</div>
-			</a>
-			<div class="message">
-				{{ connection.message }}
-			</div>
-			<div class="controls">
-				<button *ngIf="type === 'incoming'" class="btn-accept" (click)="acceptConnection(connection.user.id)">Accept</button>
-				<button *ngIf="type === 'incoming'" class="btn-decline" (click)="declineConnection(connection.user.id)">Decline</button>
-				<button *ngIf="type === 'sent'" class="btn-decline" (click)="cancelConnection(connection.user.id)">Cancel</button>
-			</div>
-		</div>
-	</div>
+    <div class="connections__have">
+        You have <span>{{ connections.length }} {{ type }} connections</span>
+    </div>
+
+    <div class="connections__list">
+        <div *ngFor="let connection of connections" class="connection">
+            <a
+                class="profile-link"
+                [routerLink]="'/profile/' + connection.user.id"
+            >
+                <div class="user">
+                    <div class="avatar-box">
+                        <img
+                            [src]="
+                                connection.user.info.avatar
+                                    ? connection.user.info.avatar.url
+                                    : 'assets/img/avatar-man.png'
+                            "
+                            alt="avatar"
+                        />
+                    </div>
+                    <div class="info">
+                        <div class="name">
+                            {{
+                                connection.user.firstName +
+                                    ' ' +
+                                    connection.user.lastName
+                            }}
+                        </div>
+                        <div class="profession">
+                            {{ connection.user.info.profession }}
+                        </div>
+                        <div class="connections-count">
+                            {{
+                                connection.user.info.connections.length +
+                                    ' connections'
+                            }}
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="message">
+                {{ connection.message }}
+            </div>
+            <div class="controls">
+                <button
+                    *ngIf="type === 'incoming'"
+                    class="btn-accept"
+                    (click)="acceptConnection(connection.user.id)"
+                >
+                    Accept
+                </button>
+                <button
+                    *ngIf="type === 'incoming'"
+                    class="btn-decline"
+                    (click)="declineConnection(connection.user.id)"
+                >
+                    Decline
+                </button>
+                <button
+                    *ngIf="type === 'sent'"
+                    class="btn-decline"
+                    (click)="cancelConnection(connection.user.id)"
+                >
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

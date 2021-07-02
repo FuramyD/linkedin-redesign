@@ -7,10 +7,11 @@ import { ChatSideComponent } from './chat-side/chat-side.component'
 import { FormsModule } from '@angular/forms'
 import { SvgIconModule } from '../../svg-icon/svg-icon.module'
 import { ChatService } from '../../services/chat.service'
+import { AppRoutingModule } from '../../app-routing.module'
 
 @NgModule({
     declarations: [ChatComponent, ChatMainComponent, ChatSideComponent],
-    imports: [CommonModule, FormsModule, SvgIconModule],
+    imports: [CommonModule, FormsModule, SvgIconModule, AppRoutingModule],
     providers: [ChatService],
 })
 export class ChatModule {}

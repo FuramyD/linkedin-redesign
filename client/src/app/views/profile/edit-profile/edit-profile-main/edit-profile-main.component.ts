@@ -110,41 +110,57 @@ export class EditProfileMainComponent implements OnInit {
     contactInfo$: Observable<IContact[]> = this.store$.pipe(
         select(myProfileContactInfoSelector),
         map(contacts => {
-            if (!contacts[0])
-                return [{ contactWay: '', data: '' }]
+            if (!contacts[0]) return [{ contactWay: '', data: '' }]
             return contacts
-        })
+        }),
     )
-
-    locality$: Observable<{ country: string; city: string }> = this.store$.pipe(
-        select(myProfileLocalitySelector),
-    )
+    // @ts-ignore
+    locality$: Observable<{ country: string; city: string }>
 
     projects$: Observable<IProject[]> = this.store$.pipe(
         select(myProfileProjectsSelector),
         map(projects => {
             if (!projects[0])
-                return [{ name: '', role: '', date: '', about: '', poster: null }]
+                return [
+                    { name: '', role: '', date: '', about: '', poster: null },
+                ]
             return projects
-        })
+        }),
     )
 
     experience$: Observable<IExp[]> = this.store$.pipe(
         select(myProfileExperienceSelector),
         map(experience => {
             if (!experience[0])
-                return [{ companyName: '', profession: '', start: '', end: '', logo: null }]
+                return [
+                    {
+                        companyName: '',
+                        profession: '',
+                        start: '',
+                        end: '',
+                        logo: null,
+                    },
+                ]
             return experience
-        })
+        }),
     )
 
     education$: Observable<IUniversity[]> = this.store$.pipe(
         select(myProfileEducationSelector),
         map(education => {
             if (!education[0])
-                return [{ name: '', facultyAndDegree: '', comment: '', start: '', end: '', logo: null }]
+                return [
+                    {
+                        name: '',
+                        facultyAndDegree: '',
+                        comment: '',
+                        start: '',
+                        end: '',
+                        logo: null,
+                    },
+                ]
             return education
-        })
+        }),
     )
 
     editPersonalInfoStatus: { status: string; message: string } | null = null
@@ -215,29 +231,57 @@ export class EditProfileMainComponent implements OnInit {
     }
 
     changeRole(role: string): void {
-        this.store$.dispatch(new MyProfileChangeRoleAction({ role, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeRoleAction({ role, id: this.profileId }),
+        )
     }
     // changeCompany(company: any): void
     changeAbout(about: string): void {
-        this.store$.dispatch(new MyProfileChangeAboutAction({ about, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeAboutAction({ about, id: this.profileId }),
+        )
     }
     changeProfession(profession: string): void {
-        this.store$.dispatch(new MyProfileChangeProfessionAction({ profession, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeProfessionAction({
+                profession,
+                id: this.profileId,
+            }),
+        )
     }
     changeLocality(locality: { country: string; city: string }): void {
-        this.store$.dispatch(new MyProfileChangeLocalityAction({ locality, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeLocalityAction({ locality, id: this.profileId }),
+        )
     }
     changeContactInfo(contactInfo: IContact[]): void {
-        this.store$.dispatch(new MyProfileChangeContactInfoAction({ contactInfo, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeContactInfoAction({
+                contactInfo,
+                id: this.profileId,
+            }),
+        )
     }
     changeProjects(projects: IProject[]): void {
-        this.store$.dispatch(new MyProfileChangeProjectsAction({ projects, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeProjectsAction({ projects, id: this.profileId }),
+        )
     }
     changeExperience(experience: IExp[]): void {
-        this.store$.dispatch(new MyProfileChangeExperienceAction({ experience, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeExperienceAction({
+                experience,
+                id: this.profileId,
+            }),
+        )
     }
     changeEducation(education: IUniversity[]): void {
-        this.store$.dispatch(new MyProfileChangeEducationAction({ education, id: this.profileId }))
+        this.store$.dispatch(
+            new MyProfileChangeEducationAction({
+                education,
+                id: this.profileId,
+            }),
+        )
     }
 
     changeAdditionalInfoHandler(ev: { type: string; data: any }): void {
@@ -271,5 +315,13 @@ export class EditProfileMainComponent implements OnInit {
 
     ngOnInit(): void {
         this.profileId$.subscribe(id => (this.profileId = id))
+
+        this.locality$ = this.store$.pipe(
+            select(myProfileLocalitySelector),
+            map(locality => {
+                console.log('Locality:', locality)
+                return locality
+            }),
+        )
     }
 }

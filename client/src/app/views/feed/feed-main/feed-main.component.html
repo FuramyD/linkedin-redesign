@@ -64,18 +64,22 @@
                         (click)="changeSortingType($event, sortList)"
                         class="list"
                     >
-                        <li>trending</li>
                         <li>newest first</li>
                         <li>lastest first</li>
-                        <li>by title</li>
+                        <li>trending</li>
                     </ul>
                 </div>
             </div>
         </h4>
     </div>
     <!-- Ted Bell, Annette Nguyen and Cody Hawkins liked this -->
-    <div *ngIf="(isPosts$ | async)" class="posts">
-        <app-post [postInfo]="post" *ngFor="let post of (posts$ | async)"></app-post>
+    <div *ngIf="isPosts$ | async" class="posts">
+        <app-post
+            [postInfo]="post"
+            *ngFor="let post of posts$ | async"
+        ></app-post>
     </div>
-    <h2 *ngIf="!(isPosts$ | async)" class="no-posts">There are no posts in your feed yet</h2>
+    <h2 *ngIf="!(isPosts$ | async)" class="no-posts">
+        There are no posts in your feed yet
+    </h2>
 </div>

@@ -1,65 +1,135 @@
 <div class="wrapper">
-	<div class="container">
-		<div class="container__header">
-			<h2 class="logo">Linked<svg icon="whiteLogo"></svg></h2>
-		</div>
-		<div class="container__body">
-			<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="form">
-				
-				<ul class="form__errors">
-					<li *ngIf="registrationForm.controls['firstName'].invalid
-					&& registrationForm.controls['firstName'].touched">
-						Invalid first name
-					</li>
-					<li *ngIf="registrationForm.controls['lastName'].invalid
-					&& registrationForm.controls['lastName'].touched">
-						Invalid last name
-					</li>
-					<li *ngIf="registrationForm.controls['email'].invalid
-					&& registrationForm.controls['email'].touched">
-						Invalid email
-					</li>
-					<li *ngIf="registrationForm.controls['phone'].invalid
-					&& registrationForm.controls['phone'].touched">
-						Invalid phone
-					</li>
-					<li *ngIf="registrationForm.controls['password'].invalid
-					&& registrationForm.controls['password'].touched">
-						invalid password
-					</li>
-					<li *ngIf="repeatPasswordError">Password mismatch</li>
-					<li *ngIf="backendError">{{ backendError }}</li>
-				</ul>
-		
-				<div>
-					<label class="form__label" for="firstName">First name</label>
-					<input class="form__control" type="text" id="firstName" formControlName="firstName" required>
-				</div>
-				<div>
-					<label class="form__label" for="lastName">Last name</label>
-					<input class="form__control" type="text" id="lastName" formControlName="lastName" required>
-				</div>
-				<div>
-					<label class="form__label" for="email">E-mail</label>
-					<input class="form__control" type="email" id="email" formControlName="email" email="true" required>
-				</div>
-				<div>
-					<label class="form__label" for="phone">Phone</label>
-					<input class="form__control" type="text" id="phone" formControlName="phone" required>
-				</div>
-				<div>
-					<label class="form__label" for="password">Password</label>
-					<input class="form__control" type="password" id="password" formControlName="password" required>
-				</div>
-				<div>
-					<label class="form__label" for="passwordRepeat">Repeat password</label>
-					<input class="form__control" type="password" id="passwordRepeat" formControlName="passwordRepeat" required>
-				</div>
-				
-				<div class="agree">By clicking Agree & Join, you agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy.</div>
-				<button class="submit" type="submit">Agree & Join</button>
-				<span class="auth-link">Already on LinkedIn? <a routerLink="/signin">Sign in</a></span>
-			</form>
-		</div>
-	</div>
+    <div class="container">
+        <div class="container__header">
+            <h2 class="logo">Linked<svg icon="whiteLogo"></svg></h2>
+        </div>
+        <div class="container__body">
+            <form
+                [formGroup]="registrationForm"
+                (ngSubmit)="onSubmit()"
+                class="form"
+            >
+                <ul class="form__errors">
+                    <li
+                        *ngIf="
+                            registrationForm.controls['firstName'].invalid &&
+                            registrationForm.controls['firstName'].touched
+                        "
+                    >
+                        Invalid first name
+                    </li>
+                    <li
+                        *ngIf="
+                            registrationForm.controls['lastName'].invalid &&
+                            registrationForm.controls['lastName'].touched
+                        "
+                    >
+                        Invalid last name
+                    </li>
+                    <li
+                        *ngIf="
+                            registrationForm.controls['email'].invalid &&
+                            registrationForm.controls['email'].touched
+                        "
+                    >
+                        Invalid email
+                    </li>
+                    <li
+                        *ngIf="
+                            registrationForm.controls['phone'].invalid &&
+                            registrationForm.controls['phone'].touched
+                        "
+                    >
+                        Invalid phone
+                    </li>
+                    <li
+                        *ngIf="
+                            registrationForm.controls['password'].invalid &&
+                            registrationForm.controls['password'].touched
+                        "
+                    >
+                        invalid password
+                    </li>
+                    <li *ngIf="repeatPasswordError">Password mismatch</li>
+                    <li *ngIf="backendError">{{ backendError }}</li>
+                </ul>
+
+                <div>
+                    <label class="form__label" for="firstName"
+                        >First name</label
+                    >
+                    <input
+                        class="form__control"
+                        type="text"
+                        id="firstName"
+                        formControlName="firstName"
+                        required
+                    />
+                </div>
+                <div>
+                    <label class="form__label" for="lastName">Last name</label>
+                    <input
+                        class="form__control"
+                        type="text"
+                        id="lastName"
+                        formControlName="lastName"
+                        required
+                    />
+                </div>
+                <div>
+                    <label class="form__label" for="email">E-mail</label>
+                    <input
+                        class="form__control"
+                        type="email"
+                        id="email"
+                        formControlName="email"
+                        email="true"
+                        required
+                    />
+                </div>
+                <div>
+                    <label class="form__label" for="phone">Phone</label>
+                    <input
+                        class="form__control"
+                        type="text"
+                        id="phone"
+                        formControlName="phone"
+                        required
+                    />
+                </div>
+                <div>
+                    <label class="form__label" for="password">Password</label>
+                    <input
+                        class="form__control"
+                        type="password"
+                        id="password"
+                        formControlName="password"
+                        required
+                    />
+                </div>
+                <div>
+                    <label class="form__label" for="passwordRepeat"
+                        >Repeat password</label
+                    >
+                    <input
+                        class="form__control"
+                        type="password"
+                        id="passwordRepeat"
+                        formControlName="passwordRepeat"
+                        required
+                    />
+                </div>
+
+                <div class="agree">
+                    By clicking Agree & Join, you agree to the LinkedIn User
+                    Agreement, Privacy Policy, and Cookie Policy.
+                </div>
+                <button class="submit" type="submit">Agree & Join</button>
+                <span class="auth-link"
+                    >Already on LinkedIn?
+                    <a routerLink="/signin">Sign in</a></span
+                >
+            </form>
+        </div>
+    </div>
 </div>

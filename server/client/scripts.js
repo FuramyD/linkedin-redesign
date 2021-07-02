@@ -58,23 +58,16 @@ export class HystModal {
         document.addEventListener(
             'click',
             function (e) {
-                const clickedlink = e.target.closest(
-                    '[' + this.config.linkAttributeName + ']',
-                )
+                const clickedlink = e.target.closest('[' + this.config.linkAttributeName + ']')
                 if (!this._isMoved && clickedlink) {
                     e.preventDefault()
                     this.starter = clickedlink
-                    let targetSelector = this.starter.getAttribute(
-                        this.config.linkAttributeName,
-                    )
+                    let targetSelector = this.starter.getAttribute(this.config.linkAttributeName)
                     this._nextWindows = document.querySelector(targetSelector)
                     this.open()
                     return
                 }
-                if (
-                    this.config.closeOnButton &&
-                    e.target.closest('[data-hystclose]')
-                ) {
+                if (this.config.closeOnButton && e.target.closest('[data-hystclose]')) {
                     this.close()
                     return
                 }
@@ -85,12 +78,7 @@ export class HystModal {
             document.addEventListener(
                 'mousedown',
                 function (e) {
-                    if (
-                        !this._isMoved &&
-                        e.target instanceof Element &&
-                        !e.target.classList.contains('hystmodal__wrap')
-                    )
-                        return
+                    if (!this._isMoved && e.target instanceof Element && !e.target.classList.contains('hystmodal__wrap')) return
                     this._overlayChecker = true
                 }.bind(this),
             )
@@ -117,22 +105,12 @@ export class HystModal {
         window.addEventListener(
             'keydown',
             function (e) {
-                if (
-                    !this._isMoved &&
-                    this.config.closeOnEsc &&
-                    e.which == 27 &&
-                    this.isOpened
-                ) {
+                if (!this._isMoved && this.config.closeOnEsc && e.which == 27 && this.isOpened) {
                     e.preventDefault()
                     this.close()
                     return
                 }
-                if (
-                    !this._isMoved &&
-                    this.config.catchFocus &&
-                    e.which == 9 &&
-                    this.isOpened
-                ) {
+                if (!this._isMoved && this.config.catchFocus && e.which == 9 && this.isOpened) {
                     this.focusCatcher(e)
                     return
                 }
@@ -175,10 +153,7 @@ export class HystModal {
         if (this.config.waitTransitions) {
             this.openedWindow.classList.add('hystmodal--moved')
             this._isMoved = true
-            this.openedWindow.addEventListener(
-                'transitionend',
-                this._closeAfterTransition,
-            )
+            this.openedWindow.addEventListener('transitionend', this._closeAfterTransition)
             this.openedWindow.classList.remove('hystmodal--active')
         } else {
             this.openedWindow.classList.remove('hystmodal--active')
@@ -188,10 +163,7 @@ export class HystModal {
 
     _closeAfterTransition() {
         this.openedWindow.classList.remove('hystmodal--moved')
-        this.openedWindow.removeEventListener(
-            'transitionend',
-            this._closeAfterTransition,
-        )
+        this.openedWindow.removeEventListener('transitionend', this._closeAfterTransition)
         this._isMoved = false
         this.shadow.classList.remove('hystmodal__shadow--show')
         this.openedWindow.setAttribute('aria-hidden', 'true')
@@ -241,9 +213,7 @@ export class HystModal {
         if (!this.config.backscroll) return
 
         // collect fixed selectors to array
-        let fixedSelectors = Array.prototype.slice.call(
-            document.querySelectorAll(this.config.fixedSelectors),
-        )
+        let fixedSelectors = Array.prototype.slice.call(document.querySelectorAll(this.config.fixedSelectors))
 
         let html = document.documentElement
         if (this.isOpened === true) {
@@ -263,15 +233,10 @@ export class HystModal {
         if (marginSize) {
             html.style.marginRight = marginSize + 'px'
             fixedSelectors.map(el => {
-                el.style.marginRight =
-                    parseInt(getComputedStyle(el).marginRight) +
-                    marginSize +
-                    'px'
+                el.style.marginRight = parseInt(getComputedStyle(el).marginRight) + marginSize + 'px'
             })
         }
         html.classList.add('hystmodal__opened')
     }
 }
-
-;
 //# sourceMappingURL=scripts.js.map

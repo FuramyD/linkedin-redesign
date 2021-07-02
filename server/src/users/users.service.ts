@@ -8,11 +8,11 @@ import { UserDocument } from './user.shema'
 import { ChatDocument } from '../chats/chat.shema'
 import { IPersonalInfo } from '../interfaces/edit-profile/personalInfo'
 import { Express } from 'express'
-import {IUniversity} from "../interfaces/university";
-import {IExp} from "../interfaces/exp";
-import {IProject} from "../interfaces/project";
-import {IContact} from "../interfaces/contact";
-import {ILocality} from "../interfaces/locality";
+import { IUniversity } from '../interfaces/university'
+import { IExp } from '../interfaces/exp'
+import { IProject } from '../interfaces/project'
+import { IContact } from '../interfaces/contact'
+import { ILocality } from '../interfaces/locality'
 
 const URL = 'http://localhost:3000'
 
@@ -132,27 +132,15 @@ export class UsersService {
             if (user.info.sentConnections.find(user => user.userId === sender.id)) {
                 return
             }
-            const chatId = (await this.chatModel.find().exec()).length
-
-            const chat = new this.chatModel({
-                chatId,
-                users: [{ userId: senderId }, { userId: userId }],
-                messages: [],
-                attached: [],
-            })
-
-            await chat.save()
 
             user.info.receivedConnections.push({
                 userId: senderId,
                 message: message,
-                chatId,
             })
 
             sender.info.sentConnections.push({
                 userId: userId,
                 message: message,
-                chatId,
             })
 
             // await this.userModel.updateOne({id: userId}, {
@@ -182,15 +170,31 @@ export class UsersService {
         const user = await this.userModel.findOne({ id: userId })
         const sender = await this.userModel.findOne({ id: senderId })
 
+        let chats = await this.chatModel.find()
+        const chat = chats.find(chat => {
+            return chat.users.find(u => u.userId === userId) && chat.users.find(u => u.userId === senderId)
+        })
+
+        if (chat) {
+            await this.chatModel.deleteOne({ chatId: chat.chatId })
+        }
+
+        const chatId = chat?.chatId ?? (await this.chatModel.find().exec()).length
+
+        const newChat = new this.chatModel({
+            chatId,
+            users: [{ userId: senderId }, { userId: userId }],
+            messages: [],
+            attached: [],
+        })
+
+        await newChat.save()
+
         if (user && sender) {
             if (!user.info.connections.find(user => user.userId === senderId))
                 if (user.info.receivedConnections.find(user => user.userId === senderId)) {
-                    // проверка на то что sender'a уже нет в connections
+                    // проверка на то что sender'a нет в connections
                     // если sender есть во входящих connections
-
-                    const chatId = user.info.receivedConnections.find(user => user.userId === senderId)?.chatId
-                    console.log(chatId)
-                    if (!chatId && chatId !== 0) return null
 
                     user.info.receivedConnections = user.info.receivedConnections.filter(user => user.userId !== senderId)
                     user.info.connections.push({ userId: senderId, date: date, chatId })
@@ -245,6 +249,15 @@ export class UsersService {
         const user = await this.userModel.findOne({ id: userId })
         const sender = await this.userModel.findOne({ id: senderId })
 
+        let chats = await this.chatModel.find()
+        const chat = chats.find(chat => {
+            return chat.users.find(u => u.userId === userId) && chat.users.find(u => u.userId === senderId)
+        })
+
+        if (chat) {
+            await this.chatModel.deleteOne({ chatId: chat.chatId })
+        }
+
         if (user && sender) {
             if (
                 sender.info.connections.find(user => user.userId === userId) &&
@@ -262,8 +275,26 @@ export class UsersService {
         return null
     }
 
-    async findAllUsers(): Promise<any> {
-        return await this.userModel.find().exec()
+    async findAllUsers(query?: { fullName?: string }): Promise<any> {
+        let users = await this.userModel.find().exec()
+        if (query?.fullName) {
+            const [firstName, lastName] = query.fullName.split(' ').map(el => {
+                if (el) return el.toLowerCase()
+                return ''
+            })
+            users = users.filter(user => {
+                if (firstName && lastName)
+                    return (
+                        user.firstName.toLowerCase().startsWith(firstName) && // === firstName
+                        user.lastName.toLowerCase().startsWith(lastName)
+                    )
+
+                if (firstName) return user.firstName.toLowerCase().startsWith(firstName)
+
+                return false
+            })
+        }
+        return users
     }
 
     async clearConnections(id: number): Promise<any> {
@@ -331,7 +362,7 @@ export class UsersService {
     }
 
     async changePassword(userId: number, newPassword: string, oldPassword: string): Promise<boolean | null> {
-        const user = await this.userModel.findOne({id: userId, password: oldPassword})
+        const user = await this.userModel.findOne({ id: userId, password: oldPassword })
         if (!user) return null
 
         if (newPassword === oldPassword) return false

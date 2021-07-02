@@ -28,6 +28,8 @@
 
             cursor: pointer;
 
+            min-width: 250px;
+
             .user {
                 display: flex;
                 .avatar-box {
@@ -36,12 +38,25 @@
                 }
 
                 .info {
+                    margin-right: 10px;
+
                     .name {
                         font-size: 14px;
                         font-weight: 600;
                     }
                     .last-message {
                         font-size: 11px;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                    }
+
+                    .profession {
+                        font-size: 11px;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        max-width: 120px;
                     }
                 }
             }
@@ -55,8 +70,6 @@
 
                 background-color: @active;
                 color: white;
-
-                padding-left: 1px;
 
                 border-radius: 50%;
             }

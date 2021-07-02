@@ -5,6 +5,7 @@ import { PostState } from '../../../store/posts/post.reducer'
 import {
     PostCreateAction,
     PostGetAction,
+    SortingPostsAction,
 } from '../../../store/posts/post.actions'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -13,7 +14,10 @@ import { IPost } from '../../../interfaces/post/post'
 import { ICreator } from '../../../interfaces/post/creator'
 import { IAttached } from '../../../interfaces/post/attached'
 import { MyProfileState } from '../../../store/my-profile/my-profile.reducer'
-import { myProfileSelector } from '../../../store/my-profile/my-profile.selectors'
+import {
+    myProfileIdSelector,
+    myProfileSelector,
+} from '../../../store/my-profile/my-profile.selectors'
 
 @Component({
     selector: 'app-feed-main',
@@ -27,6 +31,7 @@ export class FeedMainComponent implements OnInit {
     ) {}
 
     posts$: Observable<IPost[]> = this.store$.pipe(select(postsSelector))
+
     isPosts$: Observable<boolean> = this.posts$.pipe(map(posts => !!posts[0]))
 
     creator$: Observable<ICreator> = this.store$.pipe(
@@ -44,7 +49,7 @@ export class FeedMainComponent implements OnInit {
         }),
     )
 
-    feedPostSortingType: string | null = 'trending'
+    feedPostSortingType: string | null = 'newest first'
 
     attached: IAttached = {}
 
@@ -57,6 +62,7 @@ export class FeedMainComponent implements OnInit {
     textareaContent: string = ''
 
     createPost(): void {
+        console.log(this.textareaContent)
         this.store$.dispatch(
             new PostCreateAction({
                 creator: this.creator,
@@ -79,6 +85,10 @@ export class FeedMainComponent implements OnInit {
     changeSortingType(e: MouseEvent, sortList: HTMLElement): void {
         const elem = e.target as HTMLElement
         this.feedPostSortingType = elem.textContent
+        console.log(elem.textContent)
+        this.store$.dispatch(
+            new SortingPostsAction({ sortType: elem.textContent as string }),
+        )
 
         sortList.classList.remove('active')
     }

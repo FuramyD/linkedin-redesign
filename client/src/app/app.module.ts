@@ -24,6 +24,7 @@ import { PostEffects } from './store/posts/post.effects'
 import { MyProfileEffects } from './store/my-profile/my-profile.effects'
 import { ProfileEffects } from './store/profile/profile.effects'
 import { DirectivesModule } from './directives/directives.module'
+import { ChatEffects } from './store/chat/chat.effects'
 
 const config: SocketIoConfig = { url: environment.server_url, options: {} }
 
@@ -54,7 +55,12 @@ const config: SocketIoConfig = { url: environment.server_url, options: {} }
             maxAge: 25,
             logOnly: environment.production,
         }),
-        EffectsModule.forRoot([PostEffects, MyProfileEffects, ProfileEffects]),
+        EffectsModule.forRoot([
+            PostEffects,
+            MyProfileEffects,
+            ProfileEffects,
+            ChatEffects,
+        ]),
         StoreRouterConnectingModule.forRoot(),
         SocketIoModule.forRoot(config),
     ],

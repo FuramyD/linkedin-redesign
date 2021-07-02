@@ -11,6 +11,7 @@ import { PostSchema } from './posts/post.schema'
 import { UserSchema } from './users/user.shema'
 import { ChatSchema } from './chats/chat.shema'
 import { ChatsService } from './chats/chats.service'
+import { ChatsController } from './chats/chats.controller'
 
 @Module({
     imports: [
@@ -21,7 +22,7 @@ import { ChatsService } from './chats/chats.service'
             { name: 'chats', schema: ChatSchema },
         ]),
     ],
-    controllers: [AppController, UsersController, PostsController],
+    controllers: [AppController, UsersController, PostsController, ChatsController],
     providers: [AppService, PostsService, UsersService, ChatGateway, ChatsService],
 })
 export class AppModule {}
