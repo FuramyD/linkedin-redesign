@@ -14,6 +14,7 @@ import { IProject } from '../interfaces/project'
 import { IExp } from '../interfaces/exp'
 import { IUniversity } from '../interfaces/university'
 import { ILocality } from '../interfaces/locality'
+import {UploadsInterceptor} from "../interceptors/uploads.interceptor";
 
 const storage = diskStorage({
     destination: (req, file, callback) => {
@@ -119,12 +120,14 @@ export class UsersController {
 
     @Post(':id/avatar/upload')
     @UseInterceptors(
-        FileInterceptor('avatar', {
-            storage,
-        }),
+        UploadsInterceptor,
+        FileInterceptor('avatar', { storage })
     )
-    async avatarUpload(@UploadedFile() file: Express.Multer.File, @Param() param: { id: string }, @Res() res: Response): Promise<void> {
-        console.log('upload')
+    async avatarUpload(
+        @UploadedFile() file: Express.Multer.File,
+        @Param() param: { id: string },
+        @Res() res: Response
+    ): Promise<void> {
         const result = await this.usersService.uploadAvatar(file, +param.id)
         if (result)
             res.status(HttpStatus.OK).send({

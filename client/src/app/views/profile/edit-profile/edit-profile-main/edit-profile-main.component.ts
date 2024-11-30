@@ -60,7 +60,7 @@ export class EditProfileMainComponent implements OnInit {
         map(fullName => {
             console.log(fullName)
             return fullName.firstName
-        }),
+        })
     )
 
     lastName$: Observable<string> = this.store$.pipe(
